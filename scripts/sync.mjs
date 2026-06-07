@@ -131,8 +131,20 @@ const specsMap = new Map()
 for (const s of allSpecs) {
   if (!ventingIds.has(s.acIdent) || !s.acValue) continue
   const arr = specsMap.get(s.acIdent) ?? []
-  arr.push({ name: s.acSpecName ?? '', value: s.acValue, unit: s.acUM ?? '', group: s.acGroup ?? '' })
+  arr.push({
+    name: s.acSpecName ?? '',
+    value: s.acValue,
+    attr: s.acAttr ?? '',
+    unit: s.acUM ?? '',
+    group: s.acGroup ?? '',
+    basic: s.acBasic === 'T',
+    order: s.anOrderID ?? 9999,
+  })
   specsMap.set(s.acIdent, arr)
+}
+// Sort each product's specs by the API-defined display order
+for (const [id, specs] of specsMap) {
+  specsMap.set(id, specs.sort((a, b) => a.order - b.order))
 }
 
 console.log('\n[5/5] Resolving product images (using persistent cache)…')
@@ -151,7 +163,9 @@ const products = ventingRaw.map((p) => ({
   categoryName: p.acClassifName ?? '',
   subcategory: p.acClassif2 ?? '',
   subcategoryName: p.acCLassif2Name ?? '',
+  barcode: p.acCode?.trim() ?? '',
   inStock: parseFloat(p.anStock ?? '0') > 0,
+  lastUpdated: p.adTimeChg ?? '',
   image: p._acWebImage ? (updatedCache[p._acWebImage] || null) : null,
   energyClass: p.EnergetskiRazred ?? '',
   inverter: p.Inverter ?? '',

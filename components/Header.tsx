@@ -7,17 +7,11 @@ import { type Locale } from '@/lib/i18n'
 
 /* ─── Constants ──────────────────────────────────────────── */
 const LANGUAGES: { code: Locale; nativeName: string; flag: string }[] = [
-  { code: 'sr', nativeName: 'Srpski',      flag: '🇷🇸' },
-  { code: 'en', nativeName: 'English',     flag: '🇬🇧' },
-  { code: 'hr', nativeName: 'Hrvatski',    flag: '🇭🇷' },
-  { code: 'bs', nativeName: 'Bosanski',    flag: '🇧🇦' },
-  { code: 'sl', nativeName: 'Slovenščina', flag: '🇸🇮' },
-  { code: 'de', nativeName: 'Deutsch',     flag: '🇩🇪' },
-  { code: 'fr', nativeName: 'Français',    flag: '🇫🇷' },
-  { code: 'it', nativeName: 'Italiano',    flag: '🇮🇹' },
+  { code: 'sr', nativeName: 'SRB', flag: '🇷🇸' },
+  { code: 'en', nativeName: 'EN',  flag: '🇬🇧' },
 ]
 
-const SECONDARY_LINKS = ['About us', 'Blog', 'Service', 'Contact', 'Tesla Partnershub']
+const SECONDARY_LINKS = ['Servis i podrška', 'Blog', 'Kontakt']
 
 /* ─── Language Switcher ──────────────────────────────────── */
 function LanguageSwitcher({ locale, setLocale }: { locale: Locale; setLocale: (l: Locale) => void }) {
@@ -106,7 +100,7 @@ export default function Header() {
   return (
     <>
       <header className="sticky top-0 z-40 bg-white border-b border-[#e2e2e2]">
-        <div className="max-w-site mx-auto px-10">
+        <div className="w-full px-10">
           <div className="flex items-center h-[105px]">
 
             {/* Logo */}
@@ -117,9 +111,9 @@ export default function Header() {
             {/* Primary nav — desktop */}
             <nav className="hidden lg:flex flex-1 items-center justify-center" aria-label="Primary navigation">
               <ul className="flex items-center gap-9">
-                {t.nav.map(item => (
+                {t.nav.map((item, i) => (
                   <li key={item}>
-                    <a href="#" className="font-sans text-[13px] font-bold uppercase tracking-nav text-brand-text whitespace-nowrap hover:opacity-60 transition-opacity">
+                    <a href={`/shop?tab=${i}`} className="font-sans text-[13px] font-bold uppercase tracking-nav text-brand-text whitespace-nowrap hover:opacity-60 transition-opacity">
                       {item}
                     </a>
                   </li>
@@ -205,7 +199,7 @@ export default function Header() {
 
         {/* ── Search bar ────────────────────────────────────── */}
         <div className={`overflow-hidden transition-all duration-300 ${searchOpen ? 'max-h-24 border-t border-[#e2e2e2]' : 'max-h-0'}`}>
-          <div className="max-w-site mx-auto px-10 py-4">
+          <div className="w-full px-10 py-4">
             <div className="flex items-center gap-3 border-b-2 border-brand-text pb-1">
               {/* Search icon inside bar — filled, matches header icon */}
               <svg viewBox="0 0 18 17.99" style={{ width: '17px', height: '17px', fill: 'rgb(12,12,13)', stroke: 'none', flexShrink: 0, opacity: 0.4 }} aria-hidden="true">
@@ -243,16 +237,16 @@ export default function Header() {
 
       {/* Drawer — slides down from under the sticky header */}
       <div className={`fixed top-[106px] left-0 right-0 z-30 bg-white border-b border-[#e2e2e2] shadow-[0_8px_40px_rgba(0,0,0,0.1)] transition-all duration-300 origin-top ${menuOpen ? 'opacity-100 scale-y-100 pointer-events-auto' : 'opacity-0 scale-y-95 pointer-events-none'}`}>
-        <div className="max-w-site mx-auto px-10 py-8">
+        <div className="w-full px-10 py-8">
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-10">
 
             {/* Main nav items */}
             <div>
               <ul className="flex flex-col gap-1">
-                {t.nav.map(item => (
+                {t.nav.map((item, i) => (
                   <li key={item}>
                     <a
-                      href="#"
+                      href={`/shop?tab=${i}`}
                       onClick={() => setMenuOpen(false)}
                       className="flex items-center justify-between group py-3 border-b border-[#f0f0f0] last:border-0"
                     >

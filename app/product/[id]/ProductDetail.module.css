@@ -1,0 +1,341 @@
+/* ── Page wrapper ────────────────────────────────────── */
+.page {
+  background: #fff;
+}
+
+/* ── Hero ────────────────────────────────────────────── */
+.hero {
+  background: #fff;
+  padding: 60px 0 0;
+}
+
+.heroInner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 28px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+/* ── Hero text (with image = half grid, without = full width capped) ── */
+.heroTextFull {
+  grid-column: 1 / -1;
+  max-width: 680px;
+}
+
+/* ── Breadcrumb ──────────────────────────────────────── */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 400;
+  color: #9ca3af;
+  margin-bottom: 20px;
+}
+
+.breadcrumb a {
+  color: #9ca3af;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.breadcrumb a:hover {
+  color: #0c0c0d;
+}
+
+.breadcrumb span[aria-current="page"] {
+  color: #0c0c0d;
+  font-weight: 500;
+}
+
+/* ── Eyebrow / type ──────────────────────────────────── */
+.eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: #6b7280;
+  margin: 0 0 12px;
+}
+
+/* ── Product title ───────────────────────────────────── */
+.title {
+  font-family: var(--font-archivo-black), 'Archivo Black', sans-serif;
+  font-size: clamp(28px, 3.2vw, 48px);
+  font-weight: 900;
+  line-height: 1.1;
+  color: #0c0c0d;
+  margin: 0 0 12px;
+  letter-spacing: -0.5px;
+  word-break: break-word;
+}
+
+/* ── Model code ──────────────────────────────────────── */
+.model {
+  font-size: 14px;
+  font-weight: 500;
+  color: #6b7280;
+  margin: 0 0 36px;
+  font-family: ui-monospace, 'SF Mono', monospace;
+}
+
+/* ── Subcategory + barcode ───────────────────────────── */
+.metaRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.metaTag {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: #6b7280;
+  background: #f3f4f6;
+  border-radius: 6px;
+  padding: 4px 10px;
+  text-transform: uppercase;
+}
+
+.metaBarcode {
+  font-size: 11px;
+  font-weight: 400;
+  color: #9ca3af;
+  font-family: ui-monospace, 'SF Mono', monospace;
+}
+
+/* ── Quick stats row ─────────────────────────────────── */
+.quickStats {
+  display: flex;
+  margin-bottom: 36px;
+  border: 2px solid #edf1f5;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fff;
+  width: 100%;
+}
+
+.statItem {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 12px;
+  text-align: center;
+}
+
+.statItem + .statItem {
+  border-left: 1px solid #edf1f5;
+}
+
+.statValue {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0c0c0d;
+  line-height: 1.2;
+  margin-bottom: 6px;
+  white-space: nowrap;
+}
+
+.statUnit {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.statAttr {
+  font-size: 10px;
+  font-weight: 400;
+  color: #9ca3af;
+  margin-bottom: 2px;
+}
+
+.statLabel {
+  font-size: 10px;
+  font-weight: 400;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  line-height: 1.3;
+}
+
+/* ── CTAs ────────────────────────────────────────────── */
+.ctas {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 52px;
+}
+
+.ctaSecondary {
+  font-size: 13px;
+  font-weight: 500;
+  color: #6b7280;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s;
+}
+
+.ctaSecondary:hover {
+  color: #0c0c0d;
+}
+
+/* ── Hero image ──────────────────────────────────────── */
+.heroImage {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: 100%;
+  padding-bottom: 0;
+}
+
+.heroImage img {
+  max-width: 100%;
+  max-height: 440px;
+  object-fit: contain;
+}
+
+.imagePlaceholder {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 0;
+}
+
+.imagePlaceholder svg {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+}
+
+/* ── Specs section ───────────────────────────────────── */
+.specs {
+  padding: 80px 0;
+}
+
+.specsInner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+.specsHeading {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #0c0c0d;
+  margin: 0 0 40px;
+}
+
+/* ── Spec groups ─────────────────────────────────────── */
+.specGroup {
+  margin-bottom: 40px;
+}
+
+.specGroup:last-child {
+  margin-bottom: 0;
+}
+
+.specGroupTitle {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #6b7280;
+  margin: 0 0 12px;
+}
+
+/* ── Spec table ──────────────────────────────────────── */
+.specTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.specRow {
+  border-bottom: 1px dotted #d1d5db;
+}
+
+.specRow:last-child {
+  border-bottom: none;
+}
+
+.specName {
+  font-size: 14px;
+  font-weight: 400;
+  color: #6b7280;
+  padding: 13px 16px 13px 0;
+  width: 50%;
+  vertical-align: top;
+}
+
+.specValue {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0c0c0d;
+  padding: 13px 0;
+  vertical-align: top;
+}
+
+.specUnit {
+  font-weight: 400;
+  color: #9ca3af;
+  font-size: 13px;
+}
+
+.specAttrLabel {
+  font-weight: 400;
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+/* ── Responsive ──────────────────────────────────────── */
+@media (max-width: 768px) {
+  .heroInner {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .heroImage {
+    order: -1;
+  }
+
+  .heroImage img {
+    max-height: 280px;
+  }
+
+  .quickStats {
+    width: 100%;
+    justify-content: flex-start;
+    overflow-x: auto;
+  }
+
+  .specName {
+    width: 55%;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 22px;
+  }
+
+  .statItem {
+    padding: 14px 16px;
+    min-width: 72px;
+  }
+
+  .statValue {
+    font-size: 17px;
+  }
+}

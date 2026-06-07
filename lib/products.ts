@@ -23,6 +23,11 @@ async function kvAvailable(): Promise<boolean> {
 
 // ── Image cache (persists between syncs to avoid re-querying WP) ─────────────
 
+function dataPath(filename: string): string {
+  const { join } = require('path') as typeof import('path')
+  return join(process.cwd(), 'public', 'data', filename)
+}
+
 export async function loadImageCache(): Promise<Record<string, string>> {
   if (await kvAvailable()) {
     const { kv } = await import('@vercel/kv')
@@ -30,10 +35,7 @@ export async function loadImageCache(): Promise<Record<string, string>> {
   }
   try {
     const { readFile } = await import('fs/promises')
-    const raw = await readFile(
-      new URL('../public/data/image-cache.json', import.meta.url),
-      'utf-8'
-    )
+    const raw = await readFile(dataPath('image-cache.json'), 'utf-8')
     return JSON.parse(raw) as Record<string, string>
   } catch {
     return {}
@@ -47,11 +49,7 @@ export async function saveImageCache(cache: Record<string, string>): Promise<voi
     return
   }
   const { writeFile } = await import('fs/promises')
-  await writeFile(
-    new URL('../public/data/image-cache.json', import.meta.url),
-    JSON.stringify(cache, null, 2),
-    'utf-8'
-  )
+  await writeFile(dataPath('image-cache.json'), JSON.stringify(cache, null, 2), 'utf-8')
 }
 
 export async function loadSyncResult(): Promise<SyncResult | null> {
@@ -63,10 +61,7 @@ export async function loadSyncResult(): Promise<SyncResult | null> {
   // Local dev fallback — read the JSON written by `npm run sync`
   try {
     const { readFile } = await import('fs/promises')
-    const raw = await readFile(
-      new URL('../public/data/products.json', import.meta.url),
-      'utf-8'
-    )
+    const raw = await readFile(dataPath('products.json'), 'utf-8')
     return JSON.parse(raw) as SyncResult
   } catch {
     return null
@@ -83,9 +78,9 @@ export async function saveSyncResult(data: SyncResult): Promise<void> {
 
   // Local dev fallback — write to public/data/products.json
   const { writeFile, mkdir } = await import('fs/promises')
-  const outPath = new URL('../public/data/products.json', import.meta.url)
-  await mkdir(new URL('../public/data', import.meta.url), { recursive: true })
-  await writeFile(outPath, JSON.stringify(data, null, 2), 'utf-8')
+  const dir = dataPath('')
+  await mkdir(dir, { recursive: true })
+  await writeFile(dataPath('products.json'), JSON.stringify(data, null, 2), 'utf-8')
 }
 
 // ── Public read API ───────────────────────────────────────────────────────────

@@ -20,8 +20,11 @@ const BRAND_FILTER = 'VENTING'
 export interface Spec {
   name: string
   value: string
+  attr: string   // qualifier, e.g. "maks.", "min.", "nom."
   unit: string
   group: string
+  basic: boolean // true = key spec shown in quick-stats row
+  order: number  // official display order from API
 }
 
 export interface Product {
@@ -33,7 +36,9 @@ export interface Product {
   categoryName: string
   subcategory: string
   subcategoryName: string
+  barcode: string
   inStock: boolean
+  lastUpdated: string
   image: string | null
   energyClass: string
   inverter: string
@@ -127,10 +132,12 @@ interface RawProduct {
   acClassifName: string
   acClassif2: string
   acCLassif2Name: string
+  acCode: string | null
   Brand: string
   Model: string
   Tip: string
   anStock: string
+  adTimeChg: string | null
   _acWebImage: string | null
   Inverter: string
   EnergetskiRazred: string | null
@@ -140,8 +147,11 @@ interface RawSpec {
   acIdent: string
   acSpecName: string
   acValue: string | null
+  acAttr: string | null
   acUM: string | null
   acGroup: string | null
+  acBasic: string | null
+  anOrderID: number | null
 }
 
 // ── Main sync function ────────────────────────────────────────────────────────
@@ -161,7 +171,7 @@ export async function syncProducts(): Promise<SyncResult> {
   const ventingIds = new Set(ventingRaw.map((p) => p.acIdent))
   console.log(`[sync] ${ventingRaw.length} VENTING products`)
 
-  // Build specs map (acIdent → Spec[])
+  // Build specs map (acIdent → Spec[]), sorted by official order
   const specsMap = new Map<string, Spec[]>()
   for (const s of allSpecs) {
     if (!ventingIds.has(s.acIdent) || !s.acValue) continue
@@ -169,10 +179,17 @@ export async function syncProducts(): Promise<SyncResult> {
     arr.push({
       name: s.acSpecName ?? '',
       value: s.acValue,
+      attr: s.acAttr ?? '',
       unit: s.acUM ?? '',
       group: s.acGroup ?? '',
+      basic: s.acBasic === 'T',
+      order: s.anOrderID ?? 9999,
     })
     specsMap.set(s.acIdent, arr)
+  }
+  // Sort each product's specs by the API-defined display order
+  for (const [id, specs] of specsMap) {
+    specsMap.set(id, specs.sort((a, b) => a.order - b.order))
   }
 
   // Load persistent image cache, resolve only new filenames, save updated cache
@@ -191,7 +208,9 @@ export async function syncProducts(): Promise<SyncResult> {
     categoryName: p.acClassifName ?? '',
     subcategory: p.acClassif2 ?? '',
     subcategoryName: p.acCLassif2Name ?? '',
+    barcode: p.acCode?.trim() ?? '',
     inStock: parseFloat(p.anStock ?? '0') > 0,
+    lastUpdated: p.adTimeChg ?? '',
     image: p._acWebImage ? (updatedCache[p._acWebImage] || null) : null,
     energyClass: p.EnergetskiRazred ?? '',
     inverter: p.Inverter ?? '',
