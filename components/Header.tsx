@@ -11,7 +11,11 @@ const LANGUAGES: { code: Locale; nativeName: string; flag: string }[] = [
   { code: 'en', nativeName: 'EN',  flag: '🇬🇧' },
 ]
 
-const SECONDARY_LINKS = ['Servis i podrška', 'Blog', 'Kontakt']
+const SECONDARY_LINKS = [
+  { label: 'Servis i podrška', href: '/servis' },
+  { label: 'Blog',             href: '/blog'   },
+  { label: 'Kontakt',          href: '/kontakt' },
+]
 
 /* ─── Language Switcher ──────────────────────────────────── */
 function LanguageSwitcher({ locale, setLocale }: { locale: Locale; setLocale: (l: Locale) => void }) {
@@ -264,10 +268,10 @@ export default function Header() {
               {/* Secondary links */}
               <ul className="flex flex-wrap gap-x-6 gap-y-2 mt-6 pt-6 border-t border-[#f0f0f0]">
                 {SECONDARY_LINKS.map(link => (
-                  <li key={link}>
-                    <a href="#" onClick={() => setMenuOpen(false)}
+                  <li key={link.label}>
+                    <a href={link.href} onClick={() => setMenuOpen(false)}
                       className="font-sans text-[12px] font-medium uppercase tracking-[1px] text-brand-muted hover:text-brand-text transition-colors">
-                      {link}
+                      {link.label}
                     </a>
                   </li>
                 ))}

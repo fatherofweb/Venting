@@ -5,10 +5,23 @@ import { useLanguage } from '@/lib/LanguageContext'
 export default function Footer() {
   const { t } = useLanguage()
 
+  const ASSORTMENT_HREFS = [
+    '/shop?tab=0',
+    '/shop?tab=1',
+    '/shop?tab=2',
+    '/shop?tab=3',
+    '/shop?tab=1',
+    '/shop?tab=4',
+  ]
+
+  const ABOUT_HREFS = ['/o-nama', '/privatnost', '/uslovi', '/kolacici']
+
+  const SUPPORT_HREFS = ['/servis', '/kontakt']
+
   const columns = [
-    { heading: t.footerAssortment, links: t.footerAssortmentLinks },
-    { heading: t.footerAboutUs,    links: t.footerAboutUsLinks    },
-    { heading: t.footerSupport,    links: t.footerSupportLinks    },
+    { heading: t.footerAssortment, links: t.footerAssortmentLinks, hrefs: ASSORTMENT_HREFS },
+    { heading: t.footerAboutUs,    links: t.footerAboutUsLinks,    hrefs: ABOUT_HREFS    },
+    { heading: t.footerSupport,    links: t.footerSupportLinks,    hrefs: SUPPORT_HREFS  },
   ]
 
   return (
@@ -21,9 +34,9 @@ export default function Footer() {
                 {col.heading}
               </h3>
               <ul className="flex flex-col gap-2.5">
-                {col.links.map((link) => (
+                {col.links.map((link, i) => (
                   <li key={link}>
-                    <a href="#" className="font-sans text-[13.5px] text-[#555] transition-colors duration-150 hover:text-brand-text">
+                    <a href={col.hrefs[i] ?? '#'} className="font-sans text-[13.5px] text-[#555] transition-colors duration-150 hover:text-brand-text">
                       {link}
                     </a>
                   </li>
