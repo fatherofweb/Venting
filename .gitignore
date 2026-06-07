@@ -1,0 +1,29 @@
+# dependencies
+node_modules/
+
+# Next.js build output
+.next/
+out/
+
+# Generated data files (populated at runtime by sync)
+public/data/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Vercel
+.vercel
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*

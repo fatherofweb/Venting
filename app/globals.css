@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  img,
+  svg {
+    display: block;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  button {
+    font-family: inherit;
+  }
+}
+
+/* ── Hero slide backgrounds (gradient-heavy, not expressible as static Tailwind classes) ── */
+.slide-bg-1 { background: linear-gradient(105deg, #06090f 0%, #0b1424 45%, #101c35 100%); }
+.slide-bg-2 { background: linear-gradient(105deg, #071210 0%, #0d2018 50%, #081a12 100%); }
+.slide-bg-3 { background: linear-gradient(105deg, #120710 0%, #200d1a 50%, #160a14 100%); }
+.slide-bg-4 { background: linear-gradient(105deg, #06090f 0%, #0b1624 50%, #0a1820 100%); }
+.slide-bg-5 { background: linear-gradient(105deg, #080b08 0%, #101810 50%, #0c1410 100%); }
+
+/* ── Slider track ── */
+.slides-track {
+  display: flex;
+  height: 100%;
+  will-change: transform;
+  transition: transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.slide {
+  min-width: 100%;
+  height: 100%;
+}
+
+/* ── Pagination dot ── */
+.hero-dot {
+  width: 20px;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.3s, width 0.3s;
+}
+
+.hero-dot.active {
+  background: #ffffff;
+  width: 32px;
+}
+
+/* ── TV screen gradient (too complex for Tailwind) ── */
+.tv-screen-gradient {
+  background:
+    radial-gradient(ellipse at 30% 60%, rgba(255, 200, 40, 0.55) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 40%, rgba(0, 200, 180, 0.45) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(40, 80, 200, 0.3) 0%, transparent 70%),
+    linear-gradient(135deg, #0a1a3a 0%, #061028 40%, #0d1a18 100%);
+}
