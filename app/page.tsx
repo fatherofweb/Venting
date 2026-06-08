@@ -19,23 +19,52 @@ const NAV_CATEGORY_MAP: string[][] = [
   ['11OPRPOK', '08VNTDISEL', '17ALT', '12MATELE', '12MATKON', '11OPREEO', '15DEL', 'SRBZR', 'URDEL', 'POLUR'],
 ]
 
+function visibleSpecCount(p: Product): number {
+  let n = (p.energyClass ? 1 : 0) + (p.inverter ? 1 : 0)
+  for (const s of p.specs) {
+    const val = s.value + (s.unit ? ' ' + s.unit : '')
+    if (s.value && val.length <= 14) n++
+  }
+  return n
+}
+
 function pickBestSellers(products: Product[]): Product[] {
   const inStock = products.filter((p) => p.inStock && p.image)
   const picks: Product[] = []
-  for (const codes of NAV_CATEGORY_MAP.slice(0, 3)) {
+  const usedIds = new Set<string>()
+
+  // Try each main category; only pick products that have at least 1 visible spec on the card
+  for (const codes of NAV_CATEGORY_MAP.slice(0, 4)) {
     const candidates = inStock
-      .filter((p) => codes.includes(p.category))
-      .sort((a, b) => b.specs.length - a.specs.length)
-    if (candidates.length > 0) picks.push(candidates[0])
+      .filter((p) => codes.includes(p.category) && visibleSpecCount(p) > 0)
+      .sort((a, b) => visibleSpecCount(b) - visibleSpecCount(a))
+    if (candidates.length > 0 && !usedIds.has(candidates[0].id)) {
+      picks.push(candidates[0])
+      usedIds.add(candidates[0].id)
+    }
     if (picks.length === 3) break
   }
+
+  // Fill remaining slots from any inStock+image product with visible specs
   if (picks.length < 3) {
-    const usedIds = new Set(picks.map((p) => p.id))
+    const withSpecs = inStock
+      .filter((p) => !usedIds.has(p.id) && visibleSpecCount(p) > 0)
+      .sort((a, b) => visibleSpecCount(b) - visibleSpecCount(a))
+    for (const p of withSpecs) {
+      picks.push(p)
+      usedIds.add(p.id)
+      if (picks.length === 3) break
+    }
+  }
+
+  // Last resort: any inStock+image product
+  if (picks.length < 3) {
     for (const p of inStock) {
       if (!usedIds.has(p.id)) { picks.push(p); usedIds.add(p.id) }
       if (picks.length === 3) break
     }
   }
+
   return picks
 }
 
