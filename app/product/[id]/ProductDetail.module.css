@@ -170,7 +170,7 @@
   display: flex;
   align-items: center;
   gap: 14px;
-  margin-bottom: 52px;
+  margin-bottom: 32px;
 }
 
 .ctaSecondary {
@@ -220,7 +220,7 @@
 
 /* ── Specs section ───────────────────────────────────── */
 .specs {
-  padding: 80px 0;
+  padding: 52px 0 72px;
 }
 
 .specsInner {
