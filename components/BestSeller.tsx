@@ -76,19 +76,23 @@ export default function BestSeller({ products }: Props) {
 
                   <p className={styles.name}>{product.categoryName}</p>
 
-                  {specs.length > 0 && (
-                    <>
-                      <div className={styles.dotDivider} />
-                      <div className={styles.details}>
-                        {specs.map((spec) => (
-                          <div key={spec.label} className={styles.detailCol}>
-                            <div className={styles.detailLabel}>{spec.label}</div>
-                            <div className={styles.detailValue}>{spec.value}</div>
-                          </div>
-                        ))}
+                  {/* Spacer pushes specs to bottom regardless of whether they exist */}
+                  <div style={{ flex: 1 }} />
+
+                  <div className={styles.dotDivider} />
+                  <div className={styles.details}>
+                    {specs.length > 0 ? specs.map((spec) => (
+                      <div key={spec.label} className={styles.detailCol}>
+                        <div className={styles.detailLabel}>{spec.label}</div>
+                        <div className={styles.detailValue}>{spec.value}</div>
                       </div>
-                    </>
-                  )}
+                    )) : (
+                      <div className={styles.detailCol} style={{ opacity: 0.35 }}>
+                        <div className={styles.detailLabel}>Specifikacije</div>
+                        <div className={styles.detailValue}>—</div>
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 <div className={styles.actionBar}>
