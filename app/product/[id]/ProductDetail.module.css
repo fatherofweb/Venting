@@ -299,43 +299,59 @@
   font-size: 12px;
 }
 
-/* ── Responsive ──────────────────────────────────────── */
+/* ── Tablet: collapse to single column ───────────────────── */
 @media (max-width: 768px) {
-  .heroInner {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-
-  .heroImage {
-    order: -1;
-  }
-
-  .heroImage img {
-    max-height: 280px;
-  }
-
-  .quickStats {
-    width: 100%;
-    justify-content: flex-start;
-    overflow-x: auto;
-  }
-
-  .specName {
-    width: 55%;
-  }
+  .heroInner { grid-template-columns: 1fr; gap: 0; }
+  .heroImage { order: -1; justify-content: center; }
+  .heroImage img { max-height: 300px; }
+  .heroTextFull { max-width: 100%; }
+  .quickStats { overflow-x: auto; }
+  .specName { width: 52%; }
 }
 
-@media (max-width: 480px) {
-  .title {
-    font-size: 22px;
+/* ── Mobile: tighten everything ──────────────────────────── */
+@media (max-width: 640px) {
+  /* Hero */
+  .hero      { padding: 16px 0 0; }
+  .heroInner { padding: 0 16px; }
+
+  /* Image */
+  .heroImage img { max-height: 230px; }
+
+  /* Breadcrumb: truncate long product name so it doesn't wrap */
+  .breadcrumb { font-size: 11px; gap: 4px; margin-bottom: 12px; }
+  .breadcrumb span[aria-current="page"] {
+    max-width: 130px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    vertical-align: middle;
   }
 
-  .statItem {
-    padding: 14px 16px;
-    min-width: 72px;
-  }
+  /* Typography */
+  .eyebrow { font-size: 10px; letter-spacing: 2px; margin-bottom: 6px; }
+  .title   { font-size: 20px; margin-bottom: 8px; letter-spacing: -0.3px; }
+  .model   { font-size: 12px; margin-bottom: 18px; }
+  .metaRow { gap: 6px; margin-bottom: 14px; }
+  .metaTag { font-size: 10px; padding: 3px 8px; }
 
-  .statValue {
-    font-size: 17px;
-  }
+  /* Quick stats */
+  .quickStats { margin-bottom: 18px; border-radius: 12px; }
+  .statItem   { padding: 12px 10px; min-width: 62px; }
+  .statValue  { font-size: 15px; margin-bottom: 4px; }
+  .statAttr   { font-size: 9px; }
+  .statLabel  { font-size: 9px; }
+
+  /* Back link */
+  .ctas { margin-bottom: 22px; }
+
+  /* Specs section */
+  .specs        { padding: 32px 0 48px; }
+  .specsInner   { padding: 0 16px; }
+  .specsHeading { margin-bottom: 20px; }
+  .specGroup    { margin-bottom: 24px; }
+  .specName     { font-size: 13px; padding: 10px 10px 10px 0; width: 50%; }
+  .specValue    { font-size: 13px; padding: 10px 0; }
+  .specUnit     { font-size: 12px; }
 }
