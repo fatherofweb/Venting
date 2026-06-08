@@ -1,9 +1,29 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useMemo } from 'react'
 import Image from 'next/image'
 import { useLanguage } from '@/lib/LanguageContext'
 import { type Locale } from '@/lib/i18n'
+
+/* ─── Search helpers ─────────────────────────────────────── */
+type ProductHit = { id: string; name: string; categoryName: string; image: string | null }
+
+function normalize(s: string): string {
+  return s
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .replace(/đ|ð/g, 'd')
+}
+
+function highlight(text: string, query: string): string {
+  if (!query) return text
+  const q = normalize(query)
+  const n = normalize(text)
+  const idx = n.indexOf(q)
+  if (idx === -1) return text
+  return text.slice(0, idx) + '<mark>' + text.slice(idx, idx + q.length) + '</mark>' + text.slice(idx + q.length)
+}
 
 /* ─── Constants ──────────────────────────────────────────── */
 const LANGUAGES: { code: Locale; nativeName: string; flag: string }[] = [
@@ -80,12 +100,40 @@ export default function Header() {
   const [searchOpen, setSearchOpen]   = useState(false)
   const [menuOpen, setMenuOpen]       = useState(false)
   const [query, setQuery]             = useState('')
+  const [allProducts, setAllProducts] = useState<ProductHit[]>([])
+  const [selectedIdx, setSelectedIdx] = useState(-1)
   const searchInputRef                = useRef<HTMLInputElement>(null)
+  const resultsRef                    = useRef<HTMLDivElement>(null)
+
+  /* Fetch product list once on first search open */
+  useEffect(() => {
+    if (!searchOpen || allProducts.length > 0) return
+    fetch('/data/products.json')
+      .then(r => r.json())
+      .then(d => setAllProducts(
+        d.products
+          .filter((p: ProductHit & { inStock: boolean }) => p.inStock)
+          .map((p: ProductHit & { inStock: boolean }) => ({ id: p.id, name: p.name, categoryName: p.categoryName, image: p.image }))
+      ))
+  }, [searchOpen, allProducts.length])
+
+  /* Live-filter results */
+  const results = useMemo<ProductHit[]>(() => {
+    const q = query.trim()
+    if (q.length < 2) return []
+    const nq = normalize(q)
+    return allProducts
+      .filter(p => normalize(p.name).includes(nq) || normalize(p.categoryName).includes(nq))
+      .slice(0, 7)
+  }, [query, allProducts])
+
+  /* Reset selected when results change */
+  useEffect(() => { setSelectedIdx(-1) }, [results])
 
   /* focus input when search opens */
   useEffect(() => {
     if (searchOpen) searchInputRef.current?.focus()
-    else setQuery('')
+    else { setQuery(''); setSelectedIdx(-1) }
   }, [searchOpen])
 
   /* Escape closes both panels */
@@ -201,11 +249,10 @@ export default function Header() {
           </div>
         </div>
 
-        {/* ── Search bar ────────────────────────────────────── */}
-        <div className={`overflow-hidden transition-all duration-300 ${searchOpen ? 'max-h-24 border-t border-[#e2e2e2]' : 'max-h-0'}`}>
-          <div className="w-full px-10 py-4">
+        {/* ── Search bar + live results ──────────────────────── */}
+        <div className={`overflow-visible transition-all duration-300 ${searchOpen ? 'border-t border-[#e2e2e2]' : 'hidden'}`}>
+          <div className="w-full px-10 py-4 relative">
             <div className="flex items-center gap-3 border-b-2 border-brand-text pb-1">
-              {/* Search icon inside bar — filled, matches header icon */}
               <svg viewBox="0 0 18 17.99" style={{ width: '17px', height: '17px', fill: 'rgb(12,12,13)', stroke: 'none', flexShrink: 0, opacity: 0.4 }} aria-hidden="true">
                 <path fillRule="evenodd" d="M6.5 0a6.5 6.5 0 1 1 0 13 6.5 6.5 0 0 1 0-13zm0 2a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9z"/>
                 <path d="M9.89 11.31L11.31 9.89 17.99 16.79 16.79 17.99z"/>
@@ -215,9 +262,16 @@ export default function Header() {
                 type="search"
                 value={query}
                 onChange={e => setQuery(e.target.value)}
-                placeholder="Search products…"
+                placeholder="Pretraži proizvode…"
                 className="flex-1 bg-transparent font-sans text-[16px] text-brand-text placeholder:text-[#bbb] outline-none"
-                onKeyDown={e => { if (e.key === 'Enter' && query.trim()) alert(`Search: ${query}`) }}
+                onKeyDown={e => {
+                  if (e.key === 'ArrowDown') { e.preventDefault(); setSelectedIdx(i => Math.min(i + 1, results.length - 1)) }
+                  else if (e.key === 'ArrowUp') { e.preventDefault(); setSelectedIdx(i => Math.max(i - 1, -1)) }
+                  else if (e.key === 'Enter') {
+                    const target = selectedIdx >= 0 ? results[selectedIdx] : results[0]
+                    if (target) { window.location.href = `/product/${target.id}`; setSearchOpen(false) }
+                  }
+                }}
               />
               {query && (
                 <button onClick={() => setQuery('')} className="shrink-0 opacity-40 hover:opacity-80 transition-opacity" aria-label="Clear">
@@ -227,6 +281,53 @@ export default function Header() {
                 </button>
               )}
             </div>
+
+            {/* Results dropdown */}
+            {results.length > 0 && (
+              <div ref={resultsRef} className="absolute left-10 right-10 top-full z-50 bg-white border border-[#e2e2e2] rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.12)] overflow-hidden mt-1">
+                {results.map((p, i) => (
+                  <a
+                    key={p.id}
+                    href={`/product/${p.id}`}
+                    onClick={() => setSearchOpen(false)}
+                    className={`flex items-center gap-4 px-5 py-3 transition-colors ${i === selectedIdx ? 'bg-[#f3f4f6]' : 'hover:bg-[#f9fafb]'}`}
+                  >
+                    {/* Thumbnail */}
+                    <div style={{ width: 44, height: 44, flexShrink: 0, background: '#f3f4f6', borderRadius: 8, overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      {p.image
+                        ? <img src={p.image} alt="" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                        : <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#d1d5db" strokeWidth="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                      }
+                    </div>
+                    {/* Text */}
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <p
+                        className="font-sans text-[13px] font-600 text-brand-text truncate"
+                        dangerouslySetInnerHTML={{ __html: highlight(p.name, query) }}
+                        style={{ fontWeight: 600 }}
+                      />
+                      <p className="font-sans text-[11px] text-[#9ca3af] mt-0.5">{p.categoryName}</p>
+                    </div>
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#d1d5db" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+                      <path d="M3 8h10M9 4l4 4-4 4"/>
+                    </svg>
+                  </a>
+                ))}
+                {/* "See all" footer when many matches */}
+                {allProducts.filter(p => normalize(p.name).includes(normalize(query)) || normalize(p.categoryName).includes(normalize(query))).length > 7 && (
+                  <a href={`/shop`} onClick={() => setSearchOpen(false)} className="flex items-center justify-center gap-2 px-5 py-3 border-t border-[#f0f0f0] text-[12px] font-medium text-[#6b7280] hover:text-brand-text hover:bg-[#f9fafb] transition-colors">
+                    Pogledaj sve rezultate
+                  </a>
+                )}
+              </div>
+            )}
+
+            {/* No results */}
+            {query.trim().length >= 2 && results.length === 0 && allProducts.length > 0 && (
+              <div className="absolute left-10 right-10 top-full z-50 bg-white border border-[#e2e2e2] rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.12)] px-5 py-4 mt-1">
+                <p className="font-sans text-[13px] text-[#9ca3af]">Nema rezultata za <strong className="text-brand-text">{query}</strong></p>
+              </div>
+            )}
           </div>
         </div>
       </header>

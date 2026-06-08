@@ -9,6 +9,13 @@
     box-sizing: border-box;
   }
 
+  mark {
+    background: #fef08a;
+    color: inherit;
+    border-radius: 2px;
+    padding: 0 1px;
+  }
+
   html {
     scroll-behavior: smooth;
   }
