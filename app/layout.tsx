@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Montserrat, Archivo_Black } from 'next/font/google'
 import { LanguageProvider } from '@/lib/LanguageContext'
+import CookieConsent from '@/components/CookieConsent'
 import './globals.css'
 
 /* Only load the 3 weights actually used: body(400), bold UI(700), display headings(900) */
@@ -22,9 +23,9 @@ const archivoBlack = Archivo_Black({
 })
 
 export const metadata: Metadata = {
-  title: 'Tesla - Electronics for Everyone',
+  title: 'Venting | Klima uređaji i ventilacija',
   description:
-    'Discover Tesla TVs, Home Appliances, Air Conditioning, Monitors, Phones, and Beauty & Care products.',
+    'Venting - ovlašćeni distributer opreme za klimatizaciju i ventilaciju. Kućni i komercijalni klima uređaji, rekuperatori, fancoili i dodatna oprema.',
 }
 
 export default function RootLayout({
@@ -34,11 +35,12 @@ export default function RootLayout({
 }) {
   return (
     <html
-      lang="en"
+      lang="sr"
       className={`${montserrat.variable} ${archivoBlack.variable}`}
     >
       <body className="font-sans text-brand-text bg-brand-bg antialiased">
         <LanguageProvider>{children}</LanguageProvider>
+        <CookieConsent />
       </body>
     </html>
   )

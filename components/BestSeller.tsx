@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useLanguage } from '@/lib/LanguageContext'
 import type { Product } from '@/lib/sync'
 import styles from './BestSeller.module.css'
@@ -69,7 +70,7 @@ export default function BestSeller({ products }: Props) {
 
                   <div className={styles.imageWrap}>
                     {product.image
-                      ? <img src={product.image} alt={product.name} loading="lazy"/>
+                      ? <Image src={product.image} alt={product.name} fill sizes="(max-width:640px) 50vw, 300px" style={{ objectFit: 'contain' }} />
                       : <ImagePlaceholder />
                     }
                   </div>

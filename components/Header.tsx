@@ -295,7 +295,7 @@ export default function Header() {
                     {/* Thumbnail */}
                     <div style={{ width: 44, height: 44, flexShrink: 0, background: '#f3f4f6', borderRadius: 8, overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                       {p.image
-                        ? <img src={p.image} alt="" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                        ? <Image src={p.image} alt="" width={44} height={44} style={{ objectFit: 'contain' }} />
                         : <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#d1d5db" strokeWidth="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
                       }
                     </div>

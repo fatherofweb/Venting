@@ -1,11 +1,13 @@
 'use client'
 
+import Image from 'next/image'
 import { useLanguage } from '@/lib/LanguageContext'
 import type { Product } from '@/lib/sync'
 import styles from './ProductDetail.module.css'
 
 interface Props {
   product: Product
+  related?: Product[]
 }
 
 function ImagePlaceholder() {
@@ -20,7 +22,7 @@ function ImagePlaceholder() {
   )
 }
 
-export default function ProductDetail({ product }: Props) {
+export default function ProductDetail({ product, related = [] }: Props) {
   const { t } = useLanguage()
 
   // Group specs by their group label (empty group → 'Opšte')
@@ -132,8 +134,9 @@ export default function ProductDetail({ product }: Props) {
           {/* Right: image — hidden entirely when no image exists */}
           {product.image && (
             <div className={styles.heroImage}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={product.image} alt={product.name} />
+              <div className={styles.heroImageWrap}>
+                <Image src={product.image} alt={product.name} fill sizes="(max-width:768px) 100vw, 50vw" style={{ objectFit: 'contain' }} priority />
+              </div>
             </div>
           )}
 
@@ -169,6 +172,37 @@ export default function ProductDetail({ product }: Props) {
                 </table>
               </div>
             ))}
+          </div>
+        </section>
+      )}
+
+      {/* ── Related products ──────────────────────────────────── */}
+      {related.length > 0 && (
+        <section className={styles.related}>
+          <div className={styles.relatedInner}>
+            <h2 className={styles.relatedHeading}>Slični proizvodi</h2>
+            <div className={styles.relatedGrid}>
+              {related.map((p) => (
+                <a key={p.id} href={`/product/${p.id}`} className={styles.relatedCard}>
+                  <div className={styles.relatedImageWrap}>
+                    {p.image
+                      ? <Image src={p.image} alt={p.name} fill sizes="200px" style={{ objectFit: 'contain' }} />
+                      : (
+                        <svg viewBox="0 0 80 60" fill="none" aria-hidden="true" style={{ width: 64, opacity: 0.3 }}>
+                          <rect width="80" height="60" rx="6" fill="#e2e8ef"/>
+                          <path d="M16 44L28 28l10 12 12-16 14 20" stroke="#b0bec9" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          <circle cx="24" cy="22" r="5" fill="#b0bec9"/>
+                        </svg>
+                      )
+                    }
+                  </div>
+                  <div className={styles.relatedInfo}>
+                    <p className={styles.relatedName}>{p.name}</p>
+                    <p className={styles.relatedCat}>{p.categoryName}</p>
+                  </div>
+                </a>
+              ))}
+            </div>
           </div>
         </section>
       )}

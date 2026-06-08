@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useMemo, useEffect, useRef } from 'react'
+import Image from 'next/image'
 import { useLanguage } from '@/lib/LanguageContext'
 import type { Product } from '@/lib/sync'
 import styles from './Shop.module.css'
@@ -232,11 +233,16 @@ function ImagePlaceholder() {
 
 interface Props { products: Product[] }
 
+const PAGE_SIZE = 24
+
 export default function ShopClient({ products }: Props) {
   const { t, locale } = useLanguage()
   const [activeTab, setActiveTab] = useState(-1)
+  const [page, setPage] = useState(1)
+  const [search, setSearch] = useState('')
   const tabsRef = useRef<HTMLDivElement>(null)
   const tabButtonRefs = useRef<(HTMLButtonElement | null)[]>([])
+  const productsRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
@@ -262,23 +268,38 @@ export default function ShopClient({ products }: Props) {
 
   const filtered = useMemo(() => {
     const inStock = products.filter((p) => p.inStock)
-    if (activeTab === -1) return inStock
-    const codes = NAV_CATEGORY_MAP[activeTab]
-    return inStock.filter((p) => codes.includes(p.category))
-  }, [products, activeTab])
+    const byTab = activeTab === -1 ? inStock : inStock.filter((p) => NAV_CATEGORY_MAP[activeTab].includes(p.category))
+    if (!search.trim()) return byTab
+    const q = search.trim().toLowerCase()
+    return byTab.filter((p) => p.name.toLowerCase().includes(q))
+  }, [products, activeTab, search])
+
+  const totalPages = Math.ceil(filtered.length / PAGE_SIZE)
+  const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
+
+  function changeTab(tab: number) {
+    setActiveTab(tab)
+    setPage(1)
+    setSearch('')
+  }
+
+  function changePage(next: number) {
+    setPage(next)
+    productsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
 
   return (
     <>
       <CategoryHero activeTab={activeTab} t={t} locale={locale} />
 
-      <section className={styles.section} id="products">
+      <section className={styles.section} id="products" ref={productsRef}>
         {/* ── Category tabs ─────────────────────────────── */}
         <div className={styles.tabsOuter}>
           <div className={styles.tabs} ref={tabsRef}>
             <button
               ref={el => { tabButtonRefs.current[0] = el }}
               className={`${styles.tab} ${activeTab === -1 ? styles.tabActive : ''}`}
-              onClick={() => setActiveTab(-1)}
+              onClick={() => changeTab(-1)}
             >
               <span className={styles.tabName}>{t.shop.allProducts}</span>
               <span className={styles.tabCount}>{inStockProducts.length}</span>
@@ -289,7 +310,7 @@ export default function ShopClient({ products }: Props) {
                 key={i}
                 ref={el => { tabButtonRefs.current[i + 1] = el }}
                 className={`${styles.tab} ${activeTab === i ? styles.tabActive : ''}`}
-                onClick={() => setActiveTab(i)}
+                onClick={() => changeTab(i)}
               >
                 <span className={styles.tabName}>{label}</span>
                 <span className={styles.tabCount}>{tabCounts[i]}</span>
@@ -298,12 +319,39 @@ export default function ShopClient({ products }: Props) {
           </div>
         </div>
 
+        {/* ── Search filter ─────────────────────────────── */}
+        <div className={styles.searchRow}>
+          <div className={styles.searchWrap}>
+            <svg className={styles.searchIcon} viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <circle cx="6.5" cy="6.5" r="5" stroke="#9ca3af" strokeWidth="1.6"/>
+              <path d="M10.5 10.5L14 14" stroke="#9ca3af" strokeWidth="1.6" strokeLinecap="round"/>
+            </svg>
+            <input
+              type="search"
+              className={styles.searchInput}
+              placeholder="Pretraži proizvode..."
+              value={search}
+              onChange={(e) => { setSearch(e.target.value); setPage(1) }}
+            />
+            {search && (
+              <button className={styles.searchClear} onClick={() => { setSearch(''); setPage(1) }} aria-label="Obriši pretragu">
+                ×
+              </button>
+            )}
+          </div>
+          {search && (
+            <p className={styles.searchCount}>
+              {filtered.length} {filtered.length === 1 ? 'rezultat' : 'rezultata'}
+            </p>
+          )}
+        </div>
+
         {/* ── Product grid ──────────────────────────────── */}
         {filtered.length === 0 ? (
           <p className={styles.empty}>{t.shop.noProducts}</p>
         ) : (
           <div className={styles.grid}>
-            {filtered.map((product) => {
+            {paginated.map((product) => {
               const specs = pickCardSpecs(product)
               return (
                 <a key={product.id} href={`/product/${product.id}`} className={styles.item}>
@@ -313,7 +361,7 @@ export default function ShopClient({ products }: Props) {
 
                       <div className={styles.imageWrap}>
                         {product.image
-                          ? <img src={product.image} alt={product.name} loading="lazy"/>
+                          ? <Image src={product.image} alt={product.name} fill sizes="(max-width:640px) 100vw, 33vw" style={{ objectFit: 'contain' }} />
                           : <ImagePlaceholder />
                         }
                       </div>
@@ -353,6 +401,40 @@ export default function ShopClient({ products }: Props) {
                 </a>
               )
             })}
+          </div>
+        )}
+
+        {/* ── Pagination ────────────────────────────────── */}
+        {totalPages > 1 && (
+          <div className={styles.pagination}>
+            <button
+              className={styles.pageBtn}
+              onClick={() => changePage(page - 1)}
+              disabled={page === 1}
+              aria-label="Prethodna strana"
+            >
+              ←
+            </button>
+
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
+              <button
+                key={n}
+                className={`${styles.pageBtn} ${n === page ? styles.pageBtnActive : ''}`}
+                onClick={() => changePage(n)}
+                aria-current={n === page ? 'page' : undefined}
+              >
+                {n}
+              </button>
+            ))}
+
+            <button
+              className={styles.pageBtn}
+              onClick={() => changePage(page + 1)}
+              disabled={page === totalPages}
+              aria-label="Sledeća strana"
+            >
+              →
+            </button>
           </div>
         )}
       </section>
