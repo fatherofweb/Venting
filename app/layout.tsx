@@ -22,7 +22,7 @@ const archivoBlack = Archivo_Black({
 })
 
 export const metadata: Metadata = {
-  title: 'Tesla — Electronics for Everyone',
+  title: 'Tesla - Electronics for Everyone',
   description:
     'Discover Tesla TVs, Home Appliances, Air Conditioning, Monitors, Phones, and Beauty & Care products.',
 }

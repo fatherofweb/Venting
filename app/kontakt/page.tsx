@@ -2,7 +2,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import FloatingButtons from '@/components/FloatingButtons'
 
-export const metadata = { title: 'Kontakt — Venting' }
+export const metadata = { title: 'Kontakt - Venting' }
 
 export default function KontaktPage() {
   return (
@@ -36,7 +36,7 @@ export default function KontaktPage() {
               <div>
                 <h2 style={{ fontSize: 13, fontWeight: 700, letterSpacing: 1.5, textTransform: 'uppercase', color: '#0c0c0d', marginBottom: 12 }}>Radno vreme</h2>
                 <p style={{ fontSize: 15, color: '#6b7280', lineHeight: 1.7 }}>
-                  Pon – Pet: 08:00 – 16:00<br />
+                  Pon - Pet: 08:00 - 16:00<br />
                   Subota i nedelja: zatvoreno
                 </p>
               </div>

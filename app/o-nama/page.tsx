@@ -2,7 +2,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import FloatingButtons from '@/components/FloatingButtons'
 
-export const metadata = { title: 'O nama — Venting' }
+export const metadata = { title: 'O nama - Venting' }
 
 export default function ONamaPage() {
   return (
@@ -16,7 +16,7 @@ export default function ONamaPage() {
           </h1>
           <div style={{ fontSize: 16, color: '#6b7280', lineHeight: 1.8, display: 'flex', flexDirection: 'column', gap: 24 }}>
             <p>
-              Venting je srpska kompanija specijalizovana za klimatizaciju, ventilaciju i prateću opremu. Naša misija je da svakom korisniku obezbedimo optimalne uslove boravka — u domu, kancelariji ili industrijskom prostoru.
+              Venting je srpska kompanija specijalizovana za klimatizaciju, ventilaciju i prateću opremu. Naša misija je da svakom korisniku obezbedimo optimalne uslove boravka: u domu, kancelariji ili industrijskom prostoru.
             </p>
             <p>
               Nudimo kompletan asortiman koji obuhvata kućne i komercijalne klima uređaje, rekuperatore, fancoile i vazdušne zavese, kao i svu prateću opremu potrebnu za ugradnju i održavanje sistema.

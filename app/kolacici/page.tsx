@@ -1,7 +1,7 @@
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
-export const metadata = { title: 'Politika kolačića — Venting' }
+export const metadata = { title: 'Politika kolacica - Venting' }
 
 export default function KolaciciPage() {
   return (
@@ -18,7 +18,7 @@ export default function KolaciciPage() {
             <h2 style={{ fontSize: 16, fontWeight: 700, color: '#0c0c0d', margin: 0 }}>Šta su kolačići?</h2>
             <p>Kolačići su male tekstualne datoteke koje se čuvaju na vašem uređaju kada posećujete sajt. Koristimo ih za pamćenje vaših podešavanja (npr. odabrani jezik).</p>
             <h2 style={{ fontSize: 16, fontWeight: 700, color: '#0c0c0d', margin: 0 }}>Koje kolačiće koristimo?</h2>
-            <p><strong style={{ color: '#0c0c0d' }}>Neophodne</strong> — obezbeđuju osnovno funkcionisanje sajta (npr. čuvanje odabranog jezika). Ovi kolačići ne mogu biti isključeni.</p>
+            <p><strong style={{ color: '#0c0c0d' }}>Neophodne</strong>: obezbeđuju osnovno funkcionisanje sajta (npr. čuvanje odabranog jezika). Ovi kolačići ne mogu biti isključeni.</p>
             <h2 style={{ fontSize: 16, fontWeight: 700, color: '#0c0c0d', margin: 0 }}>Upravljanje kolačićima</h2>
             <p>Možete obrisati ili blokirati kolačiće u podešavanjima vašeg pregledača. Imajte u vidu da blokiranje kolačića može uticati na funkcionalnost sajta.</p>
             <h2 style={{ fontSize: 16, fontWeight: 700, color: '#0c0c0d', margin: 0 }}>Kontakt</h2>

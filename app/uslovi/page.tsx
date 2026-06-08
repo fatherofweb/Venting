@@ -1,7 +1,7 @@
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
-export const metadata = { title: 'Uslovi korišćenja — Venting' }
+export const metadata = { title: 'Uslovi korišćenja - Venting' }
 
 export default function UsloviPage() {
   return (

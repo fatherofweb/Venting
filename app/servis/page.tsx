@@ -2,7 +2,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import FloatingButtons from '@/components/FloatingButtons'
 
-export const metadata = { title: 'Servis i podrška — Venting' }
+export const metadata = { title: 'Servis i podrska - Venting' }
 
 const SERVICES = [
   { title: 'Ugradnja', desc: 'Profesionalna ugradnja klima uređaja, rekuperatora i fancoila od strane sertifikovanih tehničara.' },
@@ -22,7 +22,7 @@ export default function ServisPage() {
             Servis i podrška
           </h1>
           <p style={{ fontSize: 16, color: '#6b7280', marginBottom: 64, maxWidth: 560, lineHeight: 1.7 }}>
-            Naš tim sertifikovanih tehničara spreman je da vam pomogne u svakom trenutku — od ugradnje do redovnog održavanja.
+            Naš tim sertifikovanih tehničara spreman je da vam pomogne u svakom trenutku, od ugradnje do redovnog odrzavanja.
           </p>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 24, marginBottom: 64 }}>

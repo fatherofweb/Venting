@@ -95,7 +95,7 @@ export default function BestSeller({ products }: Props) {
                   ) : (
                     <div className={styles.details} style={{ '--spec-cols': 1, opacity: 0.35 } as React.CSSProperties}>
                       <div className={styles.detailLabel}>Specifikacije</div>
-                      <div className={styles.detailValue}>—</div>
+                      <div className={styles.detailValue}>-</div>
                     </div>
                   )}
                 </div>

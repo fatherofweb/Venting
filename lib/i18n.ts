@@ -104,7 +104,7 @@ export const translations: Record<Locale, T> = {
     blogPosts: [
       { title: 'Kako odabrati pravi klima uređaj za leto 2026.' },
       { title: 'Prednosti rekuperatora za vaš dom' },
-      { title: 'Fancoili — efikasno grejanje i hlađenje' },
+      { title: 'Fancoili: efikasno grejanje i hladjenje' },
       { title: 'Šta je VRF sistem i kada ga koristiti?' },
     ],
     footerAssortment: 'Asortiman',
@@ -160,7 +160,7 @@ export const translations: Record<Locale, T> = {
     blogPosts: [
       { title: 'How to choose the right air conditioner for summer 2026' },
       { title: 'The benefits of recuperators for your home' },
-      { title: 'Fan coils — efficient heating and cooling' },
+      { title: 'Fan coils: efficient heating and cooling' },
       { title: 'What is a VRF system and when to use it?' },
     ],
     footerAssortment: 'Assortment',

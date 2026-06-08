@@ -2,12 +2,12 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import FloatingButtons from '@/components/FloatingButtons'
 
-export const metadata = { title: 'Blog — Venting' }
+export const metadata = { title: 'Blog - Venting' }
 
 const POSTS = [
   { slug: '1', date: '05. jun 2026.', tag: 'Saveti', title: 'Kako odabrati pravi klima uređaj za leto 2026.', excerpt: 'Investicija u dobar klima uređaj može biti ključna za udobnost tokom vrućih leta. Evo šta treba da znate pre kupovine.' },
   { slug: '2', date: '28. maj 2026.', tag: 'Rekuperatori', title: 'Prednosti rekuperatora za vaš dom', excerpt: 'Rekuperatori nisu samo za poslovne prostore. Saznajte kako mogu poboljšati kvalitet vazduha u vašem domu i smanjiti račune za struju.' },
-  { slug: '3', date: '15. maj 2026.', tag: 'Fancoili', title: 'Fancoili — efikasno grejanje i hlađenje', excerpt: 'Fancoil jedinice nude fleksibilno i energetski efikasno rešenje za grejanje i hlađenje stambenih i poslovnih prostora.' },
+  { slug: '3', date: '15. maj 2026.', tag: 'Fancoili', title: 'Fancoili: efikasno grejanje i hlađenje', excerpt: 'Fancoil jedinice nude fleksibilno i energetski efikasno rešenje za grejanje i hlađenje stambenih i poslovnih prostora.' },
   { slug: '4', date: '02. maj 2026.', tag: 'Komercijalno', title: 'Šta je VRF sistem i kada ga koristiti?', excerpt: 'VRF sistemi su idealni za veće objekte koji zahtevaju preciznu kontrolu temperature u više zona. Saznajte više o prednostima.' },
 ]
 
