@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo, useEffect, useRef } from 'react'
 import { useLanguage } from '@/lib/LanguageContext'
 import type { Product } from '@/lib/sync'
 import styles from './Shop.module.css'
@@ -235,12 +235,23 @@ interface Props { products: Product[] }
 export default function ShopClient({ products }: Props) {
   const { t, locale } = useLanguage()
   const [activeTab, setActiveTab] = useState(-1)
+  const tabsRef = useRef<HTMLDivElement>(null)
+  const tabButtonRefs = useRef<(HTMLButtonElement | null)[]>([])
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
     const tab = params.get('tab')
     if (tab !== null) setActiveTab(parseInt(tab, 10))
   }, [])
+
+  // Scroll active tab pill into center on mobile
+  useEffect(() => {
+    const el = tabButtonRefs.current[activeTab + 1]
+    const container = tabsRef.current
+    if (!el || !container) return
+    const targetScroll = el.offsetLeft - (container.offsetWidth - el.offsetWidth) / 2
+    container.scrollTo({ left: targetScroll, behavior: 'smooth' })
+  }, [activeTab])
 
   const inStockProducts = useMemo(() => products.filter((p) => p.inStock), [products])
 
@@ -262,25 +273,29 @@ export default function ShopClient({ products }: Props) {
 
       <section className={styles.section} id="products">
         {/* ── Category tabs ─────────────────────────────── */}
-        <div className={styles.tabs}>
-          <button
-            className={`${styles.tab} ${activeTab === -1 ? styles.tabActive : ''}`}
-            onClick={() => setActiveTab(-1)}
-          >
-            <span className={styles.tabName}>{t.shop.allProducts}</span>
-            <span className={styles.tabCount}>{inStockProducts.length}</span>
-          </button>
-
-          {t.nav.map((label, i) => (
+        <div className={styles.tabsOuter}>
+          <div className={styles.tabs} ref={tabsRef}>
             <button
-              key={i}
-              className={`${styles.tab} ${activeTab === i ? styles.tabActive : ''}`}
-              onClick={() => setActiveTab(i)}
+              ref={el => { tabButtonRefs.current[0] = el }}
+              className={`${styles.tab} ${activeTab === -1 ? styles.tabActive : ''}`}
+              onClick={() => setActiveTab(-1)}
             >
-              <span className={styles.tabName}>{label}</span>
-              <span className={styles.tabCount}>{tabCounts[i]}</span>
+              <span className={styles.tabName}>{t.shop.allProducts}</span>
+              <span className={styles.tabCount}>{inStockProducts.length}</span>
             </button>
-          ))}
+
+            {t.nav.map((label, i) => (
+              <button
+                key={i}
+                ref={el => { tabButtonRefs.current[i + 1] = el }}
+                className={`${styles.tab} ${activeTab === i ? styles.tabActive : ''}`}
+                onClick={() => setActiveTab(i)}
+              >
+                <span className={styles.tabName}>{label}</span>
+                <span className={styles.tabCount}>{tabCounts[i]}</span>
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* ── Product grid ──────────────────────────────── */}

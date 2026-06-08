@@ -91,6 +91,10 @@
 }
 
 /* ── Category tabs ────────────────────────────────────────── */
+.tabsOuter {
+  /* desktop: plain passthrough — mobile overrides add scroll + fade */
+}
+
 .tabs {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -343,20 +347,112 @@
   padding: 60px 0;
 }
 
-/* ── Responsive ───────────────────────────────────────────── */
+/* ── Tablet ───────────────────────────────────────────────── */
 @media (max-width: 960px) {
-  .heroInner { padding: 0 40px; }
+  .heroInner  { padding: 0 40px; }
   .heroVisual { display: none; }
-  .heroText { max-width: 100%; }
-  .tabs { grid-template-columns: repeat(2, 1fr); }
-  .grid { grid-template-columns: repeat(2, 1fr); }
+  .heroText   { max-width: 100%; }
+  .tabs { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
 }
 
-@media (max-width: 600px) {
-  .hero { height: 300px; }
-  .heroInner { padding: 0 24px; }
-  .heroTitle { font-size: 32px; }
-  .tabs { grid-template-columns: 1fr; }
-  .grid { grid-template-columns: 1fr; }
-  .imageWrap { height: 160px; }
+/* ── Mobile ───────────────────────────────────────────────── */
+@media (max-width: 640px) {
+
+  /* Hero: compact, text-focused */
+  .hero      { height: 240px; }
+  .heroInner { padding: 0 20px; }
+  .heroEyebrow { font-size: 10px; letter-spacing: 2px; margin-bottom: 8px; }
+  .heroTitle { font-size: clamp(26px, 7vw, 32px); margin-bottom: 18px; line-height: 1.1; }
+  .heroCta   { font-size: 12px; padding: 8px 18px; }
+
+  /* Section: no extra top gap — hero handles separation */
+  .section { margin: 0 auto 48px; padding: 0; }
+
+  /* Tabs outer: clips scroll + right-fade hint */
+  .tabsOuter {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .tabsOuter::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 52px;
+    background: linear-gradient(to right, transparent, #ffffff);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  /* Tabs: horizontal scroll rail of pill buttons */
+  .tabs {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 8px;
+    padding: 18px 20px 14px;
+    margin-bottom: 0;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+
+  .tab {
+    flex: 0 0 auto;
+    scroll-snap-align: center;
+    flex-direction: row;
+    align-items: center;
+    padding: 9px 15px;
+    border-radius: 999px;
+    gap: 6px;
+    white-space: nowrap;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+  .tab:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+  .tabActive {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+  .tabName  { font-size: 12px; font-weight: 600; }
+  .tabCount { font-size: 11px; opacity: 0.5; }
+
+  /* Grid: 2 columns with edge padding */
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 0 14px;
+  }
+
+  /* Card: compact but balanced */
+  .inner { padding: 14px 11px 12px; }
+  .code {
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .imageWrap         { height: 110px; margin-bottom: 10px; }
+  .imagePlaceholder svg { width: 52px; height: 40px; }
+  .categoryLabel     { font-size: 10px; }
+  .dotDivider        { margin: 9px 0 8px; border-top-width: 1.5px; }
+  .specLabel         { font-size: 8.5px; padding-bottom: 3px; }
+  .specValue         { font-size: 11px; }
+
+  /* On touch the card is the tap target — no hover bar needed */
+  .actionBar { display: none; }
+
+  .empty { padding: 36px 20px; font-size: 14px; }
 }
