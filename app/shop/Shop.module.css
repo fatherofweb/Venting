@@ -425,9 +425,9 @@
   .tabName  { font-size: 12px; font-weight: 600; }
   .tabCount { font-size: 11px; opacity: 0.5; }
 
-  /* Grid: 2 columns with edge padding */
+  /* Grid: single column on mobile */
   .grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
     gap: 10px;
     padding: 0 14px;
   }
@@ -435,14 +435,10 @@
   /* Card: compact but balanced */
   .inner { padding: 14px 11px 12px; }
   .code {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 700;
     margin-bottom: 10px;
     line-height: 1.3;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
   }
   .imageWrap         { height: 110px; margin-bottom: 10px; }
   .imagePlaceholder svg { width: 52px; height: 40px; }
