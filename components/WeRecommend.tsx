@@ -7,71 +7,18 @@ interface Props {
   categoryStats: CategoryStat[]
 }
 
-const CATEGORY_STYLES = [
-  {
-    gradient: 'linear-gradient(145deg, #1a3a5c 0%, #0e2240 100%)',
-    icon: (
-      <svg viewBox="0 0 80 60" fill="none" aria-hidden="true" style={{ position: 'absolute', right: 20, top: '50%', transform: 'translateY(-50%)', width: 90, opacity: 0.18 }}>
-        <rect x="4" y="20" width="72" height="32" rx="4" stroke="white" strokeWidth="3"/>
-        <rect x="16" y="8" width="48" height="14" rx="3" stroke="white" strokeWidth="3"/>
-        <line x1="20" y1="36" x2="60" y2="36" stroke="white" strokeWidth="2"/>
-        <line x1="20" y1="42" x2="50" y2="42" stroke="white" strokeWidth="2"/>
-      </svg>
-    ),
-  },
-  {
-    gradient: 'linear-gradient(145deg, #1e3a2a 0%, #112218 100%)',
-    icon: (
-      <svg viewBox="0 0 80 70" fill="none" aria-hidden="true" style={{ position: 'absolute', right: 20, top: '50%', transform: 'translateY(-50%)', width: 90, opacity: 0.18 }}>
-        <rect x="8" y="20" width="64" height="44" rx="4" stroke="white" strokeWidth="3"/>
-        <rect x="22" y="6" width="36" height="16" rx="2" stroke="white" strokeWidth="2.5"/>
-        <line x1="40" y1="20" x2="40" y2="64" stroke="white" strokeWidth="2"/>
-        <rect x="18" y="32" width="16" height="12" rx="2" stroke="white" strokeWidth="2"/>
-        <rect x="46" y="32" width="16" height="12" rx="2" stroke="white" strokeWidth="2"/>
-      </svg>
-    ),
-  },
-  {
-    gradient: 'linear-gradient(145deg, #1a3040 0%, #0e1e2a 100%)',
-    icon: (
-      <svg viewBox="0 0 80 80" fill="none" aria-hidden="true" style={{ position: 'absolute', right: 16, top: '50%', transform: 'translateY(-50%)', width: 90, opacity: 0.18 }}>
-        <circle cx="40" cy="40" r="32" stroke="white" strokeWidth="3"/>
-        <circle cx="40" cy="40" r="16" stroke="white" strokeWidth="2.5"/>
-        <path d="M40 8 C40 8 28 24 28 40 C28 56 40 72 40 72" stroke="white" strokeWidth="2"/>
-        <path d="M40 8 C40 8 52 24 52 40 C52 56 40 72 40 72" stroke="white" strokeWidth="2"/>
-        <line x1="8" y1="40" x2="72" y2="40" stroke="white" strokeWidth="2"/>
-      </svg>
-    ),
-  },
-  {
-    gradient: 'linear-gradient(145deg, #3a1a1a 0%, #221010 100%)',
-    icon: (
-      <svg viewBox="0 0 80 70" fill="none" aria-hidden="true" style={{ position: 'absolute', right: 20, top: '50%', transform: 'translateY(-50%)', width: 90, opacity: 0.18 }}>
-        <rect x="4" y="16" width="72" height="40" rx="6" stroke="white" strokeWidth="3"/>
-        <circle cx="40" cy="36" r="14" stroke="white" strokeWidth="2.5"/>
-        <circle cx="40" cy="36" r="6" stroke="white" strokeWidth="2"/>
-        <line x1="40" y1="22" x2="40" y2="28" stroke="white" strokeWidth="2"/>
-        <line x1="40" y1="44" x2="40" y2="50" stroke="white" strokeWidth="2"/>
-        <line x1="26" y1="36" x2="32" y2="36" stroke="white" strokeWidth="2"/>
-        <line x1="48" y1="36" x2="54" y2="36" stroke="white" strokeWidth="2"/>
-      </svg>
-    ),
-  },
-  {
-    gradient: 'linear-gradient(145deg, #2a2a2a 0%, #181818 100%)',
-    icon: (
-      <svg viewBox="0 0 80 70" fill="none" aria-hidden="true" style={{ position: 'absolute', right: 20, top: '50%', transform: 'translateY(-50%)', width: 90, opacity: 0.18 }}>
-        <path d="M16 56 L16 30 L40 14 L64 30 L64 56 Z" stroke="white" strokeWidth="3"/>
-        <rect x="30" y="38" width="20" height="18" rx="2" stroke="white" strokeWidth="2.5"/>
-        <rect x="20" y="36" width="12" height="10" rx="2" stroke="white" strokeWidth="2"/>
-        <rect x="48" y="36" width="12" height="10" rx="2" stroke="white" strokeWidth="2"/>
-      </svg>
-    ),
-  },
+const CATEGORY_STYLES: { gradient: string; text: string }[] = [
+  { gradient: 'linear-gradient(160deg, #1a3a5c 0%, #0e2240 50%, #091830 100%)', text: 'rgba(255,255,255,0.65)' },
+  { gradient: 'linear-gradient(145deg, #1e3a2a 0%, #112218 100%)',              text: 'rgba(255,255,255,0.65)' },
+  { gradient: 'linear-gradient(145deg, #2a2a2a 0%, #181818 100%)',              text: 'rgba(255,255,255,0.65)' },
+  { gradient: 'linear-gradient(160deg, #3a1a1a 0%, #221010 50%, #180a0a 100%)', text: 'rgba(255,255,255,0.65)' },
 ]
 
 export default function WeRecommend({ categoryStats }: Props) {
   const { t } = useLanguage()
+
+  // Use first 4 categories in the bento layout
+  const cats = categoryStats.slice(0, 4)
 
   return (
     <section className="py-20 bg-brand-section">
@@ -80,50 +27,106 @@ export default function WeRecommend({ categoryStats }: Props) {
           {t.weRecommend}
         </h2>
 
-        {/* Row 1: 3 cards */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14, marginBottom: 14 }}>
-          {categoryStats.slice(0, 3).map((stat, i) => (
-            <a
-              key={stat.tab}
-              href={`/shop?tab=${stat.tab}`}
-              style={{ textDecoration: 'none', display: 'block', borderRadius: 10, overflow: 'hidden', height: 200, position: 'relative', cursor: 'pointer', transition: 'transform 0.3s, box-shadow 0.3s', background: CATEGORY_STYLES[i].gradient }}
-              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = 'translateY(-4px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 12px 36px rgba(0,0,0,0.22)' }}
-              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = ''; (e.currentTarget as HTMLElement).style.boxShadow = '' }}
-            >
-              {CATEGORY_STYLES[i].icon}
-              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '20px 20px 22px' }}>
-                <span style={{ display: 'block', fontSize: 10, fontWeight: 600, letterSpacing: 2, textTransform: 'uppercase', color: 'rgba(255,255,255,0.55)', marginBottom: 6 }}>
-                  {stat.count} {stat.count === 1 ? 'proizvod' : 'proizvoda'}
-                </span>
-                <span style={{ display: 'block', fontSize: 15, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1, color: '#fff', lineHeight: 1.3 }}>
-                  {t.nav[stat.tab]}
-                </span>
-              </div>
-            </a>
-          ))}
-        </div>
+        <div className="grid grid-cols-3 gap-3.5" style={{ gridTemplateRows: '248px 248px' }}>
 
-        {/* Row 2: 2 cards */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 14 }}>
-          {categoryStats.slice(3, 5).map((stat, i) => (
-            <a
-              key={stat.tab}
-              href={`/shop?tab=${stat.tab}`}
-              style={{ textDecoration: 'none', display: 'block', borderRadius: 10, overflow: 'hidden', height: 170, position: 'relative', cursor: 'pointer', transition: 'transform 0.3s, box-shadow 0.3s', background: CATEGORY_STYLES[i + 3].gradient }}
-              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = 'translateY(-4px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 12px 36px rgba(0,0,0,0.22)' }}
-              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = ''; (e.currentTarget as HTMLElement).style.boxShadow = '' }}
-            >
-              {CATEGORY_STYLES[i + 3].icon}
-              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '18px 20px 20px' }}>
-                <span style={{ display: 'block', fontSize: 10, fontWeight: 600, letterSpacing: 2, textTransform: 'uppercase', color: 'rgba(255,255,255,0.55)', marginBottom: 6 }}>
-                  {stat.count} {stat.count === 1 ? 'proizvod' : 'proizvoda'}
-                </span>
-                <span style={{ display: 'block', fontSize: 15, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1, color: '#fff', lineHeight: 1.3 }}>
-                  {t.nav[stat.tab]}
-                </span>
-              </div>
-            </a>
-          ))}
+          {/* Col 1 — tall, spans 2 rows: Kućna rešenja */}
+          <a
+            href={`/shop?tab=${cats[0]?.tab ?? 0}`}
+            className="col-start-1 row-start-1 row-span-2 rounded-[10px] overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_36px_rgba(0,0,0,0.18)]"
+            style={{ textDecoration: 'none', background: CATEGORY_STYLES[0].gradient, position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}
+          >
+            {/* AC unit illustration */}
+            <svg viewBox="0 0 120 90" fill="none" aria-hidden="true" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -60%)', width: 140, opacity: 0.12 }}>
+              <rect x="6" y="28" width="108" height="46" rx="6" stroke="white" strokeWidth="4"/>
+              <rect x="22" y="10" width="76" height="20" rx="4" stroke="white" strokeWidth="3.5"/>
+              <line x1="28" y1="52" x2="92" y2="52" stroke="white" strokeWidth="3"/>
+              <line x1="28" y1="62" x2="76" y2="62" stroke="white" strokeWidth="3"/>
+              <circle cx="96" cy="57" r="8" stroke="white" strokeWidth="3"/>
+            </svg>
+            <div className="relative z-10 p-5">
+              <span className="block font-sans text-[10px] font-medium uppercase tracking-widest mb-1.5" style={{ color: CATEGORY_STYLES[0].text }}>
+                {cats[0]?.count ?? 0} proizvoda
+              </span>
+              <span className="block font-sans text-[14px] font-bold uppercase tracking-wide text-white">
+                {t.nav[cats[0]?.tab ?? 0]}
+              </span>
+            </div>
+          </a>
+
+          {/* Col 2, Row 1: Komercijalna rešenja */}
+          <a
+            href={`/shop?tab=${cats[1]?.tab ?? 1}`}
+            className="col-start-2 row-start-1 rounded-[10px] overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_36px_rgba(0,0,0,0.18)]"
+            style={{ textDecoration: 'none', background: CATEGORY_STYLES[1].gradient, position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}
+          >
+            {/* Building illustration */}
+            <svg viewBox="0 0 100 80" fill="none" aria-hidden="true" style={{ position: 'absolute', top: 12, left: '50%', transform: 'translateX(-50%)', width: 100, opacity: 0.14 }}>
+              <rect x="10" y="24" width="80" height="50" rx="4" stroke="white" strokeWidth="3.5"/>
+              <rect x="28" y="6" width="44" height="20" rx="3" stroke="white" strokeWidth="3"/>
+              <line x1="50" y1="24" x2="50" y2="74" stroke="white" strokeWidth="2.5"/>
+              <rect x="18" y="38" width="20" height="14" rx="2" stroke="white" strokeWidth="2.5"/>
+              <rect x="62" y="38" width="20" height="14" rx="2" stroke="white" strokeWidth="2.5"/>
+            </svg>
+            <div className="relative z-10 p-5">
+              <span className="block font-sans text-[10px] font-medium uppercase tracking-widest mb-1.5" style={{ color: CATEGORY_STYLES[1].text }}>
+                {cats[1]?.count ?? 0} proizvoda
+              </span>
+              <span className="block font-sans text-[13px] font-bold uppercase tracking-wide text-white">
+                {t.nav[cats[1]?.tab ?? 1]}
+              </span>
+            </div>
+          </a>
+
+          {/* Col 3 — tall, spans 2 rows: Fancoili */}
+          <a
+            href={`/shop?tab=${cats[3]?.tab ?? 3}`}
+            className="col-start-3 row-start-1 row-span-2 rounded-[10px] overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_36px_rgba(0,0,0,0.18)]"
+            style={{ textDecoration: 'none', background: CATEGORY_STYLES[3].gradient, position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}
+          >
+            {/* Fan coil / radiator illustration */}
+            <svg viewBox="0 0 100 100" fill="none" aria-hidden="true" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -60%)', width: 120, opacity: 0.12 }}>
+              <rect x="8" y="20" width="84" height="52" rx="6" stroke="white" strokeWidth="4"/>
+              <circle cx="50" cy="46" r="18" stroke="white" strokeWidth="3"/>
+              <circle cx="50" cy="46" r="8" stroke="white" strokeWidth="2.5"/>
+              <line x1="50" y1="28" x2="50" y2="36" stroke="white" strokeWidth="2.5"/>
+              <line x1="50" y1="56" x2="50" y2="64" stroke="white" strokeWidth="2.5"/>
+              <line x1="32" y1="46" x2="40" y2="46" stroke="white" strokeWidth="2.5"/>
+              <line x1="60" y1="46" x2="68" y2="46" stroke="white" strokeWidth="2.5"/>
+            </svg>
+            <div className="relative z-10 p-5">
+              <span className="block font-sans text-[10px] font-medium uppercase tracking-widest mb-1.5" style={{ color: CATEGORY_STYLES[3].text }}>
+                {cats[3]?.count ?? 0} proizvoda
+              </span>
+              <span className="block font-sans text-[14px] font-bold uppercase tracking-wide text-white">
+                {t.nav[cats[3]?.tab ?? 3]}
+              </span>
+            </div>
+          </a>
+
+          {/* Col 2, Row 2: Rekuperatori */}
+          <a
+            href={`/shop?tab=${cats[2]?.tab ?? 2}`}
+            className="col-start-2 row-start-2 rounded-[10px] overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_36px_rgba(0,0,0,0.18)]"
+            style={{ textDecoration: 'none', background: CATEGORY_STYLES[2].gradient, position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}
+          >
+            {/* Air circulation illustration */}
+            <svg viewBox="0 0 90 90" fill="none" aria-hidden="true" style={{ position: 'absolute', top: 8, left: '50%', transform: 'translateX(-50%)', width: 90, opacity: 0.14 }}>
+              <circle cx="45" cy="45" r="36" stroke="white" strokeWidth="3.5"/>
+              <circle cx="45" cy="45" r="18" stroke="white" strokeWidth="3"/>
+              <path d="M45 9 C45 9 33 27 33 45 C33 63 45 81 45 81" stroke="white" strokeWidth="2.5"/>
+              <path d="M45 9 C45 9 57 27 57 45 C57 63 45 81 45 81" stroke="white" strokeWidth="2.5"/>
+              <line x1="9" y1="45" x2="81" y2="45" stroke="white" strokeWidth="2.5"/>
+            </svg>
+            <div className="relative z-10 p-5">
+              <span className="block font-sans text-[10px] font-medium uppercase tracking-widest mb-1.5" style={{ color: CATEGORY_STYLES[2].text }}>
+                {cats[2]?.count ?? 0} proizvoda
+              </span>
+              <span className="block font-sans text-[13px] font-bold uppercase tracking-wide text-white">
+                {t.nav[cats[2]?.tab ?? 2]}
+              </span>
+            </div>
+          </a>
+
         </div>
       </div>
     </section>
