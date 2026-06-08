@@ -1,25 +1,100 @@
-/* ── Page section ─────────────────────────────────────── */
-.section {
-  margin: 80px auto;
-  max-width: 1100px;
-  padding: 0 20px;
+/* ── Hero ──────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  height: 400px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
 }
 
-.heading {
-  font-weight: 900;
-  font-size: 28px;
-  letter-spacing: 4px;
-  color: #0c0c0d;
-  text-align: center;
+.heroInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 80px;
+  animation: heroFadeIn 0.45s ease both;
+}
+
+@keyframes heroFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.heroText {
+  max-width: 52%;
+  position: relative;
+  z-index: 2;
+}
+
+.heroEyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
   text-transform: uppercase;
-  margin: 0 auto 56px;
+  color: rgba(255, 255, 255, 0.55);
+  margin: 0 0 14px;
 }
 
-/* ── Category tabs ────────────────────────────────────── */
+.heroTitle {
+  font-family: var(--font-archivo-black), sans-serif;
+  font-size: clamp(36px, 4.5vw, 58px);
+  font-weight: 900;
+  line-height: 1.08;
+  color: #fff;
+  margin: 0 0 28px;
+  letter-spacing: 1px;
+}
+
+.heroTitleLine {
+  display: block;
+}
+
+.heroCta {
+  display: inline-flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  border-radius: 999px;
+  padding: 10px 28px;
+  text-decoration: none;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.heroCta:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #fff;
+}
+
+.heroVisual {
+  width: 42%;
+  max-width: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.heroSvg {
+  width: 100%;
+  max-width: 360px;
+}
+
+/* ── Page section ─────────────────────────────────────────── */
+.section {
+  margin: 60px auto 80px;
+  max-width: 1200px;
+  padding: 0 24px;
+}
+
+/* ── Category tabs ────────────────────────────────────────── */
 .tabs {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: 16px;
   margin-bottom: 56px;
 }
 
@@ -29,10 +104,10 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  padding: 22px 16px;
+  padding: 20px 14px;
   background: #fff;
   border: 2px solid #edf1f5;
-  border-radius: 20px;
+  border-radius: 18px;
   cursor: pointer;
   text-align: center;
   transition:
@@ -46,15 +121,15 @@
 .tab:hover {
   background: #edf1f5;
   border-color: #c8d4de;
-  transform: translateY(-5px);
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.09);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
 .tabActive {
   background: #0c0c0d;
   border-color: #0c0c0d;
-  transform: translateY(-5px);
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
   color: #fff;
 }
 
@@ -64,43 +139,45 @@
 }
 
 .tabName {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   line-height: 1.3;
   color: inherit;
 }
 
 .tabCount {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 400;
   color: inherit;
   opacity: 0.6;
 }
 
-/* ── Product grid ─────────────────────────────────────── */
+/* ── Product grid ─────────────────────────────────────────── */
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 28px;
-  align-items: start;
+  align-items: stretch;
 }
 
-/* ── Card item ────────────────────────────────────────── */
+/* ── Card item ────────────────────────────────────────────── */
 .item {
   display: block;
   cursor: pointer;
-  position: relative;
   text-decoration: none;
   color: inherit;
+  height: 100%;
 }
 
-/* ── Card shell ───────────────────────────────────────── */
+/* ── Card shell ───────────────────────────────────────────── */
 .card {
   background: #fff;
   border: 2px solid #edf1f5;
   border-radius: 20px;
   overflow: hidden;
-  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   transition:
     background     0.3s ease,
     border-color   0.3s ease,
@@ -115,45 +192,34 @@
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.10);
 }
 
-/* ── Out-of-stock badge ───────────────────────────────── */
-.outOfStockBadge {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  z-index: 2;
-  background: #ef4444;
-  color: #fff;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  padding: 4px 10px;
-  border-radius: 20px;
-}
-
-/* ── Card content ─────────────────────────────────────── */
+/* ── Card content ─────────────────────────────────────────── */
 .inner {
   padding: 36px 24px 28px;
   text-align: center;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* ── Product name ─────────────────────────────────────── */
+/* ── Product name ─────────────────────────────────────────── */
 .code {
   font-weight: 700;
-  font-size: 16px;
-  line-height: 1.3;
+  font-size: 17px;
+  line-height: 1.25;
   color: #0c0c0d;
   margin: 0 0 20px;
   word-break: break-word;
 }
 
-/* ── Image ────────────────────────────────────────────── */
+/* ── Image ────────────────────────────────────────────────── */
 .imageWrap {
-  height: 180px;
+  height: 200px;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
 .imageWrap img {
@@ -180,50 +246,56 @@
   height: 60px;
 }
 
-/* ── Category label ───────────────────────────────────── */
+/* ── Category label ───────────────────────────────────────── */
 .categoryLabel {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   color: #6b7280;
   margin: 0;
   line-height: 1.4;
 }
 
-/* ── Dotted divider ───────────────────────────────────── */
+/* ── Dotted divider ───────────────────────────────────────── */
 .dotDivider {
   height: 0;
   border: none;
-  border-top: 2px dotted rgba(11, 11, 13, 0.2);
+  border-top: 2px dotted #0b0b0d;
   margin: 16px 0 14px;
+  width: 100%;
 }
 
-/* ── Spec columns ─────────────────────────────────────── */
-.details {
-  display: flex;
-  justify-content: center;
-  gap: 24px;
+/* ── Spec 2-row grid (labels row 1, values row 2) ────────── */
+.specGrid {
+  display: grid;
+  grid-template-columns: repeat(var(--spec-cols, 3), 1fr);
+  grid-template-rows: auto auto;
+  width: 100%;
+  column-gap: 8px;
 }
 
-.detailCol {
-  text-align: center;
-}
-
-.detailLabel {
+.specLabel {
   font-size: 10px;
   font-weight: 400;
   color: #6b7280;
   line-height: 1.35;
-  margin-bottom: 4px;
+  text-align: center;
+  padding-bottom: 5px;
+  grid-row: 1;
+  align-self: end;
 }
 
-.detailValue {
+.specValue {
   font-size: 13px;
   font-weight: 700;
   color: #0c0c0d;
   line-height: 1.2;
+  word-break: break-word;
+  text-align: center;
+  grid-row: 2;
+  align-self: start;
 }
 
-/* ── Action bar ───────────────────────────────────────── */
+/* ── Action bar ───────────────────────────────────────────── */
 .actionBar {
   display: flex;
   overflow: hidden;
@@ -263,7 +335,7 @@
   flex-shrink: 0;
 }
 
-/* ── Empty state ──────────────────────────────────────── */
+/* ── Empty state ──────────────────────────────────────────── */
 .empty {
   text-align: center;
   color: #6b7280;
@@ -271,14 +343,20 @@
   padding: 60px 0;
 }
 
-/* ── Responsive ───────────────────────────────────────── */
-@media (max-width: 900px) {
-  .tabs  { grid-template-columns: repeat(2, 1fr); }
-  .grid  { grid-template-columns: repeat(2, 1fr); }
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 960px) {
+  .heroInner { padding: 0 40px; }
+  .heroVisual { display: none; }
+  .heroText { max-width: 100%; }
+  .tabs { grid-template-columns: repeat(2, 1fr); }
+  .grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 600px) {
-  .tabs  { grid-template-columns: 1fr; }
-  .grid  { grid-template-columns: 1fr; }
-  .imageWrap { height: 150px; }
+  .hero { height: 300px; }
+  .heroInner { padding: 0 24px; }
+  .heroTitle { font-size: 32px; }
+  .tabs { grid-template-columns: 1fr; }
+  .grid { grid-template-columns: 1fr; }
+  .imageWrap { height: 160px; }
 }

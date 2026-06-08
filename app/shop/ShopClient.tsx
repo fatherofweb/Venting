@@ -5,31 +5,213 @@ import { useLanguage } from '@/lib/LanguageContext'
 import type { Product } from '@/lib/sync'
 import styles from './Shop.module.css'
 
-// Maps each header nav index (0–4) to SteelSoft category codes
 const NAV_CATEGORY_MAP: string[][] = [
-  ['01KLK', '03MLT'],                                                                                          // Kućna rešenja
-  ['02KKO', '04VRF', '08VNTZAV'],                                                                               // Komercijalna rešenja
-  ['08VNTREK'],                                                                                                  // Rekuperatori
-  ['07KVVTGT'],                                                                                                  // Fancoili (konvektori)
-  ['11OPRPOK', '08VNTDISEL', '17ALT', '12MATELE', '12MATKON', '11OPREEO', '15DEL', 'SRBZR', 'URDEL', 'POLUR'], // Dodatna oprema
+  ['01KLK', '03MLT'],
+  ['02KKO', '04VRF', '08VNTZAV'],
+  ['08VNTREK'],
+  ['07KVVTGT'],
+  ['11OPRPOK', '08VNTDISEL', '17ALT', '12MATELE', '12MATKON', '11OPREEO', '15DEL', 'SRBZR', 'URDEL', 'POLUR'],
 ]
+
+// Index = activeTab + 1 (0 = all, 1-5 = tabs 0-4)
+const HERO_BG_CLASSES = [
+  'slide-bg-1',
+  'slide-bg-1',
+  'slide-bg-2',
+  'slide-bg-3',
+  'slide-bg-4',
+  'slide-bg-5',
+]
+
+/* ── SVG Visuals per category ─────────────────────────────── */
+
+function AllVisual() {
+  return (
+    <svg viewBox="0 0 200 150" fill="none" aria-hidden="true" className={styles.heroSvg}>
+      {([[18,18],[108,18],[18,88],[108,88]] as [number,number][]).map(([x,y], i) => (
+        <g key={i}>
+          <rect x={x} y={y} width="72" height="58" rx="8" stroke="white" strokeWidth="2.5" opacity="0.16"/>
+          <line x1={x+10} y1={y+18} x2={x+62} y2={y+18} stroke="white" strokeWidth="2" opacity="0.12"/>
+          <line x1={x+10} y1={y+30} x2={x+52} y2={y+30} stroke="white" strokeWidth="1.5" opacity="0.09"/>
+          <line x1={x+10} y1={y+42} x2={x+58} y2={y+42} stroke="white" strokeWidth="1.5" opacity="0.09"/>
+        </g>
+      ))}
+    </svg>
+  )
+}
+
+function HomeVisual() {
+  return (
+    <svg viewBox="0 0 200 140" fill="none" aria-hidden="true" className={styles.heroSvg}>
+      {/* Indoor unit */}
+      <rect x="10" y="36" width="180" height="50" rx="10" stroke="white" strokeWidth="3" opacity="0.18"/>
+      <line x1="30" y1="53" x2="162" y2="53" stroke="white" strokeWidth="2.5" opacity="0.16"/>
+      <line x1="30" y1="64" x2="148" y2="64" stroke="white" strokeWidth="2" opacity="0.12"/>
+      <line x1="30" y1="75" x2="155" y2="75" stroke="white" strokeWidth="2" opacity="0.12"/>
+      <circle cx="172" cy="59" r="5" fill="rgba(80,200,160,0.4)"/>
+      {/* Outdoor unit */}
+      <rect x="58" y="104" width="68" height="30" rx="6" stroke="white" strokeWidth="2.5" opacity="0.15"/>
+      <circle cx="92" cy="119" r="11" stroke="white" strokeWidth="2" opacity="0.18"/>
+      <circle cx="92" cy="119" r="4" stroke="white" strokeWidth="1.5" opacity="0.14"/>
+      {/* Pipes */}
+      <path d="M72 86 L72 104" stroke="white" strokeWidth="2" strokeDasharray="3 3" opacity="0.12"/>
+      <path d="M112 86 L112 104" stroke="white" strokeWidth="2" strokeDasharray="3 3" opacity="0.12"/>
+    </svg>
+  )
+}
+
+function CommercialVisual() {
+  return (
+    <svg viewBox="0 0 200 160" fill="none" aria-hidden="true" className={styles.heroSvg}>
+      {/* Cassette unit */}
+      <rect x="38" y="28" width="124" height="104" rx="12" stroke="white" strokeWidth="3" opacity="0.18"/>
+      {/* Center fan */}
+      <circle cx="100" cy="80" r="24" stroke="white" strokeWidth="2.5" opacity="0.16"/>
+      <circle cx="100" cy="80" r="9" stroke="white" strokeWidth="2" opacity="0.14"/>
+      {/* 4 airflow grilles */}
+      <line x1="100" y1="28" x2="100" y2="52" stroke="white" strokeWidth="3" opacity="0.16"/>
+      <line x1="100" y1="108" x2="100" y2="132" stroke="white" strokeWidth="3" opacity="0.16"/>
+      <line x1="38" y1="80" x2="62" y2="80" stroke="white" strokeWidth="3" opacity="0.16"/>
+      <line x1="138" y1="80" x2="162" y2="80" stroke="white" strokeWidth="3" opacity="0.16"/>
+      {/* Corner decorations */}
+      <circle cx="55" cy="45" r="4" stroke="white" strokeWidth="1.5" opacity="0.12"/>
+      <circle cx="145" cy="45" r="4" stroke="white" strokeWidth="1.5" opacity="0.12"/>
+      <circle cx="55" cy="115" r="4" stroke="white" strokeWidth="1.5" opacity="0.12"/>
+      <circle cx="145" cy="115" r="4" stroke="white" strokeWidth="1.5" opacity="0.12"/>
+    </svg>
+  )
+}
+
+function RecuperatorVisual() {
+  return (
+    <svg viewBox="0 0 220 140" fill="none" aria-hidden="true" className={styles.heroSvg}>
+      {/* Main box */}
+      <rect x="28" y="32" width="164" height="76" rx="10" stroke="white" strokeWidth="3" opacity="0.18"/>
+      {/* Divider */}
+      <line x1="110" y1="32" x2="110" y2="108" stroke="white" strokeWidth="2" opacity="0.14"/>
+      {/* Left: fresh air in */}
+      <path d="M8 55 L28 55" stroke="white" strokeWidth="2.5" opacity="0.2"/>
+      <path d="M8 70" stroke="white" strokeWidth="2.5" opacity="0.2"/>
+      <path d="M8 85 L28 85" stroke="white" strokeWidth="2.5" opacity="0.2"/>
+      <polyline points="18,48 25,55 18,62" stroke="white" strokeWidth="2" opacity="0.2" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+      {/* Right: stale air out */}
+      <path d="M192 55 L212 55" stroke="white" strokeWidth="2.5" opacity="0.2"/>
+      <path d="M192 85 L212 85" stroke="white" strokeWidth="2.5" opacity="0.2"/>
+      <polyline points="202,48 195,55 202,62" stroke="white" strokeWidth="2" opacity="0.2" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+      {/* Heat exchange fins left chamber */}
+      {[0,1,2,3,4].map(i => (
+        <line key={'l'+i} x1={48} y1={42+i*14} x2={90} y2={42+i*14} stroke="white" strokeWidth="1.5" opacity="0.11"/>
+      ))}
+      {/* Heat exchange fins right chamber */}
+      {[0,1,2,3,4].map(i => (
+        <line key={'r'+i} x1={130} y1={42+i*14} x2={172} y2={42+i*14} stroke="white" strokeWidth="1.5" opacity="0.11"/>
+      ))}
+    </svg>
+  )
+}
+
+function FancoilVisual() {
+  return (
+    <svg viewBox="0 0 200 140" fill="none" aria-hidden="true" className={styles.heroSvg}>
+      {/* Main body */}
+      <rect x="12" y="28" width="176" height="84" rx="10" stroke="white" strokeWidth="3" opacity="0.18"/>
+      {/* Fan */}
+      <circle cx="54" cy="70" r="30" stroke="white" strokeWidth="2.5" opacity="0.16"/>
+      <circle cx="54" cy="70" r="11" stroke="white" strokeWidth="2" opacity="0.14"/>
+      <line x1="54" y1="40" x2="54" y2="59" stroke="white" strokeWidth="2" opacity="0.15"/>
+      <line x1="54" y1="81" x2="54" y2="100" stroke="white" strokeWidth="2" opacity="0.15"/>
+      <line x1="24" y1="70" x2="43" y2="70" stroke="white" strokeWidth="2" opacity="0.15"/>
+      <line x1="65" y1="70" x2="84" y2="70" stroke="white" strokeWidth="2" opacity="0.15"/>
+      {/* Coil fins */}
+      {[0,1,2,3,4,5,6].map(i => (
+        <line key={i} x1={106+i*11} y1={36} x2={106+i*11} y2={104} stroke="white" strokeWidth="2" opacity="0.14"/>
+      ))}
+      <rect x="104" y="34" width="78" height="72" rx="4" stroke="white" strokeWidth="2" opacity="0.1"/>
+    </svg>
+  )
+}
+
+function AccessoriesVisual() {
+  return (
+    <svg viewBox="0 0 200 140" fill="none" aria-hidden="true" className={styles.heroSvg}>
+      {/* Horizontal pipe */}
+      <rect x="18" y="56" width="164" height="20" rx="10" stroke="white" strokeWidth="2.5" opacity="0.18"/>
+      {/* Vertical pipe */}
+      <rect x="90" y="18" width="20" height="104" rx="10" stroke="white" strokeWidth="2.5" opacity="0.18"/>
+      {/* Valve at intersection */}
+      <circle cx="100" cy="66" r="20" stroke="white" strokeWidth="3" opacity="0.2"/>
+      <circle cx="100" cy="66" r="8" fill="rgba(255,255,255,0.05)" stroke="white" strokeWidth="2" opacity="0.16"/>
+      {/* Handle */}
+      <rect x="82" y="60" width="36" height="12" rx="6" stroke="white" strokeWidth="2" opacity="0.16"/>
+      {/* Small fittings */}
+      <circle cx="35" cy="66" r="7" stroke="white" strokeWidth="2" opacity="0.13"/>
+      <circle cx="165" cy="66" r="7" stroke="white" strokeWidth="2" opacity="0.13"/>
+      <circle cx="100" cy="28" r="7" stroke="white" strokeWidth="2" opacity="0.13"/>
+      <circle cx="100" cy="112" r="7" stroke="white" strokeWidth="2" opacity="0.13"/>
+    </svg>
+  )
+}
+
+const VISUALS = [AllVisual, HomeVisual, CommercialVisual, RecuperatorVisual, FancoilVisual, AccessoriesVisual]
+
+/* ── CategoryHero ─────────────────────────────────────────── */
+
+interface HeroProps {
+  activeTab: number
+  t: ReturnType<typeof useLanguage>['t']
+  locale: string
+}
+
+function CategoryHero({ activeTab, t, locale }: HeroProps) {
+  const bgClass = HERO_BG_CLASSES[activeTab + 1] ?? 'slide-bg-1'
+  const Visual = VISUALS[activeTab + 1] ?? AllVisual
+
+  const eyebrow = activeTab >= 0 ? t.heroSlides[activeTab]?.eyebrow : (locale === 'sr' ? 'Svi proizvodi' : 'All products')
+  const titleLines = activeTab >= 0 ? t.heroSlides[activeTab]?.title : (locale === 'sr' ? ['Kompletan', 'Asortiman'] : ['Full', 'Assortment'])
+
+  return (
+    <div className={`${bgClass} ${styles.hero}`}>
+      <div className={styles.heroInner} key={activeTab}>
+        <div className={styles.heroText}>
+          <p className={styles.heroEyebrow}>{eyebrow}</p>
+          <h1 className={styles.heroTitle}>
+            {titleLines?.map((line, i) => <span key={i} className={styles.heroTitleLine}>{line}</span>)}
+          </h1>
+          <a href="#products" className={styles.heroCta}>{t.heroCta}</a>
+        </div>
+        <div className={styles.heroVisual}>
+          <Visual />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/* ── Spec picker (mirrors BestSeller logic) ───────────────── */
+
+function pickCardSpecs(product: Product): { label: string; value: string }[] {
+  const specs: { label: string; value: string }[] = []
+  if (product.energyClass) specs.push({ label: 'Energetska klasa', value: product.energyClass })
+  if (product.inverter)    specs.push({ label: 'Inverter', value: product.inverter })
+  const seen = new Set(specs.map((s) => s.label.toLowerCase()))
+  for (const s of product.specs) {
+    if (specs.length >= 3) break
+    const cleanName = s.name.replace(/:$/, '').trim()
+    const displayVal = s.value + (s.unit ? ' ' + s.unit : '')
+    if (!seen.has(cleanName.toLowerCase()) && s.value && displayVal.length <= 14) {
+      specs.push({ label: cleanName, value: displayVal })
+      seen.add(cleanName.toLowerCase())
+    }
+  }
+  return specs.slice(0, 3)
+}
+
+/* ── Icons ────────────────────────────────────────────────── */
 
 function ArrowIcon() {
   return (
-    <svg
-      className={styles.actionIcon}
-      viewBox="0 0 15 12"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      <path
-        d="M9 1L14 6L9 11M14 6H1"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+    <svg className={styles.actionIcon} viewBox="0 0 15 12" fill="none" aria-hidden="true">
+      <path d="M9 1L14 6L9 11M14 6H1" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   )
 }
@@ -37,30 +219,23 @@ function ArrowIcon() {
 function ImagePlaceholder() {
   return (
     <div className={styles.imagePlaceholder}>
-      <svg viewBox="0 0 64 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <rect width="64" height="48" rx="6" fill="#e2e8ef" />
-        <path
-          d="M16 34 L26 22 L33 30 L42 18 L50 34"
-          stroke="#b0bec9"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <circle cx="22" cy="18" r="4" fill="#b0bec9" />
+      <svg viewBox="0 0 64 48" fill="none" aria-hidden="true">
+        <rect width="64" height="48" rx="6" fill="#e2e8ef"/>
+        <path d="M16 34 L26 22 L33 30 L42 18 L50 34" stroke="#b0bec9" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <circle cx="22" cy="18" r="4" fill="#b0bec9"/>
       </svg>
     </div>
   )
 }
 
-interface Props {
-  products: Product[]
-}
+/* ── Main ─────────────────────────────────────────────────── */
+
+interface Props { products: Product[] }
 
 export default function ShopClient({ products }: Props) {
-  const { t } = useLanguage()
+  const { t, locale } = useLanguage()
   const [activeTab, setActiveTab] = useState(-1)
 
-  // Read ?tab= from URL on mount so header nav links work
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
     const tab = params.get('tab')
@@ -82,85 +257,90 @@ export default function ShopClient({ products }: Props) {
   }, [products, activeTab])
 
   return (
-    <section className={styles.section}>
-      <h1 className={styles.heading}>{t.shop.heading}</h1>
+    <>
+      <CategoryHero activeTab={activeTab} t={t} locale={locale} />
 
-      {/* ── Category tabs — mirrors the header nav ─────────── */}
-      <div className={styles.tabs}>
-        <button
-          className={`${styles.tab} ${activeTab === -1 ? styles.tabActive : ''}`}
-          onClick={() => setActiveTab(-1)}
-        >
-          <span className={styles.tabName}>{t.shop.allProducts}</span>
-          <span className={styles.tabCount}>{inStockProducts.length}</span>
-        </button>
-
-        {t.nav.map((label, i) => (
+      <section className={styles.section} id="products">
+        {/* ── Category tabs ─────────────────────────────── */}
+        <div className={styles.tabs}>
           <button
-            key={i}
-            className={`${styles.tab} ${activeTab === i ? styles.tabActive : ''}`}
-            onClick={() => setActiveTab(i)}
+            className={`${styles.tab} ${activeTab === -1 ? styles.tabActive : ''}`}
+            onClick={() => setActiveTab(-1)}
           >
-            <span className={styles.tabName}>{label}</span>
-            <span className={styles.tabCount}>{tabCounts[i]}</span>
+            <span className={styles.tabName}>{t.shop.allProducts}</span>
+            <span className={styles.tabCount}>{inStockProducts.length}</span>
           </button>
-        ))}
-      </div>
 
-      {/* ── Product grid ──────────────────────────────────── */}
-      {filtered.length === 0 ? (
-        <p className={styles.empty}>{t.shop.noProducts}</p>
-      ) : (
-        <div className={styles.grid}>
-          {filtered.map((product) => (
-            <a key={product.id} href={`/product/${product.id}`} className={styles.item}>
-              <div className={styles.card}>
-                <div className={styles.inner}>
-                  <h3 className={styles.code}>{product.name || product.id}</h3>
-
-                  <div className={styles.imageWrap}>
-                    {product.image ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img src={product.image} alt={product.name} loading="lazy" />
-                    ) : (
-                      <ImagePlaceholder />
-                    )}
-                  </div>
-
-                  <p className={styles.categoryLabel}>{product.categoryName}</p>
-
-                  {(product.energyClass || product.inverter) && (
-                    <>
-                      <div className={styles.dotDivider} />
-                      <div className={styles.details}>
-                        {product.energyClass && (
-                          <div className={styles.detailCol}>
-                            <div className={styles.detailLabel}>{t.shop.energyClass}</div>
-                            <div className={styles.detailValue}>{product.energyClass}</div>
-                          </div>
-                        )}
-                        {product.inverter && (
-                          <div className={styles.detailCol}>
-                            <div className={styles.detailLabel}>{t.shop.inverter}</div>
-                            <div className={styles.detailValue}>{product.inverter}</div>
-                          </div>
-                        )}
-                      </div>
-                    </>
-                  )}
-                </div>
-
-                <div className={styles.actionBar}>
-                  <span className={styles.actionBtn}>
-                    <ArrowIcon />
-                    {t.learnMore}
-                  </span>
-                </div>
-              </div>
-            </a>
+          {t.nav.map((label, i) => (
+            <button
+              key={i}
+              className={`${styles.tab} ${activeTab === i ? styles.tabActive : ''}`}
+              onClick={() => setActiveTab(i)}
+            >
+              <span className={styles.tabName}>{label}</span>
+              <span className={styles.tabCount}>{tabCounts[i]}</span>
+            </button>
           ))}
         </div>
-      )}
-    </section>
+
+        {/* ── Product grid ──────────────────────────────── */}
+        {filtered.length === 0 ? (
+          <p className={styles.empty}>{t.shop.noProducts}</p>
+        ) : (
+          <div className={styles.grid}>
+            {filtered.map((product) => {
+              const specs = pickCardSpecs(product)
+              return (
+                <a key={product.id} href={`/product/${product.id}`} className={styles.item}>
+                  <div className={styles.card}>
+                    <div className={styles.inner}>
+                      <h3 className={styles.code}>{product.name || product.id}</h3>
+
+                      <div className={styles.imageWrap}>
+                        {product.image
+                          ? <img src={product.image} alt={product.name} loading="lazy"/>
+                          : <ImagePlaceholder />
+                        }
+                      </div>
+
+                      <p className={styles.categoryLabel}>{product.categoryName}</p>
+
+                      <div style={{ flex: 1 }} />
+
+                      <div className={styles.dotDivider} />
+                      {specs.length > 0 ? (
+                        <div
+                          className={styles.specGrid}
+                          style={{ '--spec-cols': specs.length } as React.CSSProperties}
+                        >
+                          {specs.map((spec) => (
+                            <div key={spec.label + '_l'} className={styles.specLabel}>{spec.label}</div>
+                          ))}
+                          {specs.map((spec) => (
+                            <div key={spec.label + '_v'} className={styles.specValue}>{spec.value}</div>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className={styles.specGrid} style={{ '--spec-cols': 1, opacity: 0.3 } as React.CSSProperties}>
+                          <div className={styles.specLabel}>Specifikacije</div>
+                          <div className={styles.specValue}>-</div>
+                        </div>
+                      )}
+                    </div>
+
+                    <div className={styles.actionBar}>
+                      <span className={styles.actionBtn}>
+                        <ArrowIcon />
+                        {t.learnMore}
+                      </span>
+                    </div>
+                  </div>
+                </a>
+              )
+            })}
+          </div>
+        )}
+      </section>
+    </>
   )
 }
