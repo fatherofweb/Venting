@@ -1,10 +1,77 @@
 'use client'
 
 import { useLanguage } from '@/lib/LanguageContext'
+import type { CategoryStat } from '@/app/page'
 
-export default function WeRecommend() {
+interface Props {
+  categoryStats: CategoryStat[]
+}
+
+const CATEGORY_STYLES = [
+  {
+    gradient: 'linear-gradient(145deg, #1a3a5c 0%, #0e2240 100%)',
+    icon: (
+      <svg viewBox="0 0 80 60" fill="none" aria-hidden="true" style={{ position: 'absolute', right: 20, top: '50%', transform: 'translateY(-50%)', width: 90, opacity: 0.18 }}>
+        <rect x="4" y="20" width="72" height="32" rx="4" stroke="white" strokeWidth="3"/>
+        <rect x="16" y="8" width="48" height="14" rx="3" stroke="white" strokeWidth="3"/>
+        <line x1="20" y1="36" x2="60" y2="36" stroke="white" strokeWidth="2"/>
+        <line x1="20" y1="42" x2="50" y2="42" stroke="white" strokeWidth="2"/>
+      </svg>
+    ),
+  },
+  {
+    gradient: 'linear-gradient(145deg, #1e3a2a 0%, #112218 100%)',
+    icon: (
+      <svg viewBox="0 0 80 70" fill="none" aria-hidden="true" style={{ position: 'absolute', right: 20, top: '50%', transform: 'translateY(-50%)', width: 90, opacity: 0.18 }}>
+        <rect x="8" y="20" width="64" height="44" rx="4" stroke="white" strokeWidth="3"/>
+        <rect x="22" y="6" width="36" height="16" rx="2" stroke="white" strokeWidth="2.5"/>
+        <line x1="40" y1="20" x2="40" y2="64" stroke="white" strokeWidth="2"/>
+        <rect x="18" y="32" width="16" height="12" rx="2" stroke="white" strokeWidth="2"/>
+        <rect x="46" y="32" width="16" height="12" rx="2" stroke="white" strokeWidth="2"/>
+      </svg>
+    ),
+  },
+  {
+    gradient: 'linear-gradient(145deg, #1a3040 0%, #0e1e2a 100%)',
+    icon: (
+      <svg viewBox="0 0 80 80" fill="none" aria-hidden="true" style={{ position: 'absolute', right: 16, top: '50%', transform: 'translateY(-50%)', width: 90, opacity: 0.18 }}>
+        <circle cx="40" cy="40" r="32" stroke="white" strokeWidth="3"/>
+        <circle cx="40" cy="40" r="16" stroke="white" strokeWidth="2.5"/>
+        <path d="M40 8 C40 8 28 24 28 40 C28 56 40 72 40 72" stroke="white" strokeWidth="2"/>
+        <path d="M40 8 C40 8 52 24 52 40 C52 56 40 72 40 72" stroke="white" strokeWidth="2"/>
+        <line x1="8" y1="40" x2="72" y2="40" stroke="white" strokeWidth="2"/>
+      </svg>
+    ),
+  },
+  {
+    gradient: 'linear-gradient(145deg, #3a1a1a 0%, #221010 100%)',
+    icon: (
+      <svg viewBox="0 0 80 70" fill="none" aria-hidden="true" style={{ position: 'absolute', right: 20, top: '50%', transform: 'translateY(-50%)', width: 90, opacity: 0.18 }}>
+        <rect x="4" y="16" width="72" height="40" rx="6" stroke="white" strokeWidth="3"/>
+        <circle cx="40" cy="36" r="14" stroke="white" strokeWidth="2.5"/>
+        <circle cx="40" cy="36" r="6" stroke="white" strokeWidth="2"/>
+        <line x1="40" y1="22" x2="40" y2="28" stroke="white" strokeWidth="2"/>
+        <line x1="40" y1="44" x2="40" y2="50" stroke="white" strokeWidth="2"/>
+        <line x1="26" y1="36" x2="32" y2="36" stroke="white" strokeWidth="2"/>
+        <line x1="48" y1="36" x2="54" y2="36" stroke="white" strokeWidth="2"/>
+      </svg>
+    ),
+  },
+  {
+    gradient: 'linear-gradient(145deg, #2a2a2a 0%, #181818 100%)',
+    icon: (
+      <svg viewBox="0 0 80 70" fill="none" aria-hidden="true" style={{ position: 'absolute', right: 20, top: '50%', transform: 'translateY(-50%)', width: 90, opacity: 0.18 }}>
+        <path d="M16 56 L16 30 L40 14 L64 30 L64 56 Z" stroke="white" strokeWidth="3"/>
+        <rect x="30" y="38" width="20" height="18" rx="2" stroke="white" strokeWidth="2.5"/>
+        <rect x="20" y="36" width="12" height="10" rx="2" stroke="white" strokeWidth="2"/>
+        <rect x="48" y="36" width="12" height="10" rx="2" stroke="white" strokeWidth="2"/>
+      </svg>
+    ),
+  },
+]
+
+export default function WeRecommend({ categoryStats }: Props) {
   const { t } = useLanguage()
-  const rc = t.recCards
 
   return (
     <section className="py-20 bg-brand-section">
@@ -13,78 +80,50 @@ export default function WeRecommend() {
           {t.weRecommend}
         </h2>
 
-        <div className="grid grid-cols-3 gap-3.5" style={{ gridTemplateRows: '248px 248px' }}>
-
-          {/* Washing Machine — col 1, spans 2 rows */}
-          <div className="col-start-1 row-start-1 row-span-2 rounded-[10px] overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_36px_rgba(0,0,0,0.18)]">
-            <div className="relative w-full h-full flex flex-col justify-end p-5"
-              style={{ background: 'linear-gradient(160deg, #b8c4d0 0%, #8898a8 40%, #6a7a8a 100%)' }}>
-              <svg viewBox="0 0 120 120" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[55%] w-28 h-28" aria-hidden="true">
-                <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth="8" />
-                <circle cx="60" cy="60" r="36" fill="none" stroke="rgba(255,255,255,0.1)"  strokeWidth="5" />
-              </svg>
-              <div className="relative z-10">
-                <span className="block font-sans text-[10px] font-medium uppercase tracking-widest mb-1" style={{ color: 'rgba(255,255,255,0.65)' }}>
-                  {rc.washerSub}
+        {/* Row 1: 3 cards */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14, marginBottom: 14 }}>
+          {categoryStats.slice(0, 3).map((stat, i) => (
+            <a
+              key={stat.tab}
+              href={`/shop?tab=${stat.tab}`}
+              style={{ textDecoration: 'none', display: 'block', borderRadius: 10, overflow: 'hidden', height: 200, position: 'relative', cursor: 'pointer', transition: 'transform 0.3s, box-shadow 0.3s', background: CATEGORY_STYLES[i].gradient }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = 'translateY(-4px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 12px 36px rgba(0,0,0,0.22)' }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = ''; (e.currentTarget as HTMLElement).style.boxShadow = '' }}
+            >
+              {CATEGORY_STYLES[i].icon}
+              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '20px 20px 22px' }}>
+                <span style={{ display: 'block', fontSize: 10, fontWeight: 600, letterSpacing: 2, textTransform: 'uppercase', color: 'rgba(255,255,255,0.55)', marginBottom: 6 }}>
+                  {stat.count} {stat.count === 1 ? 'proizvod' : 'proizvoda'}
                 </span>
-                <span className="block font-sans text-[13px] font-bold uppercase tracking-wide text-white">
-                  {rc.washerLabel}
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Beauty & Care — col 2, row 1 */}
-          <div className="col-start-2 row-start-1 rounded-[10px] overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_36px_rgba(0,0,0,0.18)]">
-            <div className="relative w-full h-full flex flex-col justify-end p-5"
-              style={{ background: 'linear-gradient(145deg, #c8a8a0 0%, #b08090 50%, #906070 100%)' }}>
-              <div className="absolute top-7 left-1/2 -translate-x-1/2 flex gap-2.5 items-end" aria-hidden="true">
-                {[{ w: 14, h: 60 }, { w: 20, h: 76 }, { w: 14, h: 56 }, { w: 18, h: 70 }].map((b, i) => (
-                  <div key={i} className="rounded-[3px_3px_0_0]" style={{ width: b.w, height: b.h, background: 'rgba(255,255,255,0.2)' }} />
-                ))}
-              </div>
-              <span className="relative z-10 block font-sans text-[13px] font-bold uppercase tracking-wide text-white">
-                {rc.beauty}
-              </span>
-            </div>
-          </div>
-
-          {/* Tesla Giveaways — col 3, spans 2 rows */}
-          <div className="col-start-3 row-start-1 row-span-2 rounded-[10px] overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_36px_rgba(0,0,0,0.18)]">
-            <div className="relative w-full h-full flex flex-col justify-end p-5"
-              style={{ background: 'linear-gradient(160deg, #162040 0%, #0e1830 50%, #0a1228 100%)' }}>
-              <div className="absolute top-5 right-5 rounded-lg p-2.5 text-center border"
-                style={{ background: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)' }} aria-hidden="true">
-                <span className="block font-sans text-[8px] font-bold uppercase tracking-widest" style={{ color: 'rgba(255,255,255,0.55)' }}>
-                  {rc.warrantyTop}
-                </span>
-                <span className="block font-sans text-[11px] font-black uppercase tracking-wide text-white">
-                  {rc.warrantyMain}
+                <span style={{ display: 'block', fontSize: 15, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1, color: '#fff', lineHeight: 1.3 }}>
+                  {t.nav[stat.tab]}
                 </span>
               </div>
-              <div className="relative z-10">
-                <span className="block font-sans text-[10px] font-medium uppercase tracking-widest mb-1" style={{ color: 'rgba(255,255,255,0.65)' }}>
-                  {rc.giftSub}
+            </a>
+          ))}
+        </div>
+
+        {/* Row 2: 2 cards */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 14 }}>
+          {categoryStats.slice(3, 5).map((stat, i) => (
+            <a
+              key={stat.tab}
+              href={`/shop?tab=${stat.tab}`}
+              style={{ textDecoration: 'none', display: 'block', borderRadius: 10, overflow: 'hidden', height: 170, position: 'relative', cursor: 'pointer', transition: 'transform 0.3s, box-shadow 0.3s', background: CATEGORY_STYLES[i + 3].gradient }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = 'translateY(-4px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 12px 36px rgba(0,0,0,0.22)' }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = ''; (e.currentTarget as HTMLElement).style.boxShadow = '' }}
+            >
+              {CATEGORY_STYLES[i + 3].icon}
+              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '18px 20px 20px' }}>
+                <span style={{ display: 'block', fontSize: 10, fontWeight: 600, letterSpacing: 2, textTransform: 'uppercase', color: 'rgba(255,255,255,0.55)', marginBottom: 6 }}>
+                  {stat.count} {stat.count === 1 ? 'proizvod' : 'proizvoda'}
                 </span>
-                <span className="block font-sans text-[13px] font-bold uppercase tracking-wide text-white">
-                  {rc.giftLabel}
+                <span style={{ display: 'block', fontSize: 15, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1, color: '#fff', lineHeight: 1.3 }}>
+                  {t.nav[stat.tab]}
                 </span>
               </div>
-            </div>
-          </div>
-
-          {/* Handstick Vacuum — col 2, row 2 */}
-          <div className="col-start-2 row-start-2 rounded-[10px] overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_36px_rgba(0,0,0,0.18)]">
-            <div className="relative w-full h-full flex flex-col justify-end p-5"
-              style={{ background: 'linear-gradient(145deg, #2a2a2a 0%, #1a1a1a 100%)' }}>
-              <div className="absolute top-3 left-1/2 -translate-x-1/2 w-1 rounded" style={{ height: '68%', background: 'rgba(255,255,255,0.15)' }} aria-hidden="true" />
-              <div className="absolute left-1/2 -translate-x-1/2 w-14 h-4 rounded-full" style={{ bottom: 60, background: 'rgba(255,255,255,0.12)' }} aria-hidden="true" />
-              <span className="relative z-10 block font-sans text-[13px] font-bold uppercase tracking-wide text-white">
-                {rc.vacuum}
-              </span>
-            </div>
-          </div>
-
+            </a>
+          ))}
         </div>
       </div>
     </section>
