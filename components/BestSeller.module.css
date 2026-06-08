@@ -1,8 +1,8 @@
 /* ── Section ───────────────────────────────────────────── */
 .section {
   margin: 80px auto;
-  max-width: 960px;
-  padding: 0 15px;
+  max-width: 1200px;
+  padding: 0 24px;
 }
 
 .heading {
@@ -112,23 +112,22 @@
 
 /* ── Spec columns ──────────────────────────────────────── */
 .details {
-  display: flex;
-  justify-content: space-between;
-}
-
-.detailCol {
-  flex: 1;
-  min-width: 0;
-  text-align: center;
+  display: grid;
+  grid-template-columns: repeat(var(--spec-cols, 3), 1fr);
+  grid-template-rows: auto auto;
+  width: 100%;
+  column-gap: 8px;
 }
 
 .detailLabel {
   font-size: 11px;
   font-weight: 400;
   color: #6b7280;
-  min-height: 40px;
   line-height: 1.35;
-  margin-bottom: 6px;
+  text-align: center;
+  padding-bottom: 6px;
+  grid-row: 1;
+  align-self: end;
 }
 
 .detailValue {
@@ -137,6 +136,9 @@
   color: #0c0c0d;
   line-height: 1.2;
   word-break: break-word;
+  text-align: center;
+  grid-row: 2;
+  align-self: start;
 }
 
 /* ── Action bar — slides into view on hover ────────────── */

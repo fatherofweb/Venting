@@ -80,19 +80,24 @@ export default function BestSeller({ products }: Props) {
                   <div style={{ flex: 1 }} />
 
                   <div className={styles.dotDivider} />
-                  <div className={styles.details}>
-                    {specs.length > 0 ? specs.map((spec) => (
-                      <div key={spec.label} className={styles.detailCol}>
-                        <div className={styles.detailLabel}>{spec.label}</div>
-                        <div className={styles.detailValue}>{spec.value}</div>
-                      </div>
-                    )) : (
-                      <div className={styles.detailCol} style={{ opacity: 0.35 }}>
-                        <div className={styles.detailLabel}>Specifikacije</div>
-                        <div className={styles.detailValue}>—</div>
-                      </div>
-                    )}
-                  </div>
+                  {specs.length > 0 ? (
+                    <div
+                      className={styles.details}
+                      style={{ '--spec-cols': specs.length } as React.CSSProperties}
+                    >
+                      {specs.map((spec) => (
+                        <div key={spec.label + '_l'} className={styles.detailLabel}>{spec.label}</div>
+                      ))}
+                      {specs.map((spec) => (
+                        <div key={spec.label + '_v'} className={styles.detailValue}>{spec.value}</div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className={styles.details} style={{ '--spec-cols': 1, opacity: 0.35 } as React.CSSProperties}>
+                      <div className={styles.detailLabel}>Specifikacije</div>
+                      <div className={styles.detailValue}>—</div>
+                    </div>
+                  )}
                 </div>
 
                 <div className={styles.actionBar}>
