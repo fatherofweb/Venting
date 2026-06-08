@@ -40,6 +40,14 @@
   }
 }
 
+/* ── Hero section responsive height ── */
+.hero-section { height: 320px; }
+@media (min-width: 640px) { .hero-section { height: 520px; } }
+
+/* ── WeRecommend grid responsive row heights ── */
+.wr-grid { grid-template-rows: 152px 152px; }
+@media (min-width: 640px) { .wr-grid { grid-template-rows: 248px 248px; } }
+
 /* ── Hero slide backgrounds (gradient-heavy, not expressible as static Tailwind classes) ── */
 .slide-bg-1 { background: linear-gradient(105deg, #06090f 0%, #0b1424 45%, #101c35 100%); }
 .slide-bg-2 { background: linear-gradient(105deg, #071210 0%, #0d2018 50%, #081a12 100%); }

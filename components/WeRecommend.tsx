@@ -21,18 +21,18 @@ export default function WeRecommend({ categoryStats }: Props) {
   const cats = categoryStats.slice(0, 4)
 
   return (
-    <section className="py-20 bg-brand-section">
-      <div className="max-w-site mx-auto px-10">
-        <h2 className="font-sans text-[28px] font-black uppercase tracking-heading text-brand-text text-center mb-12">
+    <section className="py-10 sm:py-20 bg-brand-section">
+      <div className="max-w-site mx-auto px-4 sm:px-10">
+        <h2 className="font-sans text-[22px] sm:text-[28px] font-black uppercase tracking-heading text-brand-text text-center mb-7 sm:mb-12">
           {t.weRecommend}
         </h2>
 
-        <div className="grid grid-cols-3 gap-3.5" style={{ gridTemplateRows: '248px 248px' }}>
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3.5 wr-grid">
 
-          {/* Col 1 — tall, spans 2 rows: Kućna rešenja */}
+          {/* Col 1 — tall, spans 2 rows on desktop: Kućna rešenja */}
           <a
             href={`/shop?tab=${cats[0]?.tab ?? 0}`}
-            className="col-start-1 row-start-1 row-span-2 rounded-[10px] overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_36px_rgba(0,0,0,0.18)]"
+            className="sm:col-start-1 sm:row-start-1 sm:row-span-2 rounded-[10px] overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_36px_rgba(0,0,0,0.18)]"
             style={{ textDecoration: 'none', background: CATEGORY_STYLES[0].gradient, position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}
           >
             {/* AC unit illustration */}
@@ -53,10 +53,10 @@ export default function WeRecommend({ categoryStats }: Props) {
             </div>
           </a>
 
-          {/* Col 2, Row 1: Komercijalna rešenja */}
+          {/* Col 2, Row 1 on desktop: Komercijalna rešenja */}
           <a
             href={`/shop?tab=${cats[1]?.tab ?? 1}`}
-            className="col-start-2 row-start-1 rounded-[10px] overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_36px_rgba(0,0,0,0.18)]"
+            className="sm:col-start-2 sm:row-start-1 rounded-[10px] overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_36px_rgba(0,0,0,0.18)]"
             style={{ textDecoration: 'none', background: CATEGORY_STYLES[1].gradient, position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}
           >
             {/* Building illustration */}
@@ -77,10 +77,10 @@ export default function WeRecommend({ categoryStats }: Props) {
             </div>
           </a>
 
-          {/* Col 3 — tall, spans 2 rows: Fancoili */}
+          {/* Col 3 — tall, spans 2 rows on desktop: Fancoili */}
           <a
             href={`/shop?tab=${cats[3]?.tab ?? 3}`}
-            className="col-start-3 row-start-1 row-span-2 rounded-[10px] overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_36px_rgba(0,0,0,0.18)]"
+            className="sm:col-start-3 sm:row-start-1 sm:row-span-2 rounded-[10px] overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_36px_rgba(0,0,0,0.18)]"
             style={{ textDecoration: 'none', background: CATEGORY_STYLES[3].gradient, position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}
           >
             {/* Fan coil / radiator illustration */}
@@ -103,10 +103,10 @@ export default function WeRecommend({ categoryStats }: Props) {
             </div>
           </a>
 
-          {/* Col 2, Row 2: Rekuperatori */}
+          {/* Col 2, Row 2 on desktop: Rekuperatori */}
           <a
             href={`/shop?tab=${cats[2]?.tab ?? 2}`}
-            className="col-start-2 row-start-2 rounded-[10px] overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_36px_rgba(0,0,0,0.18)]"
+            className="sm:col-start-2 sm:row-start-2 rounded-[10px] overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_36px_rgba(0,0,0,0.18)]"
             style={{ textDecoration: 'none', background: CATEGORY_STYLES[2].gradient, position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}
           >
             {/* Air circulation illustration */}

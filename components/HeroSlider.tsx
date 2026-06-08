@@ -135,8 +135,7 @@ export default function HeroSlider() {
 
   return (
     <section
-      className="relative overflow-hidden bg-[#0a0c10]"
-      style={{ height: '520px' }}
+      className="relative overflow-hidden bg-[#0a0c10] hero-section"
       aria-label="Featured products"
       onMouseEnter={stopAuto}
       onMouseLeave={startAuto}
@@ -151,18 +150,18 @@ export default function HeroSlider() {
           const slide = t.heroSlides[i]
           return (
             <div key={cfg.visual} className={`slide flex items-center ${cfg.bgClass}`} role="listitem">
-              <div className="relative z-10 px-20 max-w-[52%]">
-                <p className="font-sans text-[13px] font-medium uppercase tracking-[2.5px] mb-3" style={{ color: 'rgba(255,255,255,0.6)' }}>
+              <div className="relative z-10 px-6 sm:px-20 max-w-full sm:max-w-[52%]">
+                <p className="font-sans text-[11px] sm:text-[13px] font-medium uppercase tracking-[2.5px] mb-2 sm:mb-3" style={{ color: 'rgba(255,255,255,0.6)' }}>
                   {slide.eyebrow}
                 </p>
-                <h2 className="font-display text-[60px] font-bold leading-[1.08] mb-8 text-white tracking-wide">
+                <h2 className="font-display text-[32px] sm:text-[60px] font-bold leading-[1.1] sm:leading-[1.08] mb-5 sm:mb-8 text-white tracking-wide">
                   {slide.title.map((line, j) => <span key={j} className="block">{line}</span>)}
                 </h2>
-                <a href="#" className="inline-flex items-center font-sans text-base font-medium rounded-pill px-7 py-2.5 border-2 border-white text-white bg-transparent transition-colors duration-200 hover:bg-white hover:text-brand-text">
+                <a href="#" className="inline-flex items-center font-sans text-sm sm:text-base font-medium rounded-pill px-5 sm:px-7 py-2 sm:py-2.5 border-2 border-white text-white bg-transparent transition-colors duration-200 hover:bg-white hover:text-brand-text">
                   {t.heroCta}
                 </a>
               </div>
-              <div className="absolute right-[72px] top-1/2 -translate-y-1/2 w-[44%] max-w-[520px]">
+              <div className="hidden sm:block absolute right-[72px] top-1/2 -translate-y-1/2 w-[44%] max-w-[520px]">
                 {VISUALS[cfg.visual]}
               </div>
             </div>
