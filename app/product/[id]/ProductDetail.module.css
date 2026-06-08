@@ -191,10 +191,9 @@
 /* ── Hero image ──────────────────────────────────────── */
 .heroImage {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
   height: 100%;
-  padding-bottom: 0;
 }
 
 .heroImage img {
