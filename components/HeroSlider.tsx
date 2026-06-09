@@ -66,7 +66,7 @@ export default function HeroSlider() {
               src={slide.src}
               alt={slide.alt}
               fill
-              style={{ objectFit: 'contain', objectPosition: 'center' }}
+              style={{ objectFit: 'cover', objectPosition: 'center' }}
               priority={i === 0}
               sizes="100vw"
             />
