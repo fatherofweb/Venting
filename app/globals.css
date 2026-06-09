@@ -44,7 +44,8 @@
 /* Natural image ratio ~1700/920 — section auto-scales with viewport width */
 .hero-section {
   aspect-ratio: 85 / 46;
-  min-height: 180px;
+  max-height: 460px;
+  min-height: 160px;
 }
 
 /* ── WeRecommend grid responsive row heights ── */
