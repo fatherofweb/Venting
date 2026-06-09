@@ -4,9 +4,10 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import Image from 'next/image'
 
 const SLIDES = [
-  { src: '/Naslovna 1.png', alt: 'Venting Glory Pro klima uređaj' },
-  { src: '/Naslovna 3.png', alt: 'Venting komercijalni kasetni klima uređaji' },
-  { src: '/Naslovna 5.png', alt: 'Venting sobni rekuperator' },
+  { src: '/naslovna-1.png', alt: 'Venting Glory Pro klima uređaj' },
+  { src: '/naslovna-2.png', alt: 'Venting Flex Fit multi sistem' },
+  { src: '/naslovna-3.png', alt: 'Venting komercijalni kasetni klima uređaji' },
+  { src: '/naslovna-5.png', alt: 'Venting sobni rekuperator' },
 ]
 
 const DELAY = 4800
