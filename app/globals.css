@@ -41,8 +41,12 @@
 }
 
 /* ── Hero section responsive height ── */
-.hero-section { height: 320px; }
-@media (min-width: 640px) { .hero-section { height: 520px; } }
+/* Natural image ratio ~1700/920 — section auto-scales with viewport width */
+.hero-section {
+  aspect-ratio: 85 / 46;
+  max-height: 680px;
+  min-height: 180px;
+}
 
 /* ── WeRecommend grid responsive row heights ── */
 .wr-grid { grid-template-rows: 152px 152px; }
@@ -69,12 +73,11 @@
   height: 100%;
 }
 
-/* ── Pagination dot ── */
+/* ── Pagination dot — background set via inline style in component ── */
 .hero-dot {
   width: 20px;
   height: 3px;
   border-radius: 2px;
-  background: rgba(255, 255, 255, 0.3);
   border: none;
   cursor: pointer;
   padding: 0;
@@ -82,7 +85,6 @@
 }
 
 .hero-dot.active {
-  background: #ffffff;
   width: 32px;
 }
 
