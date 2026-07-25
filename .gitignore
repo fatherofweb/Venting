@@ -5,8 +5,11 @@ node_modules/
 .next/
 out/
 
-# Generated data files (populated at runtime by sync)
-public/data/
+# Generated data files (populated at runtime by sync).
+# products.json IS committed — it's the deployed source of truth for the
+# catalogue; the daily KV cron only overrides it when strictly newer.
+public/data/*
+!public/data/products.json
 
 # Original hi-res catalogue photos (source backups, not used by the site)
 catalog-originals-2026/

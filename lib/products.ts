@@ -1,17 +1,19 @@
 /**
  * Product data access layer.
  *
- * Strategy:
- *  - Production (Vercel):  reads from Vercel KV, populated daily by the cron sync.
- *  - Local development:    reads from public/data/products.json written by `npm run sync`.
- *
- * KV keys:
- *   venting:products:v1     — full SyncResult
+ * The committed public/data/products.json is the source of truth for the
+ * catalogue and its images — it ships with every deploy, so the live site is
+ * always correct the moment the code deploys. Vercel KV (refreshed by the daily
+ * cron) is used only when it is *strictly newer* than the bundled snapshot, so a
+ * stale KV entry can never override a fresh deploy. Regenerate the snapshot with
+ * `npm run sync` and commit it whenever the catalogue changes.
  */
 
 import type { SyncResult, Product, Category } from './sync'
+import bundledData from '@/public/data/products.json'
 
 const KV_KEY = 'venting:products:v1'
+const BUNDLED = bundledData as unknown as SyncResult
 
 // ── Storage helpers ───────────────────────────────────────────────────────────
 
@@ -25,19 +27,17 @@ function dataPath(filename: string): string {
 }
 
 export async function loadSyncResult(): Promise<SyncResult | null> {
+  // KV wins only when it is strictly newer than the deployed snapshot.
   if (await kvAvailable()) {
-    const { kv } = await import('@vercel/kv')
-    return kv.get<SyncResult>(KV_KEY)
+    try {
+      const { kv } = await import('@vercel/kv')
+      const kvData = await kv.get<SyncResult>(KV_KEY)
+      if (kvData?.syncedAt && kvData.syncedAt > BUNDLED.syncedAt) return kvData
+    } catch {
+      // KV unreachable — fall through to the bundled snapshot
+    }
   }
-
-  // Local dev fallback — read the JSON written by `npm run sync`
-  try {
-    const { readFile } = await import('fs/promises')
-    const raw = await readFile(dataPath('products.json'), 'utf-8')
-    return JSON.parse(raw) as SyncResult
-  } catch {
-    return null
-  }
+  return BUNDLED
 }
 
 export async function saveSyncResult(data: SyncResult): Promise<void> {
