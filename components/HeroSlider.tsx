@@ -69,10 +69,10 @@ export default function HeroSlider() {
               src={slide.src}
               alt={slide.alt}
               fill
-              // contain (not cover): the slides are ~16:9 but the band is wider, so
-              // cover would crop the bottom feature-icon row. The slide bg colour is
-              // matched to each image's edges, so it fills the sides seamlessly.
-              style={{ objectFit: 'contain', objectPosition: 'center' }}
+              // cover: the band is locked to the banner ratio (globals.css), so the
+              // image fills the full width edge-to-edge with no side gutters and
+              // essentially nothing is cropped.
+              style={{ objectFit: 'cover', objectPosition: 'center' }}
               priority={i === 0}
               sizes="100vw"
             />

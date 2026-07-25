@@ -40,15 +40,16 @@
   }
 }
 
-/* ── Hero section responsive height ── */
-/* The slides are complete ~1.87:1 marketing banners shown in full (contain) — no
-   cropping. Height tracks that ratio (100/1.87 ≈ 53vw) so the band matches the
-   banner and there are no side gutters up to ~1170px wide; above that a max-height
-   caps it and the slide bg colour (matched to each banner's edges) fills the sides.
-   Width is pinned to 100% so the height cap never collapses the width. */
+/* ── Hero section ── */
+/* The band is locked to the banners' own aspect ratio (1717:916 ≈ 1.874) and the
+   image uses object-fit:cover, so every slide fills the full width edge-to-edge
+   with no side gutters at any viewport width. Because the band ratio matches the
+   banners, cover crops essentially nothing — only naslovna-1 (slightly squarer)
+   loses a sliver of its empty top/bottom margin. No max-height: capping would make
+   cover crop into the banners' bottom info bars. */
 .hero-section {
   width: 100%;
-  height: min(53vw, 620px);
+  aspect-ratio: 1717 / 916;
 }
 
 /* ── WeRecommend grid responsive row heights ── */
