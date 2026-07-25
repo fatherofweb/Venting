@@ -3,11 +3,13 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import Image from 'next/image'
 
+// bg = svetla neutrala uzeta sa ivice svakog banera; puni bočne trake na širokim
+// ekranima tako da se stope sa slikom (svi baneri su svetli).
 const SLIDES = [
-  { src: '/naslovna-1.png', alt: 'Venting Glory Pro klima uređaj',             bg: '#e8e8e8' },
-  { src: '/naslovna-2.png', alt: 'Venting Flex Fit multi sistem',               bg: '#e4e0db' },
-  { src: '/naslovna-3.png', alt: 'Venting komercijalni kasetni klima uređaji',  bg: '#15080e' },
-  { src: '/naslovna-5.png', alt: 'Venting sobni rekuperator',                   bg: '#0c1020' },
+  { src: '/naslovna-1.png', alt: 'Venting Glory Pro klima uređaj',             bg: '#e7e6e9' },
+  { src: '/naslovna-2.png', alt: 'Venting Flex Fit multi sistem',               bg: '#f3f2f1' },
+  { src: '/naslovna-3.png', alt: 'Venting komercijalni kasetni klima uređaji',  bg: '#e9e9ea' },
+  { src: '/naslovna-5.png', alt: 'Venting sobni rekuperator',                   bg: '#eaeef2' },
 ]
 
 const DELAY = 4800
@@ -32,7 +34,8 @@ export default function HeroSlider() {
 
   const touchXRef = useRef(0)
 
-  const isDark = current >= 2
+  // Svi baneri su svetli → tamne tačkice na svima.
+  const isDark = false
 
   return (
     <section
@@ -66,7 +69,10 @@ export default function HeroSlider() {
               src={slide.src}
               alt={slide.alt}
               fill
-              style={{ objectFit: 'cover', objectPosition: 'center' }}
+              // contain (not cover): the slides are ~16:9 but the band is wider, so
+              // cover would crop the bottom feature-icon row. The slide bg colour is
+              // matched to each image's edges, so it fills the sides seamlessly.
+              style={{ objectFit: 'contain', objectPosition: 'center' }}
               priority={i === 0}
               sizes="100vw"
             />

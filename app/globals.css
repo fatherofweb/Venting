@@ -41,11 +41,14 @@
 }
 
 /* ── Hero section responsive height ── */
-/* Natural image ratio ~1700/920 — section auto-scales with viewport width */
+/* The slides are complete ~1.87:1 marketing banners shown in full (contain) — no
+   cropping. Height tracks that ratio (100/1.87 ≈ 53vw) so the band matches the
+   banner and there are no side gutters up to ~1170px wide; above that a max-height
+   caps it and the slide bg colour (matched to each banner's edges) fills the sides.
+   Width is pinned to 100% so the height cap never collapses the width. */
 .hero-section {
-  aspect-ratio: 85 / 46;
-  max-height: 460px;
-  min-height: 160px;
+  width: 100%;
+  height: min(53vw, 620px);
 }
 
 /* ── WeRecommend grid responsive row heights ── */
