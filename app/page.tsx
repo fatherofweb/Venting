@@ -11,6 +11,21 @@ import type { Product } from '@/lib/sync'
 
 export const dynamic = 'force-dynamic'
 
+/**
+ * Istaknuti proizvodi u sekciji „Najprodavaniji".
+ *
+ * Nemamo podatke o stvarnoj prodaji, pa su ovo ručno izabrani reprezentativni
+ * modeli (po jedan iz kućnog, komercijalnog i multi programa, svi sa bogatim
+ * specifikacijama za karticu). Da promeniš izbor — samo zameni šifre artikala
+ * (acIdent). Redosled ovde = redosled na sajtu. Prikazuju se bez obzira na
+ * zalihu (sajt je katalog/izlog, ne prodavnica sa korpom).
+ */
+const FEATURED_IDS = [
+  '01KLK001900', // GLORY PRO VSGPAU-09HRFN8 — kućni split
+  '02KKO000657', // VCD1-24HRFM8 — komercijalni kasetni
+  '03MLT000836', // VCA3U-18HRFM8 — multi split kasetni
+]
+
 const NAV_CATEGORY_MAP: string[][] = [
   ['01KLK', '03MLT'],
   ['02KKO', '04VRF', '08VNTZAV'],
@@ -29,38 +44,32 @@ function visibleSpecCount(p: Product): number {
 }
 
 function pickBestSellers(products: Product[]): Product[] {
-  const inStock = products.filter((p) => p.inStock && p.image)
+  const byId = new Map(products.map((p) => [p.id, p]))
   const picks: Product[] = []
   const usedIds = new Set<string>()
 
-  // Try each main category; only pick products that have at least 1 visible spec on the card
-  for (const codes of NAV_CATEGORY_MAP.slice(0, 4)) {
-    const candidates = inStock
-      .filter((p) => codes.includes(p.category) && visibleSpecCount(p) > 0)
-      .sort((a, b) => visibleSpecCount(b) - visibleSpecCount(a))
-    if (candidates.length > 0 && !usedIds.has(candidates[0].id)) {
-      picks.push(candidates[0])
-      usedIds.add(candidates[0].id)
-    }
-    if (picks.length === 3) break
-  }
-
-  // Fill remaining slots from any inStock+image product with visible specs
-  if (picks.length < 3) {
-    const withSpecs = inStock
-      .filter((p) => !usedIds.has(p.id) && visibleSpecCount(p) > 0)
-      .sort((a, b) => visibleSpecCount(b) - visibleSpecCount(a))
-    for (const p of withSpecs) {
+  // 1) Hand-picked featured models, in order
+  for (const id of FEATURED_IDS) {
+    const p = byId.get(id)
+    if (p?.image && !usedIds.has(p.id)) {
       picks.push(p)
       usedIds.add(p.id)
-      if (picks.length === 3) break
     }
   }
 
-  // Last resort: any inStock+image product
+  // 2) Fallback — if a featured id is missing, fill with the richest-spec products
+  //    (prefer in stock) so the row always has three cards.
   if (picks.length < 3) {
-    for (const p of inStock) {
-      if (!usedIds.has(p.id)) { picks.push(p); usedIds.add(p.id) }
+    const fallback = products
+      .filter((p) => p.image && !usedIds.has(p.id) && visibleSpecCount(p) > 0)
+      .sort(
+        (a, b) =>
+          Number(b.inStock) - Number(a.inStock) ||
+          visibleSpecCount(b) - visibleSpecCount(a)
+      )
+    for (const p of fallback) {
+      picks.push(p)
+      usedIds.add(p.id)
       if (picks.length === 3) break
     }
   }
