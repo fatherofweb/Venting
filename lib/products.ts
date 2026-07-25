@@ -7,13 +7,11 @@
  *
  * KV keys:
  *   venting:products:v1     — full SyncResult
- *   venting:image-cache:v1  — filename→URL map, persists across syncs
  */
 
 import type { SyncResult, Product, Category } from './sync'
 
 const KV_KEY = 'venting:products:v1'
-const IMAGE_CACHE_KEY = 'venting:image-cache:v1'
 
 // ── Storage helpers ───────────────────────────────────────────────────────────
 
@@ -21,35 +19,9 @@ async function kvAvailable(): Promise<boolean> {
   return !!(process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN)
 }
 
-// ── Image cache (persists between syncs to avoid re-querying WP) ─────────────
-
 function dataPath(filename: string): string {
   const { join } = require('path') as typeof import('path')
   return join(process.cwd(), 'public', 'data', filename)
-}
-
-export async function loadImageCache(): Promise<Record<string, string>> {
-  if (await kvAvailable()) {
-    const { kv } = await import('@vercel/kv')
-    return (await kv.get<Record<string, string>>(IMAGE_CACHE_KEY)) ?? {}
-  }
-  try {
-    const { readFile } = await import('fs/promises')
-    const raw = await readFile(dataPath('image-cache.json'), 'utf-8')
-    return JSON.parse(raw) as Record<string, string>
-  } catch {
-    return {}
-  }
-}
-
-export async function saveImageCache(cache: Record<string, string>): Promise<void> {
-  if (await kvAvailable()) {
-    const { kv } = await import('@vercel/kv')
-    await kv.set(IMAGE_CACHE_KEY, cache)
-    return
-  }
-  const { writeFile } = await import('fs/promises')
-  await writeFile(dataPath('image-cache.json'), JSON.stringify(cache, null, 2), 'utf-8')
 }
 
 export async function loadSyncResult(): Promise<SyncResult | null> {

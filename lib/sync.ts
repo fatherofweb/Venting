@@ -1,19 +1,15 @@
 /**
  * Core sync logic — runs both in the Vercel Cron route and the local CLI script.
- * Fetches all VENTING-brand products from the SteelSoft API, joins specs,
- * and resolves product image URLs via the public WordPress media library on steelsoft.rs.
- *
- * Image resolution is cached persistently (Vercel KV / local file) so subsequent
- * daily syncs only query the WP API for filenames that have never been seen before,
- * keeping runtime well under the Vercel Hobby 60-second function limit.
+ * Fetches products + specs from the SteelSoft API and keeps only the current 2026
+ * VENTING offer (see product-filter.mjs). Every kept product is attached its local
+ * watermark-free catalogue photo from lib/image-overrides.mjs — the site serves no
+ * external product images, so the whole thing stays well under the Vercel 60s limit.
  */
 
-import { loadImageCache, saveImageCache } from './products'
+import { overrideImage } from './image-overrides.mjs'
+import { isCatalogProduct } from './product-filter.mjs'
 
 const STEELSOFT_BASE = 'http://mail.steelsoft.rs:51337'
-const WP_MEDIA_BASE = 'https://steelsoft.rs/wp-json/wp/v2/media'
-const IMAGE_CONCURRENCY = 15
-const BRAND_FILTER = 'VENTING'
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -75,53 +71,6 @@ async function fetchSteelSoft<T>(path: string): Promise<T> {
   return res.json() as Promise<T>
 }
 
-// ── WordPress media resolver ──────────────────────────────────────────────────
-
-type WPMedia = { source_url: string }
-
-/**
- * Resolves only filenames not already in the persistent cache.
- * Returns an updated cache record with any new entries merged in.
- */
-async function resolveNewImages(
-  filenames: string[],
-  existingCache: Record<string, string>
-): Promise<Record<string, string>> {
-  const unique = [...new Set(filenames.filter(Boolean))]
-
-  // Only query WP for filenames we haven't seen before
-  const unknown = unique.filter((f) => !(f in existingCache))
-  console.log(
-    `[sync] Image cache: ${unique.length - unknown.length} hits, ${unknown.length} need lookup`
-  )
-
-  if (unknown.length === 0) return existingCache
-
-  const newEntries: Record<string, string> = {}
-
-  for (let i = 0; i < unknown.length; i += IMAGE_CONCURRENCY) {
-    const batch = unknown.slice(i, i + IMAGE_CONCURRENCY)
-    await Promise.all(
-      batch.map(async (filename) => {
-        try {
-          const searchTerm = filename.replace(/\.[^.]+$/, '')
-          const url = `${WP_MEDIA_BASE}?search=${encodeURIComponent(searchTerm)}&per_page=3&orderby=date&order=desc`
-          const res = await fetch(url, { cache: 'no-store' })
-          if (!res.ok) return
-          const items = (await res.json()) as WPMedia[]
-          // Store URL if found, empty string if not — so we never look this up again
-          newEntries[filename] = items.length > 0 ? items[0].source_url : ''
-        } catch {
-          // Non-fatal — will retry next sync
-        }
-      })
-    )
-  }
-
-  console.log(`[sync] Resolved ${Object.keys(newEntries).length} new images`)
-  return { ...existingCache, ...newEntries }
-}
-
 // ── Raw API types ─────────────────────────────────────────────────────────────
 
 interface RawProduct {
@@ -137,10 +86,15 @@ interface RawProduct {
   Model: string
   Tip: string
   anStock: string
+  acShowAtena: string      // "T" = SteelSoft marks it for the web
   adTimeChg: string | null
-  _acWebImage: string | null
   Inverter: string
   EnergetskiRazred: string | null
+}
+
+/** Fields overrideImage() needs from a raw record. */
+function imageInput(p: RawProduct) {
+  return { name: p.acName ?? '', model: p.Model ?? '', subcategoryName: p.acCLassif2Name ?? '' }
 }
 
 interface RawSpec {
@@ -166,10 +120,13 @@ export async function syncProducts(): Promise<SyncResult> {
   const allSpecs = await fetchSteelSoft<RawSpec[]>('/api/karakteristike/')
   console.log(`[sync] Got ${allSpecs.length} specs`)
 
-  // Filter to VENTING brand only
-  const ventingRaw = allProducts.filter((p) => p.Brand?.trim() === BRAND_FILTER)
+  // The 2026 catalogue *is* the set of photos the client sent — a product only
+  // exists on the site if one of those photos covers it (see product-filter.mjs).
+  // Everything else (discontinued series, spare parts, items with no photo) is
+  // left out by design.
+  const ventingRaw = allProducts.filter(isCatalogProduct)
   const ventingIds = new Set(ventingRaw.map((p) => p.acIdent))
-  console.log(`[sync] ${ventingRaw.length} VENTING products`)
+  console.log(`[sync] ${ventingRaw.length} VENTING catalogue products`)
 
   // Build specs map (acIdent → Spec[]), sorted by official order
   const specsMap = new Map<string, Spec[]>()
@@ -192,13 +149,8 @@ export async function syncProducts(): Promise<SyncResult> {
     specsMap.set(id, specs.sort((a, b) => a.order - b.order))
   }
 
-  // Load persistent image cache, resolve only new filenames, save updated cache
-  const imageFilenames = ventingRaw.map((p) => p._acWebImage ?? '').filter(Boolean)
-  const existingCache = await loadImageCache()
-  const updatedCache = await resolveNewImages(imageFilenames, existingCache)
-  await saveImageCache(updatedCache)
-
-  // Build final product list
+  // Build final product list. Every item is guaranteed a local catalogue photo
+  // by the filter above, so overrideImage() never returns null here.
   const products: Product[] = ventingRaw.map((p) => ({
     id: p.acIdent,
     name: p.acName ?? '',
@@ -211,7 +163,7 @@ export async function syncProducts(): Promise<SyncResult> {
     barcode: p.acCode?.trim() ?? '',
     inStock: parseFloat(p.anStock ?? '0') > 0,
     lastUpdated: p.adTimeChg ?? '',
-    image: p._acWebImage ? (updatedCache[p._acWebImage] || null) : null,
+    image: overrideImage(imageInput(p)),
     energyClass: p.EnergetskiRazred ?? '',
     inverter: p.Inverter ?? '',
     specs: specsMap.get(p.acIdent) ?? [],

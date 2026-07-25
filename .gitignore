@@ -8,6 +8,9 @@ out/
 # Generated data files (populated at runtime by sync)
 public/data/
 
+# Original hi-res catalogue photos (source backups, not used by the site)
+catalog-originals-2026/
+
 # Environment variables
 .env
 .env.local
