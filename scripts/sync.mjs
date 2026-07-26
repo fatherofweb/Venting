@@ -39,8 +39,13 @@ try {
 
 // ── Config ────────────────────────────────────────────────────────────────────
 const STEELSOFT_BASE = 'http://mail.steelsoft.rs:51337'
-const STEELSOFT_USER = process.env.STEELSOFT_USER ?? ''
-const STEELSOFT_PASS = process.env.STEELSOFT_PASS ?? ""
+const STEELSOFT_USER = process.env.STEELSOFT_USER
+const STEELSOFT_PASS = process.env.STEELSOFT_PASS
+
+if (!STEELSOFT_USER || !STEELSOFT_PASS) {
+  console.error('\n✗ STEELSOFT_USER i STEELSOFT_PASS moraju biti postavljeni (npr. u .env.local)\n')
+  process.exit(1)
+}
 
 const STEELSOFT_AUTH = Buffer.from(`${STEELSOFT_USER}:${STEELSOFT_PASS}`).toString('base64')
 

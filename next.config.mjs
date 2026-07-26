@@ -1,13 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'steelsoft.rs',
-        pathname: '/wp-content/uploads/**',
-      },
-    ],
+    // All product/hero images are now local; serve modern formats for smaller payloads.
+    formats: ['image/avif', 'image/webp'],
   },
 }
 

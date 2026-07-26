@@ -57,8 +57,11 @@ export interface SyncResult {
 // ── SteelSoft API ─────────────────────────────────────────────────────────────
 
 function steelsoftAuth(): string {
-  const user = process.env.STEELSOFT_USER ?? ''
-  const pass = process.env.STEELSOFT_PASS ?? ""
+  const user = process.env.STEELSOFT_USER
+  const pass = process.env.STEELSOFT_PASS
+  if (!user || !pass) {
+    throw new Error('STEELSOFT_USER and STEELSOFT_PASS must be set in the environment')
+  }
   return Buffer.from(`${user}:${pass}`).toString('base64')
 }
 

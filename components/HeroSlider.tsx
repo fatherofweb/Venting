@@ -6,10 +6,10 @@ import Image from 'next/image'
 // bg = svetla neutrala uzeta sa ivice svakog banera; puni bočne trake na širokim
 // ekranima tako da se stope sa slikom (svi baneri su svetli).
 const SLIDES = [
-  { src: '/naslovna-1.png', alt: 'Venting Glory Pro klima uređaj',             bg: '#e7e6e9' },
-  { src: '/naslovna-2.png', alt: 'Venting Flex Fit multi sistem',               bg: '#f3f2f1' },
-  { src: '/naslovna-3.png', alt: 'Venting komercijalni kasetni klima uređaji',  bg: '#e9e9ea' },
-  { src: '/naslovna-5.png', alt: 'Venting sobni rekuperator',                   bg: '#eaeef2' },
+  { src: '/naslovna-1.webp', alt: 'Venting Glory Pro klima uređaj',             bg: '#e7e6e9' },
+  { src: '/naslovna-2.webp', alt: 'Venting Flex Fit multi sistem',               bg: '#f3f2f1' },
+  { src: '/naslovna-3.webp', alt: 'Venting komercijalni kasetni klima uređaji',  bg: '#e9e9ea' },
+  { src: '/naslovna-5.webp', alt: 'Venting sobni rekuperator',                   bg: '#eaeef2' },
 ]
 
 const DELAY = 4800
