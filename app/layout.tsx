@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Montserrat, Archivo_Black } from 'next/font/google'
 import { LanguageProvider } from '@/lib/LanguageContext'
 import CookieConsent from '@/components/CookieConsent'
+import { SITE_URL, SITE_NAME, SITE_DESCRIPTION } from '@/lib/site'
 import './globals.css'
 
 /* Only load the 3 weights actually used: body(400), bold UI(700), display headings(900) */
@@ -23,9 +24,32 @@ const archivoBlack = Archivo_Black({
 })
 
 export const metadata: Metadata = {
-  title: 'Venting | Klima uređaji i ventilacija',
-  description:
-    'Venting - ovlašćeni distributer opreme za klimatizaciju i ventilaciju. Kućni i komercijalni klima uređaji, rekuperatori, fancoili i dodatna oprema.',
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: 'Venting | Klima uređaji i ventilacija',
+    template: '%s | Venting',
+  },
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  alternates: { canonical: '/' },
+  openGraph: {
+    type: 'website',
+    locale: 'sr_RS',
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: 'Venting | Klima uređaji i ventilacija',
+    description: SITE_DESCRIPTION,
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Venting | Klima uređaji i ventilacija',
+    description: SITE_DESCRIPTION,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, 'max-image-preview': 'large' },
+  },
 }
 
 export default function RootLayout({

@@ -7,9 +7,10 @@ import Blog from '@/components/Blog'
 import Footer from '@/components/Footer'
 import FloatingButtons from '@/components/FloatingButtons'
 import { getProducts } from '@/lib/products'
+import { SITE_URL, SITE_NAME, SITE_DESCRIPTION } from '@/lib/site'
 import type { Product } from '@/lib/sync'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 3600
 
 /**
  * Istaknuti proizvodi u sekciji „Najprodavaniji".
@@ -109,6 +110,33 @@ function computeCategoryStats(products: Product[]): CategoryStat[] {
   })
 }
 
+function OrganizationJsonLd() {
+  const data = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Organization',
+        '@id': `${SITE_URL}/#organization`,
+        name: SITE_NAME,
+        url: SITE_URL,
+        logo: `${SITE_URL}/logo.png`,
+        description: SITE_DESCRIPTION,
+      },
+      {
+        '@type': 'WebSite',
+        '@id': `${SITE_URL}/#website`,
+        url: SITE_URL,
+        name: SITE_NAME,
+        publisher: { '@id': `${SITE_URL}/#organization` },
+        inLanguage: 'sr-RS',
+      },
+    ],
+  }
+  return (
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />
+  )
+}
+
 export default async function Home() {
   const products = await getProducts()
   const bestSellers = pickBestSellers(products)
@@ -116,6 +144,7 @@ export default async function Home() {
 
   return (
     <>
+      <OrganizationJsonLd />
       <Header />
       <main>
         <HeroSlider />
