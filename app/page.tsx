@@ -34,6 +34,18 @@ const NAV_CATEGORY_MAP: string[][] = [
   ['11OPRPOK', '08VNTDISEL', '17ALT', '12MATELE', '12MATKON', '11OPREEO', '15DEL', 'SRBZR', 'URDEL', 'POLUR'],
 ]
 
+/**
+ * Reprezentativna slika za pločicu svake kategorije u sekciji „Preporučujemo".
+ * Indeks = broj taba (0 Kućna, 1 Komercijalna, 2 Rekuperatori, 3 Fancoili).
+ * Ako je prazno, uzima se slika prvog artikla iz te kategorije.
+ */
+const CATEGORY_IMAGE: (string | null)[] = [
+  '/images/products/glory-pro.jpg',                 // Kućna rešenja
+  '/images/products/vca3u-vcd1-kasetni-split-r32.jpg', // Komercijalna rešenja
+  '/images/products/vhbqit-rekuperator.jpg',        // Rekuperatori
+  '/images/products/h2km4-kasetni-fancoil.jpg',     // Fancoili
+]
+
 function visibleSpecCount(p: Product): number {
   let n = (p.energyClass ? 1 : 0) + (p.inverter ? 1 : 0)
   for (const s of p.specs) {
@@ -81,13 +93,19 @@ export interface CategoryStat {
   tab: number
   count: number
   withImage: number
+  image: string | null
 }
 
 function computeCategoryStats(products: Product[]): CategoryStat[] {
-  const inStock = products.filter((p) => p.inStock)
   return NAV_CATEGORY_MAP.map((codes, tab) => {
-    const group = inStock.filter((p) => codes.includes(p.category))
-    return { tab, count: group.length, withImage: group.filter((p) => p.image).length }
+    const group = products.filter((p) => codes.includes(p.category))
+    const image = CATEGORY_IMAGE[tab] ?? group.find((p) => p.image)?.image ?? null
+    return {
+      tab,
+      count: group.length,
+      withImage: group.filter((p) => p.image).length,
+      image,
+    }
   })
 }
 

@@ -25,6 +25,7 @@ export default function Footer() {
   ]
 
   return (
+    <>
     <footer className="bg-white border-t border-brand-border pt-14 pb-8">
       <div className="max-w-site mx-auto px-10">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-12 mb-12">
@@ -50,5 +51,21 @@ export default function Footer() {
         </div>
       </div>
     </footer>
+
+    {/* Signature strip below the footer */}
+    <div className="bg-[#0e0f11] py-3.5 text-center">
+      <p className="font-sans text-[12px] text-white/55">
+        Izrada sajta:{' '}
+        <a
+          href="https://fatherofweb.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-semibold text-white/85 transition-colors duration-150 hover:text-white"
+        >
+          Father of Web
+        </a>
+      </p>
+    </div>
+    </>
   )
 }
