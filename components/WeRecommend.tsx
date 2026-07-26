@@ -26,11 +26,11 @@ function Tile({
   return (
     <a
       href={`/shop?tab=${tab}`}
-      className={`group relative flex flex-col rounded-[10px] overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_36px_rgba(0,0,0,0.16)] ${className}`}
+      className={`group relative flex flex-col rounded-[10px] overflow-hidden bg-white border border-black/[0.07] cursor-pointer transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_38px_rgba(0,0,0,0.14)] ${className}`}
       style={{ textDecoration: 'none' }}
     >
-      {/* Image area — device shown in full (contain), no cropping */}
-      <div className="relative flex-1 min-h-0" style={{ background: 'linear-gradient(160deg, #f6f9fb 0%, #e3e9ef 100%)' }}>
+      {/* Image area — white to match the photo background, device shown in full */}
+      <div className="relative flex-1 min-h-0 bg-white">
         {cat?.image && (
           <div className="absolute inset-0 p-4 sm:p-5">
             <div className="relative w-full h-full">
@@ -47,8 +47,8 @@ function Tile({
         )}
       </div>
 
-      {/* Solid label bar */}
-      <div className="relative bg-white border-t border-black/[0.06] px-5 py-4">
+      {/* Label bar */}
+      <div className="relative border-t border-black/[0.07] px-5 py-4">
         <span className="block font-sans text-[10px] font-medium uppercase tracking-widest mb-1 text-[#7a8794]">
           {cat?.count ?? 0} proizvoda
         </span>
