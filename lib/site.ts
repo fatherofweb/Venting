@@ -4,7 +4,7 @@
  * falls back to the current Vercel domain.
  */
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://venting-seven.vercel.app'
+  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ventinghvac.com'
 ).replace(/\/+$/, '')
 
 export const SITE_NAME = 'Venting'
