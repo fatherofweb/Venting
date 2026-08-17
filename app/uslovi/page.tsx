@@ -14,15 +14,15 @@ export default function UsloviPage() {
             Uslovi korišćenja
           </h1>
           <div style={{ fontSize: 15, color: '#6b7280', lineHeight: 1.8, display: 'flex', flexDirection: 'column', gap: 24 }}>
-            <p>Korišćenjem sajta venting.rs slažete se sa sledećim uslovima. Ukoliko se ne slažete, molimo vas da ne koristite sajt.</p>
+            <p>Korišćenjem sajta ventinghvac.com slažete se sa sledećim uslovima. Ukoliko se ne slažete, molimo vas da ne koristite sajt.</p>
             <h2 style={{ fontSize: 16, fontWeight: 700, color: '#0c0c0d', margin: 0 }}>Sadržaj sajta</h2>
-            <p>Sav sadržaj na sajtu (tekst, slike, logotipi) vlasništvo je kompanije Venting d.o.o. i zaštićen je autorskim pravima. Nije dozvoljena upotreba bez pismene dozvole.</p>
+            <p>Sav sadržaj na sajtu (tekst, slike, logotipi) vlasništvo je kompanije Steelsoft d.o.o. i zaštićen je autorskim pravima. Nije dozvoljena upotreba bez pismene dozvole.</p>
             <h2 style={{ fontSize: 16, fontWeight: 700, color: '#0c0c0d', margin: 0 }}>Tačnost informacija</h2>
-            <p>Trudimo se da informacije budu tačne i ažurne. Venting d.o.o. ne preuzima odgovornost za eventualne greške u opisima proizvoda ili tehničkim specifikacijama.</p>
+            <p>Trudimo se da informacije budu tačne i ažurne. Steelsoft d.o.o. ne preuzima odgovornost za eventualne greške u opisima proizvoda ili tehničkim specifikacijama.</p>
             <h2 style={{ fontSize: 16, fontWeight: 700, color: '#0c0c0d', margin: 0 }}>Izmene uslova</h2>
             <p>Zadržavamo pravo izmene ovih uslova u bilo kom trenutku. Izmene stupaju na snagu objavljivanjem na sajtu.</p>
             <h2 style={{ fontSize: 16, fontWeight: 700, color: '#0c0c0d', margin: 0 }}>Kontakt</h2>
-            <p>Za pitanja u vezi sa uslovima korišćenja: <a href="mailto:info@venting.rs" style={{ color: '#0c0c0d' }}>info@venting.rs</a></p>
+            <p>Za pitanja u vezi sa uslovima korišćenja: <a href="mailto:prodaja@steelsoft.rs" style={{ color: '#0c0c0d' }}>prodaja@steelsoft.rs</a></p>
           </div>
         </div>
       </main>

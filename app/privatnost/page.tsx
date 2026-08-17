@@ -14,7 +14,7 @@ export default function PrivatnostPage() {
             Politika privatnosti
           </h1>
           <div style={{ fontSize: 15, color: '#6b7280', lineHeight: 1.8, display: 'flex', flexDirection: 'column', gap: 24 }}>
-            <p>Venting d.o.o. poštuje privatnost korisnika svog sajta. Ova politika objašnjava koje podatke prikupljamo, kako ih koristimo i štitimo.</p>
+            <p>Steelsoft d.o.o. poštuje privatnost korisnika svog sajta. Ova politika objašnjava koje podatke prikupljamo, kako ih koristimo i štitimo.</p>
             <h2 style={{ fontSize: 16, fontWeight: 700, color: '#0c0c0d', margin: 0 }}>Podaci koje prikupljamo</h2>
             <p>Prikupljamo isključivo podatke koje nam dobrovoljno dostavite putem kontakt forme (ime, e-mail, poruka). Ne prikupljamo podatke o plaćanju niti posebne kategorije ličnih podataka.</p>
             <h2 style={{ fontSize: 16, fontWeight: 700, color: '#0c0c0d', margin: 0 }}>Svrha obrade</h2>
@@ -22,7 +22,7 @@ export default function PrivatnostPage() {
             <h2 style={{ fontSize: 16, fontWeight: 700, color: '#0c0c0d', margin: 0 }}>Kolačići</h2>
             <p>Sajt koristi neophodne kolačiće za ispravno funkcionisanje. Detaljnije informacije dostupne su u <a href="/kolacici" style={{ color: '#0c0c0d' }}>Politici kolačića</a>.</p>
             <h2 style={{ fontSize: 16, fontWeight: 700, color: '#0c0c0d', margin: 0 }}>Kontakt</h2>
-            <p>Za sva pitanja u vezi sa zaštitom podataka, kontaktirajte nas na <a href="mailto:info@venting.rs" style={{ color: '#0c0c0d' }}>info@venting.rs</a>.</p>
+            <p>Za sva pitanja u vezi sa zaštitom podataka, kontaktirajte nas na <a href="mailto:prodaja@steelsoft.rs" style={{ color: '#0c0c0d' }}>prodaja@steelsoft.rs</a>.</p>
           </div>
         </div>
       </main>

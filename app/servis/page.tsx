@@ -2,13 +2,12 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import FloatingButtons from '@/components/FloatingButtons'
 
-export const metadata = { title: 'Servis i podrska - Venting' }
+export const metadata = { title: 'Servis i podrška' }
 
 const SERVICES = [
   { title: 'Ugradnja', desc: 'Profesionalna ugradnja klima uređaja, rekuperatora i fancoila od strane sertifikovanih tehničara.' },
   { title: 'Redovno održavanje', desc: 'Godišnji servis i čišćenje uređaja za optimalne performanse i duži vek trajanja.' },
   { title: 'Popravka i dijagnostika', desc: 'Brza dijagnostika i popravka kvara na svim Venting uređajima.' },
-  { title: 'Garancijski servis', desc: 'Besplatan garancijski servis za sve uređaje kupljene kod ovlašćenih prodavaca.' },
 ]
 
 export default function ServisPage() {
@@ -37,10 +36,10 @@ export default function ServisPage() {
           <div style={{ background: '#f9fafb', borderRadius: 20, padding: '40px 36px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 32, flexWrap: 'wrap' }}>
             <div>
               <h2 style={{ fontSize: 20, fontWeight: 700, color: '#0c0c0d', marginBottom: 8 }}>Zakažite servis</h2>
-              <p style={{ fontSize: 14, color: '#6b7280', margin: 0 }}>Kontaktirajte nas i dogovorimo termin koji vam odgovara.</p>
+              <p style={{ fontSize: 14, color: '#6b7280', margin: 0 }}>Pišite nam na servis@steelsoft.rs i dogovorimo termin koji vam odgovara.</p>
             </div>
-            <a href="/kontakt" style={{ background: '#0c0c0d', color: '#fff', borderRadius: 12, padding: '14px 32px', fontSize: 14, fontWeight: 600, textDecoration: 'none', whiteSpace: 'nowrap' }}>
-              Kontaktirajte nas
+            <a href="mailto:servis@steelsoft.rs?subject=Zakazivanje%20servisa" style={{ background: '#0c0c0d', color: '#fff', borderRadius: 12, padding: '14px 32px', fontSize: 14, fontWeight: 600, textDecoration: 'none', whiteSpace: 'nowrap' }}>
+              servis@steelsoft.rs
             </a>
           </div>
         </div>

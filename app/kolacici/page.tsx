@@ -14,7 +14,7 @@ export default function KolaciciPage() {
             Politika kolačića
           </h1>
           <div style={{ fontSize: 15, color: '#6b7280', lineHeight: 1.8, display: 'flex', flexDirection: 'column', gap: 24 }}>
-            <p>Sajt venting.rs koristi kolačiće (cookies) kako bi osigurao ispravno funkcionisanje i poboljšao korisničko iskustvo.</p>
+            <p>Sajt ventinghvac.com koristi kolačiće (cookies) kako bi osigurao ispravno funkcionisanje i poboljšao korisničko iskustvo.</p>
             <h2 style={{ fontSize: 16, fontWeight: 700, color: '#0c0c0d', margin: 0 }}>Šta su kolačići?</h2>
             <p>Kolačići su male tekstualne datoteke koje se čuvaju na vašem uređaju kada posećujete sajt. Koristimo ih za pamćenje vaših podešavanja (npr. odabrani jezik).</p>
             <h2 style={{ fontSize: 16, fontWeight: 700, color: '#0c0c0d', margin: 0 }}>Koje kolačiće koristimo?</h2>
@@ -22,7 +22,7 @@ export default function KolaciciPage() {
             <h2 style={{ fontSize: 16, fontWeight: 700, color: '#0c0c0d', margin: 0 }}>Upravljanje kolačićima</h2>
             <p>Možete obrisati ili blokirati kolačiće u podešavanjima vašeg pregledača. Imajte u vidu da blokiranje kolačića može uticati na funkcionalnost sajta.</p>
             <h2 style={{ fontSize: 16, fontWeight: 700, color: '#0c0c0d', margin: 0 }}>Kontakt</h2>
-            <p>Za pitanja: <a href="mailto:info@venting.rs" style={{ color: '#0c0c0d' }}>info@venting.rs</a></p>
+            <p>Za pitanja: <a href="mailto:prodaja@steelsoft.rs" style={{ color: '#0c0c0d' }}>prodaja@steelsoft.rs</a></p>
           </div>
         </div>
       </main>

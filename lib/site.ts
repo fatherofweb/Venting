@@ -9,4 +9,4 @@ export const SITE_URL = (
 
 export const SITE_NAME = 'Venting'
 export const SITE_DESCRIPTION =
-  'Venting — ovlašćeni distributer opreme za klimatizaciju i ventilaciju. Kućni i komercijalni klima uređaji, rekuperatori, fancoili i dodatna oprema.'
+  'Venting — oprema za klimatizaciju i ventilaciju: kućni i komercijalni klima uređaji, multi-split sistemi, rekuperatori, fancoili, vazdušne zavese i dodatna oprema.'
