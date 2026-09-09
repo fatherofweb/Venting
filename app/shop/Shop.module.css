@@ -581,10 +581,16 @@
 /* ── Filteri ─────────────────────────────────────────────── */
 .filterBar {
   display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 7px;
+  margin-bottom: 16px;
+}
+
+.filterActions {
+  display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 14px;
-  flex-wrap: wrap;
 }
 
 .filterToggle {
@@ -660,7 +666,6 @@
 }
 
 .filterCount {
-  margin-left: auto;
   font-size: 12.5px;
   color: #8b95a1;
 }
@@ -723,6 +728,13 @@
   color: #fff;
 }
 
+/* mora posle .chip:hover — inače hover oboji tekst u crno na crnoj podlozi */
+.chipOn:hover {
+  background: #2a3038;
+  border-color: #2a3038;
+  color: #fff;
+}
+
 .chipCount {
   font-size: 11px;
   font-weight: 600;
@@ -739,7 +751,6 @@
     border-radius: 12px;
   }
   .filterCount {
-    width: 100%;
-    margin-left: 0;
+    font-size: 12px;
   }
 }

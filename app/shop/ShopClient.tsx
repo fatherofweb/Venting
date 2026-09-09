@@ -396,24 +396,26 @@ export default function ShopClient({ products }: Props) {
         {/* ── Filteri ───────────────────────────────────── */}
         {filters.length > 0 && (
           <div className={styles.filterBar}>
-            <button
-              className={`${styles.filterToggle} ${filtersOpen ? styles.filterToggleOpen : ''}`}
-              onClick={() => setFiltersOpen((o) => !o)}
-              aria-expanded={filtersOpen}
-            >
-              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true" className={styles.filterIcon}>
-                <path d="M2 4h12M4.5 8h7M7 12h2" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
-              </svg>
-              Filteri
-              {activeCount > 0 && <span className={styles.filterBadge}>{activeCount}</span>}
-              <span className={styles.filterChevron} aria-hidden="true">⌄</span>
-            </button>
+            <div className={styles.filterActions}>
+              {activeCount > 0 && (
+                <button className={styles.filterReset} onClick={() => { setActiveFilters({}); setPage(1) }}>
+                  Poništi
+                </button>
+              )}
 
-            {activeCount > 0 && (
-              <button className={styles.filterReset} onClick={() => { setActiveFilters({}); setPage(1) }}>
-                Poništi
+              <button
+                className={`${styles.filterToggle} ${filtersOpen ? styles.filterToggleOpen : ''}`}
+                onClick={() => setFiltersOpen((o) => !o)}
+                aria-expanded={filtersOpen}
+              >
+                <svg viewBox="0 0 16 16" fill="none" aria-hidden="true" className={styles.filterIcon}>
+                  <path d="M2 4h12M4.5 8h7M7 12h2" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+                </svg>
+                Filteri
+                {activeCount > 0 && <span className={styles.filterBadge}>{activeCount}</span>}
+                <span className={styles.filterChevron} aria-hidden="true">⌄</span>
               </button>
-            )}
+            </div>
 
             <span className={styles.filterCount}>
               {filtered.length} {filtered.length === 1 ? 'proizvod' : 'proizvoda'}
