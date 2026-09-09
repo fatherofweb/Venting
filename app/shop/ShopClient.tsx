@@ -4,24 +4,29 @@ import { useState, useMemo, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import { useLanguage } from '@/lib/LanguageContext'
 import type { Product } from '@/lib/sync'
+import { NAV_CATEGORY_MAP, CATEGORIES } from '@/lib/categories.mjs'
+import { buildFilters, matchesFilters } from '@/lib/filters.mjs'
+
+type FilterOption = { value: string; count: number }
+type ShopFilter = {
+  key: string
+  label: string
+  get: (p: Product) => string | null
+  options: FilterOption[]
+}
 import styles from './Shop.module.css'
 
-const NAV_CATEGORY_MAP: string[][] = [
-  ['01KLK', '03MLT'],
-  ['02KKO', '04VRF', '08VNTZAV'],
-  ['08VNTREK'],
-  ['07KVVTGT'],
-  ['11OPRPOK', '08VNTDISEL', '17ALT', '12MATELE', '12MATKON', '11OPREEO', '15DEL', 'SRBZR', 'URDEL', 'POLUR'],
-]
-
 // Index = activeTab + 1 (0 = all, 1-5 = tabs 0-4)
+// indeks = activeTab + 1 (tab -1 = svi proizvodi)
 const HERO_BG_CLASSES = [
-  'slide-bg-1',
-  'slide-bg-1',
-  'slide-bg-2',
-  'slide-bg-3',
-  'slide-bg-4',
-  'slide-bg-5',
+  'slide-bg-1', // svi
+  'slide-bg-1', // kućna
+  'slide-bg-2', // komercijalna
+  'slide-bg-4', // flex fit
+  'slide-bg-3', // rekuperatori
+  'slide-bg-5', // fancoili
+  'slide-bg-2', // kondenz pumpe
+  'slide-bg-4', // dodatna oprema
 ]
 
 /* ── SVG Visuals per category ─────────────────────────────── */
@@ -153,7 +158,16 @@ function AccessoriesVisual() {
   )
 }
 
-const VISUALS = [AllVisual, HomeVisual, CommercialVisual, RecuperatorVisual, FancoilVisual, AccessoriesVisual]
+const VISUALS = [
+  AllVisual,           // svi
+  HomeVisual,          // kućna
+  CommercialVisual,    // komercijalna
+  CommercialVisual,    // flex fit
+  RecuperatorVisual,   // rekuperatori
+  FancoilVisual,       // fancoili
+  AccessoriesVisual,   // kondenz pumpe
+  AccessoriesVisual,   // dodatna oprema
+]
 
 /* ── CategoryHero ─────────────────────────────────────────── */
 
@@ -240,6 +254,8 @@ export default function ShopClient({ products }: Props) {
   const [activeTab, setActiveTab] = useState(-1)
   const [page, setPage] = useState(1)
   const [search, setSearch] = useState('')
+  const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({})
+  const [filtersOpen, setFiltersOpen] = useState(false)
   const tabsRef = useRef<HTMLDivElement>(null)
   const tabButtonRefs = useRef<(HTMLButtonElement | null)[]>([])
   const productsRef = useRef<HTMLElement>(null)
@@ -259,20 +275,36 @@ export default function ShopClient({ products }: Props) {
     container.scrollTo({ left: targetScroll, behavior: 'smooth' })
   }, [activeTab])
 
-  const inStockProducts = useMemo(() => products.filter((p) => p.inStock), [products])
+  // Sajt je izlog kataloga 2026 — prikazuju se svi artikli, a zaliha je filter.
+  const inStockProducts = products
 
   const tabCounts = useMemo(
-    () => NAV_CATEGORY_MAP.map((codes) => inStockProducts.filter((p) => codes.includes(p.category)).length),
-    [inStockProducts]
+    () => NAV_CATEGORY_MAP.map((codes) => products.filter((p) => codes.includes(p.category)).length),
+    [products]
+  )
+
+  // Artikli aktivnog taba (pre filtera) — iz njih se izvode opcije filtera.
+  const tabProducts = useMemo(
+    () =>
+      activeTab === -1
+        ? products
+        : products.filter((p) => NAV_CATEGORY_MAP[activeTab].includes(p.category)),
+    [products, activeTab]
+  )
+
+  const filters: ShopFilter[] = useMemo(
+    () => buildFilters(activeTab === -1 ? null : NAV_CATEGORY_MAP[activeTab], tabProducts),
+    [activeTab, tabProducts]
   )
 
   const filtered = useMemo(() => {
-    const inStock = products.filter((p) => p.inStock)
-    const byTab = activeTab === -1 ? inStock : inStock.filter((p) => NAV_CATEGORY_MAP[activeTab].includes(p.category))
-    if (!search.trim()) return byTab
+    let list = tabProducts.filter((p) => matchesFilters(p, filters, activeFilters))
     const q = search.trim().toLowerCase()
-    return byTab.filter((p) => p.name.toLowerCase().includes(q))
-  }, [products, activeTab, search])
+    if (q) list = list.filter((p) => p.name.toLowerCase().includes(q))
+    return list
+  }, [tabProducts, filters, activeFilters, search])
+
+  const activeCount = Object.values(activeFilters).reduce((n, v) => n + v.length, 0)
 
   const totalPages = Math.ceil(filtered.length / PAGE_SIZE)
   const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
@@ -281,6 +313,19 @@ export default function ShopClient({ products }: Props) {
     setActiveTab(tab)
     setPage(1)
     setSearch('')
+    setActiveFilters({})
+  }
+
+  function toggleFilter(key: string, value: string) {
+    setActiveFilters((prev) => {
+      const cur = prev[key] ?? []
+      const next = cur.includes(value) ? cur.filter((v) => v !== value) : [...cur, value]
+      const out = { ...prev }
+      if (next.length) out[key] = next
+      else delete out[key]
+      return out
+    })
+    setPage(1)
   }
 
   function changePage(next: number) {
@@ -306,6 +351,7 @@ export default function ShopClient({ products }: Props) {
             </button>
 
             {t.nav.map((label, i) => (
+              CATEGORIES[i]?.href ? null : (
               <button
                 key={i}
                 ref={el => { tabButtonRefs.current[i + 1] = el }}
@@ -315,6 +361,7 @@ export default function ShopClient({ products }: Props) {
                 <span className={styles.tabName}>{label}</span>
                 <span className={styles.tabCount}>{tabCounts[i]}</span>
               </button>
+              )
             ))}
           </div>
         </div>
@@ -345,6 +392,60 @@ export default function ShopClient({ products }: Props) {
             </p>
           )}
         </div>
+
+        {/* ── Filteri ───────────────────────────────────── */}
+        {filters.length > 0 && (
+          <div className={styles.filterBar}>
+            <button
+              className={`${styles.filterToggle} ${filtersOpen ? styles.filterToggleOpen : ''}`}
+              onClick={() => setFiltersOpen((o) => !o)}
+              aria-expanded={filtersOpen}
+            >
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true" className={styles.filterIcon}>
+                <path d="M2 4h12M4.5 8h7M7 12h2" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+              </svg>
+              Filteri
+              {activeCount > 0 && <span className={styles.filterBadge}>{activeCount}</span>}
+              <span className={styles.filterChevron} aria-hidden="true">⌄</span>
+            </button>
+
+            {activeCount > 0 && (
+              <button className={styles.filterReset} onClick={() => { setActiveFilters({}); setPage(1) }}>
+                Poništi
+              </button>
+            )}
+
+            <span className={styles.filterCount}>
+              {filtered.length} {filtered.length === 1 ? 'proizvod' : 'proizvoda'}
+            </span>
+          </div>
+        )}
+
+        {filters.length > 0 && filtersOpen && (
+          <div className={styles.filterPanel}>
+            {filters.map((f) => (
+              <div key={f.key} className={styles.filterGroup}>
+                <span className={styles.filterLabel}>{f.label}</span>
+                <div className={styles.filterChips}>
+                  {f.options.map((o) => {
+                    const on = (activeFilters[f.key] ?? []).includes(o.value)
+                    return (
+                      <button
+                        key={o.value}
+                        className={`${styles.chip} ${on ? styles.chipOn : ''}`}
+                        onClick={() => toggleFilter(f.key, o.value)}
+                        aria-pressed={on}
+                      >
+                        {o.value}
+                        <span className={styles.chipCount}>{o.count}</span>
+                      </button>
+                    )
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
 
         {/* ── Product grid ──────────────────────────────── */}
         {filtered.length === 0 ? (

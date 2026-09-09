@@ -1,0 +1,344 @@
+.page {
+  background: #fff;
+}
+
+.inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+/* ── Hero ─────────────────────────────────────────────── */
+.hero {
+  padding: 72px 0 56px;
+  background: linear-gradient(168deg, #f7f9fb 0%, #eef2f6 100%);
+  border-bottom: 1px solid #e6ebf0;
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: #c0392f;
+  margin: 0 0 16px;
+}
+
+.title {
+  font-family: var(--font-archivo-black), sans-serif;
+  font-size: clamp(28px, 4vw, 46px);
+  font-weight: 900;
+  line-height: 1.12;
+  color: #0c0c0d;
+  margin: 0 0 20px;
+  max-width: 20ch;
+}
+
+.lead {
+  font-size: 17px;
+  line-height: 1.75;
+  color: #4b5563;
+  max-width: 62ch;
+  margin: 0 0 32px;
+}
+
+.apps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 12px 28px;
+}
+
+.appItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: #1f2937;
+  line-height: 1.5;
+}
+
+.appDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: #c0392f;
+  flex-shrink: 0;
+  margin-top: 7px;
+}
+
+/* ── Sekcije ──────────────────────────────────────────── */
+.section {
+  padding: 68px 0;
+}
+
+.sectionAlt {
+  background: #f7f9fb;
+  border-top: 1px solid #eef2f6;
+  border-bottom: 1px solid #eef2f6;
+}
+
+.h2 {
+  font-family: var(--font-archivo-black), sans-serif;
+  font-size: clamp(21px, 2.4vw, 28px);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #0c0c0d;
+  margin: 0 0 12px;
+}
+
+.sub {
+  font-size: 15.5px;
+  line-height: 1.75;
+  color: #6b7280;
+  max-width: 68ch;
+  margin: 0 0 36px;
+}
+
+.figure {
+  background: #fff;
+  border: 1px solid #e9eef3;
+  border-radius: 14px;
+  padding: 26px;
+  display: flex;
+  justify-content: center;
+}
+
+.figureImg {
+  width: 100%;
+  height: auto;
+  max-width: 900px;
+}
+
+/* ── Kartice proizvoda ────────────────────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 18px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.13);
+}
+
+.cardImg {
+  position: relative;
+  height: 190px;
+  background: #fff;
+  padding: 18px;
+}
+
+.cardBody {
+  border-top: 1px solid rgba(0, 0, 0, 0.07);
+  padding: 18px 20px 20px;
+}
+
+.cardTip {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: #8b95a1;
+  margin-bottom: 6px;
+}
+
+.cardModel {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+  color: #0c0c0d;
+  margin-bottom: 14px;
+}
+
+.cardSpecs {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.cardSpecs > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 12.5px;
+}
+
+.cardSpecs dt {
+  color: #8b95a1;
+}
+
+.cardSpecs dd {
+  margin: 0;
+  color: #374151;
+  font-weight: 600;
+  text-align: right;
+}
+
+/* ── Funkcije ─────────────────────────────────────────── */
+.fnGrid {
+  margin-top: 36px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 18px;
+}
+
+.fnCard {
+  background: #f7f9fb;
+  border: 1px solid #eef2f6;
+  border-radius: 12px;
+  padding: 24px 22px;
+}
+
+.fnTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0c0c0d;
+  margin: 0 0 10px;
+}
+
+.fnText {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* ── Tabela specifikacije ─────────────────────────────── */
+.tableWrap {
+  overflow-x: auto;
+  background: #fff;
+  border: 1px solid #e9eef3;
+  border-radius: 14px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  min-width: 620px;
+}
+
+.table thead th {
+  background: #0f1216;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 14px 16px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.table thead th:first-child {
+  border-top-left-radius: 13px;
+}
+
+.table thead th:last-child {
+  border-top-right-radius: 13px;
+}
+
+.table tbody tr:nth-child(even) {
+  background: #fafbfc;
+}
+
+.table tbody th {
+  text-align: left;
+  font-weight: 600;
+  color: #0c0c0d;
+  padding: 12px 16px;
+  border-top: 1px solid #eef2f6;
+  white-space: nowrap;
+}
+
+.table tbody td {
+  color: #4b5563;
+  padding: 12px 16px;
+  border-top: 1px solid #eef2f6;
+  white-space: nowrap;
+}
+
+.unit {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  color: #9aa4b0;
+  margin-top: 2px;
+}
+
+.note {
+  margin: 16px 0 0;
+  font-size: 13px;
+  color: #8b95a1;
+}
+
+/* ── CTA ──────────────────────────────────────────────── */
+.cta {
+  background: #0f1216;
+  padding: 62px 0;
+  text-align: center;
+}
+
+.ctaTitle {
+  font-family: var(--font-archivo-black), sans-serif;
+  font-size: clamp(20px, 2.4vw, 28px);
+  font-weight: 900;
+  color: #fff;
+  margin: 0 0 10px;
+}
+
+.ctaText {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0 0 26px;
+}
+
+.ctaBtn {
+  display: inline-block;
+  background: #fff;
+  color: #0c0c0d;
+  border-radius: 12px;
+  padding: 14px 34px;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.ctaBtn:hover {
+  opacity: 0.85;
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding: 52px 0 44px;
+  }
+  .section {
+    padding: 48px 0;
+  }
+  .inner {
+    padding: 0 20px;
+  }
+  .figure {
+    padding: 14px;
+  }
+}

@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect, useMemo } from 'react'
 import Image from 'next/image'
 import { useLanguage } from '@/lib/LanguageContext'
+import { categoryHref } from '@/lib/categories.mjs'
 import { type Locale } from '@/lib/i18n'
 
 /* ─── Search helpers ─────────────────────────────────────── */
@@ -165,7 +166,7 @@ export default function Header() {
               <ul className="flex items-center gap-9">
                 {t.nav.map((item, i) => (
                   <li key={item}>
-                    <a href={`/shop?tab=${i}`} className="font-sans text-[13px] font-bold uppercase tracking-nav text-brand-text whitespace-nowrap hover:opacity-60 transition-opacity">
+                    <a href={categoryHref(i)} className="font-sans text-[13px] font-bold uppercase tracking-nav text-brand-text whitespace-nowrap hover:opacity-60 transition-opacity">
                       {item}
                     </a>
                   </li>
@@ -351,7 +352,7 @@ export default function Header() {
                 {t.nav.map((item, i) => (
                   <li key={item}>
                     <a
-                      href={`/shop?tab=${i}`}
+                      href={categoryHref(i)}
                       onClick={() => setMenuOpen(false)}
                       className="flex items-center justify-between group py-3 border-b border-[#f0f0f0] last:border-0"
                     >

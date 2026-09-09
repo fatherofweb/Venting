@@ -12,7 +12,8 @@
 import { writeFile, readFile, mkdir } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
-import { overrideImage } from '../lib/image-overrides.mjs'
+import { overrideImage, overrideRule } from '../lib/image-overrides.mjs'
+import { VIRTUAL_CATEGORY_NAMES } from '../lib/categories.mjs'
 import { isCatalogProduct } from '../lib/product-filter.mjs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -105,6 +106,14 @@ for (const [id, specs] of specsMap) {
   specsMap.set(id, specs.sort((a, b) => a.order - b.order))
 }
 
+// Virtuelne kategorije (FLEXFIT, KONDENZ) dolaze iz pravila u image-overrides.
+const catOf = (p) => {
+  const virt = overrideRule(imageInput(p))?.category
+  return virt
+    ? { code: virt, name: VIRTUAL_CATEGORY_NAMES[virt] ?? virt }
+    : { code: p.acClassif ?? '', name: p.acClassifName ?? '' }
+}
+
 // Build products — svaki artikal po definiciji filtera ima lokalnu katalog-sliku,
 // pa overrideImage() ovde nikad ne vraća null.
 console.log('\n[5/5] Building products…')
@@ -113,8 +122,8 @@ const products = ventingRaw.map((p) => ({
   name: p.acName ?? '',
   model: p.Model ?? '',
   type: p.Tip ?? '',
-  category: p.acClassif ?? '',
-  categoryName: p.acClassifName ?? '',
+  category: catOf(p).code,
+  categoryName: catOf(p).name,
   subcategory: p.acClassif2 ?? '',
   subcategoryName: p.acCLassif2Name ?? '',
   barcode: p.acCode?.trim() ?? '',

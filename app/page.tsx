@@ -8,6 +8,7 @@ import Footer from '@/components/Footer'
 import FloatingButtons from '@/components/FloatingButtons'
 import { getProducts } from '@/lib/products'
 import { SITE_URL, SITE_NAME, SITE_DESCRIPTION } from '@/lib/site'
+import { NAV_CATEGORY_MAP } from '@/lib/categories.mjs'
 import type { Product } from '@/lib/sync'
 
 export const revalidate = 3600
@@ -27,25 +28,24 @@ const FEATURED_IDS = [
   '03MLT000836', // VCA3U-18HRFM8 — multi split kasetni
 ]
 
-const NAV_CATEGORY_MAP: string[][] = [
-  ['01KLK', '03MLT'],
-  ['02KKO', '04VRF', '08VNTZAV'],
-  ['08VNTREK'],
-  ['07KVVTGT'],
-  ['11OPRPOK', '08VNTDISEL', '17ALT', '12MATELE', '12MATKON', '11OPREEO', '15DEL', 'SRBZR', 'URDEL', 'POLUR'],
-]
+
 
 /**
- * Reprezentativna slika za pločicu svake kategorije u sekciji „Preporučujemo".
- * Indeks = broj taba (0 Kućna, 1 Komercijalna, 2 Rekuperatori, 3 Fancoili).
- * Ako je prazno, uzima se slika prvog artikla iz te kategorije.
+ * Reprezentativna slika za pločicu svake kategorije. Indeks = broj taba
+ * (vidi lib/categories.mjs). Ako je prazno, uzima se slika prvog artikla.
  */
 const CATEGORY_IMAGE: (string | null)[] = [
-  '/images/products/glory-pro.jpg',                 // Kućna rešenja
-  '/images/products/vca3u-vcd1-kasetni-split-r32.jpg', // Komercijalna rešenja
-  '/images/products/vhbqit-rekuperator.jpg',        // Rekuperatori
-  '/images/products/h2km4-kasetni-fancoil.jpg',     // Fancoili
+  '/images/products/glory-pro.jpg',                    // 0 Kućna rešenja
+  '/images/products/vca3u-vcd1-kasetni-split-r32.jpg', // 1 Komercijalna rešenja
+  '/images/products/hidro-box.jpg',                    // 2 Flex Fit
+  '/images/products/vhbqit-rekuperator.jpg',           // 3 Rekuperatori
+  '/images/products/h2km4-kasetni-fancoil.jpg',        // 4 Fancoili
+  '/images/products/kondenz-pumpa-pc-24a.jpg',         // 5 Kondenz pumpe
+  '/images/products/termostat-vbc103.jpg',             // 6 Dodatna oprema
 ]
+
+/** Kategorije prikazane u sekciji „Preporučujemo" (bento od 4 pločice). */
+const RECOMMEND_TABS = [0, 1, 3, 4]
 
 function visibleSpecCount(p: Product): number {
   let n = (p.energyClass ? 1 : 0) + (p.inverter ? 1 : 0)
@@ -149,7 +149,7 @@ export default async function Home() {
       <main>
         <HeroSlider />
         <BestSeller products={bestSellers} />
-        <WeRecommend categoryStats={categoryStats} />
+        <WeRecommend categoryStats={RECOMMEND_TABS.map((t) => categoryStats[t])} />
         <Disclaimer />
         <Blog />
       </main>

@@ -6,7 +6,8 @@
  * external product images, so the whole thing stays well under the Vercel 60s limit.
  */
 
-import { overrideImage } from './image-overrides.mjs'
+import { overrideImage, overrideRule } from './image-overrides.mjs'
+import { VIRTUAL_CATEGORY_NAMES } from './categories.mjs'
 import { isCatalogProduct } from './product-filter.mjs'
 
 const STEELSOFT_BASE = 'http://mail.steelsoft.rs:51337'
@@ -152,6 +153,14 @@ export async function syncProducts(): Promise<SyncResult> {
     specsMap.set(id, specs.sort((a, b) => a.order - b.order))
   }
 
+  // Virtuelne kategorije (FLEXFIT, KONDENZ) dolaze iz pravila u image-overrides.
+  const catOf = (p: RawProduct) => {
+    const virt = overrideRule(imageInput(p))?.category
+    return virt
+      ? { code: virt, name: (VIRTUAL_CATEGORY_NAMES as Record<string, string>)[virt] ?? virt }
+      : { code: p.acClassif ?? '', name: p.acClassifName ?? '' }
+  }
+
   // Build final product list. Every item is guaranteed a local catalogue photo
   // by the filter above, so overrideImage() never returns null here.
   const products: Product[] = ventingRaw.map((p) => ({
@@ -159,8 +168,8 @@ export async function syncProducts(): Promise<SyncResult> {
     name: p.acName ?? '',
     model: p.Model ?? '',
     type: p.Tip ?? '',
-    category: p.acClassif ?? '',
-    categoryName: p.acClassifName ?? '',
+    category: catOf(p).code,
+    categoryName: catOf(p).name,
     subcategory: p.acClassif2 ?? '',
     subcategoryName: p.acCLassif2Name ?? '',
     barcode: p.acCode?.trim() ?? '',

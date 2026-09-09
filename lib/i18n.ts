@@ -60,13 +60,15 @@ export type T = {
 export const translations: Record<Locale, T> = {
   /* ─── Serbian ─────────────────────────────────────────── */
   sr: {
-    nav: ['Kućna rešenja', 'Komercijalna rešenja', 'Rekuperatori', 'Fancoili', 'Dodatna oprema'],
+    nav: ['Kućna rešenja', 'Komercijalna rešenja', 'Flex Fit', 'Rekuperatori', 'Fancoili', 'Kondenz pumpe', 'Dodatna oprema'],
     heroCta: 'Pogledaj više',
     heroSlides: [
       { eyebrow: 'Pametna klima', title: ['Venting', 'Klima uređaji'] },
       { eyebrow: 'Više od hlađenja', title: ['Venting', 'Komercijalna', 'rešenja'] },
+      { eyebrow: 'Jedan sistem, više funkcija', title: ['Venting', 'Flex Fit'] },
       { eyebrow: 'Čist vazduh', title: ['Venting', 'Rekuperatori'] },
       { eyebrow: 'Efikasno grejanje', title: ['Venting', 'Fancoili'] },
+      { eyebrow: 'Odvod kondenzata', title: ['Venting', 'Kondenz pumpe'] },
       { eyebrow: 'Kompletna oprema', title: ['Venting', 'Dodatna oprema'] },
     ],
     bestSeller: 'Najprodavaniji',
@@ -121,13 +123,15 @@ export const translations: Record<Locale, T> = {
 
   /* ─── English ─────────────────────────────────────────── */
   en: {
-    nav: ['Home Solutions', 'Commercial Solutions', 'Recuperators', 'Fan Coils', 'Additional Equipment'],
+    nav: ['Home Solutions', 'Commercial Solutions', 'Flex Fit', 'Recuperators', 'Fan Coils', 'Condensate Pumps', 'Additional Equipment'],
     heroCta: 'See more',
     heroSlides: [
       { eyebrow: 'Smart climate', title: ['Venting', 'Air Conditioning'] },
       { eyebrow: 'Beyond cooling', title: ['Venting', 'Commercial', 'Solutions'] },
+      { eyebrow: 'One system, many functions', title: ['Venting', 'Flex Fit'] },
       { eyebrow: 'Clean air', title: ['Venting', 'Recuperators'] },
       { eyebrow: 'Efficient heating', title: ['Venting', 'Fan Coils'] },
+      { eyebrow: 'Condensate removal', title: ['Venting', 'Condensate Pumps'] },
       { eyebrow: 'Complete equipment', title: ['Venting', 'Additional Equipment'] },
     ],
     bestSeller: 'Best Sellers',
