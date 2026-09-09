@@ -162,11 +162,11 @@ export default function Header() {
             </a>
 
             {/* Primary nav — desktop */}
-            <nav className="hidden lg:flex flex-1 items-center justify-center" aria-label="Primary navigation">
-              <ul className="flex items-center gap-9">
+            <nav className="hidden xl:flex flex-1 items-center justify-center" aria-label="Primary navigation">
+              <ul className="flex items-center gap-4 2xl:gap-6">
                 {t.nav.map((item, i) => (
                   <li key={item}>
-                    <a href={categoryHref(i)} className="font-sans text-[13px] font-bold uppercase tracking-nav text-brand-text whitespace-nowrap hover:opacity-60 transition-opacity">
+                    <a href={categoryHref(i)} className="font-sans text-[11px] 2xl:text-[12px] font-bold uppercase tracking-[0.3px] 2xl:tracking-[0.8px] text-brand-text whitespace-nowrap hover:opacity-60 transition-opacity">
                       {item}
                     </a>
                   </li>
