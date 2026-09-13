@@ -8,6 +8,7 @@
 
 import { overrideImage, overrideRule } from './image-overrides.mjs'
 import { VIRTUAL_CATEGORY_NAMES } from './categories.mjs'
+import { catalogInfo, toSpecs } from './catalog-info.mjs'
 import { isCatalogProduct } from './product-filter.mjs'
 
 const STEELSOFT_BASE = 'http://mail.steelsoft.rs:51337'
@@ -37,6 +38,7 @@ export interface Product {
   inStock: boolean
   lastUpdated: string
   image: string | null
+  description: string
   energyClass: string
   inverter: string
   specs: Spec[]
@@ -94,6 +96,17 @@ interface RawProduct {
   adTimeChg: string | null
   Inverter: string
   EnergetskiRazred: string | null
+}
+
+/**
+ * SteelSoft polje `Model` je za dobar deo artikala smeće (jedno slovo "O", "U", "S").
+ * Prava oznaka modela stoji u nazivu, odmah iza reči VENTING.
+ */
+function displayModel(p: RawProduct): string {
+  const raw = (p.Model ?? '').trim()
+  if (raw.length >= 3) return raw
+  const m = (p.acName ?? '').match(/\bVENTING\s+(\S+)/i)
+  return m ? m[1] : ''
 }
 
 /** Fields overrideImage() needs from a raw record. */
@@ -163,10 +176,13 @@ export async function syncProducts(): Promise<SyncResult> {
 
   // Build final product list. Every item is guaranteed a local catalogue photo
   // by the filter above, so overrideImage() never returns null here.
-  const products: Product[] = ventingRaw.map((p) => ({
+  const products: Product[] = ventingRaw.map((p) => {
+    const info = catalogInfo({ name: p.acName, model: p.Model })
+    const apiSpecs = specsMap.get(p.acIdent) ?? []
+    return {
     id: p.acIdent,
-    name: p.acName ?? '',
-    model: p.Model ?? '',
+    name: (p.acName ?? '').trim(),
+    model: displayModel(p),
     type: p.Tip ?? '',
     category: catOf(p).code,
     categoryName: catOf(p).name,
@@ -176,10 +192,13 @@ export async function syncProducts(): Promise<SyncResult> {
     inStock: parseFloat(p.anStock ?? '0') > 0,
     lastUpdated: p.adTimeChg ?? '',
     image: overrideImage(imageInput(p)),
+    description: info?.description ?? '',
     energyClass: p.EnergetskiRazred ?? '',
     inverter: p.Inverter ?? '',
-    specs: specsMap.get(p.acIdent) ?? [],
-  }))
+    // API za neke grupe ne vraća karakteristike — tada uzimamo one iz kataloga
+    specs: apiSpecs.length > 0 ? apiSpecs : info ? toSpecs(info.specs) : [],
+    }
+  })
 
   // Build category list sorted by count
   const catMap = new Map<string, { name: string; count: number }>()

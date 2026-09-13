@@ -14,6 +14,7 @@ import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 import { overrideImage, overrideRule } from '../lib/image-overrides.mjs'
 import { VIRTUAL_CATEGORY_NAMES } from '../lib/categories.mjs'
+import { catalogInfo, toSpecs } from '../lib/catalog-info.mjs'
 import { isCatalogProduct } from '../lib/product-filter.mjs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -58,6 +59,17 @@ async function fetchSteelSoft(path) {
   })
   if (!res.ok) throw new Error(`SteelSoft ${path} → HTTP ${res.status}`)
   return res.json()
+}
+
+/**
+ * SteelSoft polje `Model` je za dobar deo artikala smeće (jedno slovo "O", "U", "S").
+ * Prava oznaka modela stoji u nazivu, odmah iza reči VENTING.
+ */
+function displayModel(p) {
+  const raw = (p.Model ?? '').trim()
+  if (raw.length >= 3) return raw
+  const m = (p.acName ?? '').match(/\bVENTING\s+(\S+)/i)
+  return m ? m[1] : ''
 }
 
 /** Polja koja overrideImage() traži iz sirovog zapisa. */
@@ -117,10 +129,13 @@ const catOf = (p) => {
 // Build products — svaki artikal po definiciji filtera ima lokalnu katalog-sliku,
 // pa overrideImage() ovde nikad ne vraća null.
 console.log('\n[5/5] Building products…')
-const products = ventingRaw.map((p) => ({
+const products = ventingRaw.map((p) => {
+  const info = catalogInfo({ name: p.acName, model: p.Model })
+  const apiSpecs = specsMap.get(p.acIdent) ?? []
+  return {
   id: p.acIdent,
-  name: p.acName ?? '',
-  model: p.Model ?? '',
+  name: (p.acName ?? '').trim(),
+  model: displayModel(p),
   type: p.Tip ?? '',
   category: catOf(p).code,
   categoryName: catOf(p).name,
@@ -130,10 +145,13 @@ const products = ventingRaw.map((p) => ({
   inStock: parseFloat(p.anStock ?? '0') > 0,
   lastUpdated: p.adTimeChg ?? '',
   image: overrideImage(imageInput(p)),
+  description: info?.description ?? '',
   energyClass: p.EnergetskiRazred ?? '',
   inverter: p.Inverter ?? '',
-  specs: specsMap.get(p.acIdent) ?? [],
-}))
+  // API za neke grupe ne vraća karakteristike — tada uzimamo one iz kataloga
+  specs: apiSpecs.length > 0 ? apiSpecs : info ? toSpecs(info.specs) : [],
+  }
+})
 
 // Build categories
 const catMap = new Map()

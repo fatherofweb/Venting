@@ -430,3 +430,12 @@
   .relatedGrid  { grid-template-columns: 1fr; gap: 12px; }
   .relatedImageWrap { height: 140px; }
 }
+
+/* Opis proizvoda (podaci iz kataloga 2026) */
+.description {
+  margin: 18px 0 14px;
+  font-size: 15px;
+  line-height: 1.75;
+  color: #4b5563;
+  max-width: 56ch;
+}

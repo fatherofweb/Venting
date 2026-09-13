@@ -97,6 +97,11 @@ export default function ProductDetail({ product, related = [] }: Props) {
               <p className={styles.model}>{product.model}</p>
             )}
 
+            {/* Opis iz kataloga 2026 (kad ga API nema) */}
+            {product.description && (
+              <p className={styles.description}>{product.description}</p>
+            )}
+
             {/* Subcategory + barcode meta row */}
             <div className={styles.metaRow}>
               {product.subcategoryName && (

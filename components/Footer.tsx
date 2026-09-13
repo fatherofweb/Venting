@@ -1,20 +1,24 @@
 'use client'
 
 import { useLanguage } from '@/lib/LanguageContext'
+import { categoryHref } from '@/lib/categories.mjs'
 
 export default function Footer() {
   const { t } = useLanguage()
 
+  // Izvedeno iz lib/categories.mjs da linkovi ne zastare kad se doda kategorija.
   const ASSORTMENT_HREFS = [
-    '/shop?tab=0',
-    '/shop?tab=1',
-    '/shop?tab=2',
-    '/shop?tab=3',
-    '/shop?tab=1',
-    '/shop?tab=4',
+    categoryHref(0), // Kućni klima uređaji
+    categoryHref(1), // Komercijalni klima uređaji
+    categoryHref(2), // Flex Fit (sopstvena stranica)
+    categoryHref(3), // Rekuperatori
+    categoryHref(4), // Fancoili
+    categoryHref(5), // Kondenz pumpe
+    categoryHref(1), // Vazdušne zavese — u komercijalnom programu
+    categoryHref(6), // Dodatna oprema
   ]
 
-  const ABOUT_HREFS = ['/o-nama', '/privatnost', '/uslovi', '/kolacici']
+  const ABOUT_HREFS = ['/o-nama', '/blog', '/privatnost', '/uslovi', '/kolacici']
 
   const SUPPORT_HREFS = ['/servis', '/kontakt']
 
