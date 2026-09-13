@@ -22,9 +22,11 @@ export default function BlogPage() {
             Blog
           </h1>
 
+          {/* Članci još nemaju sadržaj, pa kartice nisu linkovane — vodile bi na 404.
+              Kad stignu tekstovi: vrati <a href={`/blog/${post.slug}`}> i dodaj rutu app/blog/[slug]. */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
             {POSTS.map((post, i) => (
-              <a key={post.slug} href={`/blog/${post.slug}`} style={{ display: 'block', textDecoration: 'none', color: 'inherit', borderTop: i === 0 ? '1px solid #edf1f5' : undefined, borderBottom: '1px solid #edf1f5', padding: '36px 0' }}>
+              <div key={post.slug} style={{ display: 'block', color: 'inherit', borderTop: i === 0 ? '1px solid #edf1f5' : undefined, borderBottom: '1px solid #edf1f5', padding: '36px 0' }}>
                 <div style={{ display: 'flex', gap: 48, alignItems: 'flex-start' }}>
                   <div style={{ flexShrink: 0, width: 120 }}>
                     <span style={{ fontSize: 11, fontWeight: 600, color: '#6b7280' }}>{post.date}</span>
@@ -34,9 +36,13 @@ export default function BlogPage() {
                     <h2 style={{ fontSize: 18, fontWeight: 700, color: '#0c0c0d', marginBottom: 10, lineHeight: 1.3 }}>{post.title}</h2>
                     <p style={{ fontSize: 14, color: '#6b7280', lineHeight: 1.7, margin: 0 }}>{post.excerpt}</p>
                   </div>
-                  <div style={{ flexShrink: 0, color: '#9ca3af', fontSize: 20, alignSelf: 'center' }}>→</div>
+                  <div style={{ flexShrink: 0, alignSelf: 'center' }}>
+                    <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', color: '#9ca3af', border: '1px solid #e5e7eb', borderRadius: 999, padding: '4px 12px', whiteSpace: 'nowrap' }}>
+                      Uskoro
+                    </span>
+                  </div>
                 </div>
-              </a>
+              </div>
             ))}
           </div>
         </div>
