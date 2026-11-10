@@ -80,7 +80,7 @@ export default function HeroSlider() {
         ))}
       </div>
 
-      {/* Dots — colour adapts to light vs dark slide */}
+      {/* Dots - colour adapts to light vs dark slide */}
       <div
         className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-10 px-3 py-2 rounded-full"
         style={{

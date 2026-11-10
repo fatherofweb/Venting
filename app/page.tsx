@@ -18,14 +18,14 @@ export const revalidate = 3600
  *
  * Nemamo podatke o stvarnoj prodaji, pa su ovo ručno izabrani reprezentativni
  * modeli (po jedan iz kućnog, komercijalnog i multi programa, svi sa bogatim
- * specifikacijama za karticu). Da promeniš izbor — samo zameni šifre artikala
+ * specifikacijama za karticu). Da promeniš izbor - samo zameni šifre artikala
  * (acIdent). Redosled ovde = redosled na sajtu. Prikazuju se bez obzira na
  * zalihu (sajt je katalog/izlog, ne prodavnica sa korpom).
  */
 const FEATURED_IDS = [
-  '01KLK001900', // GLORY PRO VSGPAU-09HRFN8 — kućni split
-  '02KKO000657', // VCD1-24HRFM8 — komercijalni kasetni
-  '03MLT000836', // VCA3U-18HRFM8 — multi split kasetni
+  '01KLK001900', // GLORY PRO VSGPAU-09HRFN8 - kućni split
+  '02KKO000657', // VCD1-24HRFM8 - komercijalni kasetni
+  '03MLT000836', // VCA3U-18HRFM8 - multi split kasetni
 ]
 
 
@@ -70,7 +70,7 @@ function pickBestSellers(products: Product[]): Product[] {
     }
   }
 
-  // 2) Fallback — if a featured id is missing, fill with the richest-spec products
+  // 2) Fallback - if a featured id is missing, fill with the richest-spec products
   //    (prefer in stock) so the row always has three cards.
   if (picks.length < 3) {
     const fallback = products

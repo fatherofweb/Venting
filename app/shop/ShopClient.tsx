@@ -29,7 +29,7 @@ const HERO_BG_CLASSES = [
   'slide-bg-4', // dodatna oprema
 ]
 
-/* ── SVG Visuals per category ─────────────────────────────── */
+/* SVG Visuals per category */
 
 function AllVisual() {
   return (
@@ -169,7 +169,7 @@ const VISUALS = [
   AccessoriesVisual,   // dodatna oprema
 ]
 
-/* ── CategoryHero ─────────────────────────────────────────── */
+/* CategoryHero */
 
 interface HeroProps {
   activeTab: number
@@ -202,7 +202,7 @@ function CategoryHero({ activeTab, t, locale }: HeroProps) {
   )
 }
 
-/* ── Spec picker (mirrors BestSeller logic) ───────────────── */
+/* Spec picker (mirrors BestSeller logic) */
 
 function pickCardSpecs(product: Product): { label: string; value: string }[] {
   const specs: { label: string; value: string }[] = []
@@ -221,7 +221,7 @@ function pickCardSpecs(product: Product): { label: string; value: string }[] {
   return specs.slice(0, 3)
 }
 
-/* ── Icons ────────────────────────────────────────────────── */
+/* Icons */
 
 function ArrowIcon() {
   return (
@@ -243,7 +243,7 @@ function ImagePlaceholder() {
   )
 }
 
-/* ── Main ─────────────────────────────────────────────────── */
+/* Main */
 
 interface Props { products: Product[] }
 
@@ -275,7 +275,7 @@ export default function ShopClient({ products }: Props) {
     container.scrollTo({ left: targetScroll, behavior: 'smooth' })
   }, [activeTab])
 
-  // Sajt je izlog kataloga 2026 — prikazuju se svi artikli, a zaliha je filter.
+  // Sajt je izlog kataloga 2026 - prikazuju se svi artikli, a zaliha je filter.
   const inStockProducts = products
 
   const tabCounts = useMemo(
@@ -283,7 +283,7 @@ export default function ShopClient({ products }: Props) {
     [products]
   )
 
-  // Artikli aktivnog taba (pre filtera) — iz njih se izvode opcije filtera.
+  // Artikli aktivnog taba (pre filtera) - iz njih se izvode opcije filtera.
   const tabProducts = useMemo(
     () =>
       activeTab === -1
@@ -338,7 +338,7 @@ export default function ShopClient({ products }: Props) {
       <CategoryHero activeTab={activeTab} t={t} locale={locale} />
 
       <section className={styles.section} id="products" ref={productsRef}>
-        {/* ── Category tabs ─────────────────────────────── */}
+        {/* Category tabs */}
         <div className={styles.tabsOuter}>
           <div className={styles.tabs} ref={tabsRef}>
             <button
@@ -366,7 +366,7 @@ export default function ShopClient({ products }: Props) {
           </div>
         </div>
 
-        {/* ── Search filter ─────────────────────────────── */}
+        {/* Search filter */}
         <div className={styles.searchRow}>
           <div className={styles.searchWrap}>
             <svg className={styles.searchIcon} viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -392,7 +392,7 @@ export default function ShopClient({ products }: Props) {
             </p>
           )}
 
-          {/* ── Filteri ─────────────────────────────── */}
+          {/* Filteri */}
           {filters.length > 0 && (
             <div className={styles.filterBar}>
               <div className={styles.filterActions}>
@@ -449,7 +449,7 @@ export default function ShopClient({ products }: Props) {
           </div>
         )}
 
-        {/* ── Product grid ──────────────────────────────── */}
+        {/* Product grid */}
         {filtered.length === 0 ? (
           <p className={styles.empty}>{t.shop.noProducts}</p>
         ) : (
@@ -507,7 +507,7 @@ export default function ShopClient({ products }: Props) {
           </div>
         )}
 
-        {/* ── Pagination ────────────────────────────────── */}
+        {/* Pagination */}
         {totalPages > 1 && (
           <div className={styles.pagination}>
             <button

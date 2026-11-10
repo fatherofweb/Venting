@@ -8,7 +8,7 @@
   padding: 0 28px;
 }
 
-/* ── Hero ─────────────────────────────────────────────── */
+/* Hero */
 .hero {
   padding: 72px 0 56px;
   background: linear-gradient(168deg, #f7f9fb 0%, #eef2f6 100%);
@@ -70,7 +70,7 @@
   margin-top: 7px;
 }
 
-/* ── Sekcije ──────────────────────────────────────────── */
+/* Sekcije */
 .section {
   padding: 68px 0;
 }
@@ -114,7 +114,7 @@
   max-width: 900px;
 }
 
-/* ── Kartice proizvoda ────────────────────────────────── */
+/* Kartice proizvoda */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
@@ -193,7 +193,7 @@
   text-align: right;
 }
 
-/* ── Funkcije ─────────────────────────────────────────── */
+/* Funkcije */
 .fnGrid {
   margin-top: 36px;
   display: grid;
@@ -222,7 +222,7 @@
   margin: 0;
 }
 
-/* ── Tabela specifikacije ─────────────────────────────── */
+/* Tabela specifikacije */
 .tableWrap {
   overflow-x: auto;
   background: #fff;
@@ -291,7 +291,7 @@
   color: #8b95a1;
 }
 
-/* ── CTA ──────────────────────────────────────────────── */
+/* CTA */
 .cta {
   background: #0f1216;
   padding: 62px 0;

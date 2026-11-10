@@ -2,7 +2,7 @@
  * Product data access layer.
  *
  * The committed public/data/products.json is the source of truth for the
- * catalogue and its images — it ships with every deploy, so the live site is
+ * catalogue and its images - it ships with every deploy, so the live site is
  * always correct the moment the code deploys. Vercel KV (refreshed by the daily
  * cron) is used only when it is *strictly newer* than the bundled snapshot, so a
  * stale KV entry can never override a fresh deploy. Regenerate the snapshot with
@@ -15,7 +15,7 @@ import bundledData from '@/public/data/products.json'
 const KV_KEY = 'venting:products:v1'
 const BUNDLED = bundledData as unknown as SyncResult
 
-// ── Storage helpers ───────────────────────────────────────────────────────────
+// Storage helpers
 
 async function kvAvailable(): Promise<boolean> {
   return !!(process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN)
@@ -34,7 +34,7 @@ export async function loadSyncResult(): Promise<SyncResult | null> {
       const kvData = await kv.get<SyncResult>(KV_KEY)
       if (kvData?.syncedAt && kvData.syncedAt > BUNDLED.syncedAt) return kvData
     } catch {
-      // KV unreachable — fall through to the bundled snapshot
+      // KV unreachable - fall through to the bundled snapshot
     }
   }
   return BUNDLED
@@ -43,19 +43,19 @@ export async function loadSyncResult(): Promise<SyncResult | null> {
 export async function saveSyncResult(data: SyncResult): Promise<void> {
   if (await kvAvailable()) {
     const { kv } = await import('@vercel/kv')
-    // No TTL — the cron updates this manually; we never want it to auto-expire
+    // No TTL - the cron updates this manually; we never want it to auto-expire
     await kv.set(KV_KEY, data)
     return
   }
 
-  // Local dev fallback — write to public/data/products.json
+  // Local dev fallback - write to public/data/products.json
   const { writeFile, mkdir } = await import('fs/promises')
   const dir = dataPath('')
   await mkdir(dir, { recursive: true })
   await writeFile(dataPath('products.json'), JSON.stringify(data, null, 2), 'utf-8')
 }
 
-// ── Public read API ───────────────────────────────────────────────────────────
+// Public read API
 
 export async function getProducts(): Promise<Product[]> {
   const data = await loadSyncResult()

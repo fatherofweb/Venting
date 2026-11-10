@@ -58,7 +58,7 @@ export type T = {
 }
 
 export const translations: Record<Locale, T> = {
-  /* ─── Serbian ─────────────────────────────────────────── */
+  /* Serbian */
   sr: {
     nav: ['Kućna rešenja', 'Komercijalna rešenja', 'Flex Fit', 'Rekuperatori', 'Fancoili', 'Kondenz pumpe', 'Dodatna oprema'],
     heroCta: 'Pogledaj više',
@@ -121,7 +121,7 @@ export const translations: Record<Locale, T> = {
     newsletter: 'Bilten',
   },
 
-  /* ─── English ─────────────────────────────────────────── */
+  /* English */
   en: {
     nav: ['Home Solutions', 'Commercial Solutions', 'Flex Fit', 'Recuperators', 'Fan Coils', 'Condensate Pumps', 'Additional Equipment'],
     heroCta: 'See more',

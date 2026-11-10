@@ -26,7 +26,7 @@ function productDescription(p: Product): string {
     .filter((s) => s.value && (s.value + (s.unit ? ' ' + s.unit : '')).length <= 16)
     .slice(0, 4)
     .map((s) => `${s.name.replace(/:$/, '')} ${s.value}${s.unit ? ' ' + s.unit : ''}`)
-  const base = `${p.name} — ${p.categoryName}.`
+  const base = `${p.name} - ${p.categoryName}.`
   const tail = specs.length ? ` ${specs.join(', ')}.` : ''
   return (base + tail).slice(0, 200)
 }
@@ -81,7 +81,7 @@ export default async function ProductPage({ params }: Props) {
 
   // „Slični proizvodi": rangiraj po srodnosti (ista podkategorija > ista kategorija),
   // pa po zalihi. Ne zahtevamo zalihu jer je katalog izlog i mnogi modeli su van
-  // zaliha — tako sekcija uvek ima 3 relevantna artikla umesto da bude prazna.
+  // zaliha - tako sekcija uvek ima 3 relevantna artikla umesto da bude prazna.
   const allProducts = await getProducts()
   const rank = (p: (typeof allProducts)[number]) =>
     (p.subcategory && p.subcategory === product.subcategory ? 2 : 0) +

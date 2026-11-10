@@ -32,7 +32,7 @@ export default function KontaktPage() {
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
-    const subject = `Upit sa sajta${name ? ` — ${name}` : ''}`
+    const subject = `Upit sa sajta${name ? ` - ${name}` : ''}`
     const body = `Ime i prezime: ${name}\nE-pošta: ${email}\n\n${message}`
     window.location.href = `mailto:prodaja@steelsoft.rs?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
   }
@@ -47,7 +47,7 @@ export default function KontaktPage() {
             Kako možemo da pomognemo?
           </h1>
           <p style={{ fontSize: 16, color: '#6b7280', lineHeight: 1.7, marginBottom: 44 }}>
-            Pošaljite nam upit — brzo odgovaramo na sve poruke.
+            Pošaljite nam upit - brzo odgovaramo na sve poruke.
           </p>
 
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>

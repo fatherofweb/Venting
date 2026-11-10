@@ -14,7 +14,7 @@ const montserrat = Montserrat({
   preload: true,
 })
 
-/* Single display font — Archivo Black covers Panton Black Caps fallback */
+/* Single display font - Archivo Black covers Panton Black Caps fallback */
 const archivoBlack = Archivo_Black({
   subsets: ['latin'],
   weight: ['400'],

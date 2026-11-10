@@ -1,5 +1,5 @@
 /**
- * POST /api/sync  — Vercel Cron endpoint
+ * POST /api/sync  - Vercel Cron endpoint
  *
  * Vercel calls this automatically every day at 14:00 UTC (16:00 Serbian time / CEST).
  * The request carries `Authorization: Bearer <CRON_SECRET>` set by Vercel.
@@ -12,7 +12,7 @@ import { NextResponse } from 'next/server'
 import { syncProducts } from '@/lib/sync'
 import { saveSyncResult } from '@/lib/products'
 
-// Allow up to 5 minutes — capped at 60 s on Hobby plan, 300 s on Pro
+// Allow up to 5 minutes - capped at 60 s on Hobby plan, 300 s on Pro
 export const maxDuration = 300
 
 export async function GET(req: Request) {

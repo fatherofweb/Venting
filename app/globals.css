@@ -40,11 +40,11 @@
   }
 }
 
-/* ── Hero section ── */
+/* Hero section */
 /* The band is locked to the banners' own aspect ratio (1717:916 ≈ 1.874) and the
    image uses object-fit:cover, so every slide fills the full width edge-to-edge
    with no side gutters at any viewport width. Because the band ratio matches the
-   banners, cover crops essentially nothing — only naslovna-1 (slightly squarer)
+   banners, cover crops essentially nothing - only naslovna-1 (slightly squarer)
    loses a sliver of its empty top/bottom margin. No max-height: capping would make
    cover crop into the banners' bottom info bars. */
 .hero-section {
@@ -52,18 +52,18 @@
   aspect-ratio: 1717 / 916;
 }
 
-/* ── WeRecommend grid responsive row heights ── */
+/* WeRecommend grid responsive row heights */
 .wr-grid { grid-template-rows: 152px 152px; }
 @media (min-width: 640px) { .wr-grid { grid-template-rows: 248px 248px; } }
 
-/* ── Hero slide backgrounds (gradient-heavy, not expressible as static Tailwind classes) ── */
+/* Hero slide backgrounds (gradient-heavy, not expressible as static Tailwind classes) */
 .slide-bg-1 { background: linear-gradient(105deg, #06090f 0%, #0b1424 45%, #101c35 100%); }
 .slide-bg-2 { background: linear-gradient(105deg, #071210 0%, #0d2018 50%, #081a12 100%); }
 .slide-bg-3 { background: linear-gradient(105deg, #120710 0%, #200d1a 50%, #160a14 100%); }
 .slide-bg-4 { background: linear-gradient(105deg, #06090f 0%, #0b1624 50%, #0a1820 100%); }
 .slide-bg-5 { background: linear-gradient(105deg, #080b08 0%, #101810 50%, #0c1410 100%); }
 
-/* ── Slider track ── */
+/* Slider track */
 .slides-track {
   display: flex;
   height: 100%;
@@ -77,7 +77,7 @@
   height: 100%;
 }
 
-/* ── Pagination dot — background set via inline style in component ── */
+/* Pagination dot - background set via inline style in component */
 .hero-dot {
   width: 20px;
   height: 3px;
@@ -92,7 +92,7 @@
   width: 32px;
 }
 
-/* ── TV screen gradient (too complex for Tailwind) ── */
+/* TV screen gradient (too complex for Tailwind) */
 .tv-screen-gradient {
   background:
     radial-gradient(ellipse at 30% 60%, rgba(255, 200, 40, 0.55) 0%, transparent 50%),

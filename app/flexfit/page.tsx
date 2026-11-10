@@ -10,20 +10,20 @@ export const revalidate = 3600
 export const metadata: Metadata = {
   title: 'Flex Fit',
   description:
-    'Venting Flex Fit — multi sistem sa Hidro box-om: hlađenje i grejanje unutrašnjim jedinicama, podno grejanje i sanitarna topla voda iz jedne spoljne jedinice.',
+    'Venting Flex Fit - multi sistem sa Hidro box-om: hlađenje i grejanje unutrašnjim jedinicama, podno grejanje i sanitarna topla voda iz jedne spoljne jedinice.',
   alternates: { canonical: '/flexfit' },
   openGraph: {
     title: 'Flex Fit | Venting',
     description:
-      'Jedna jedinica za mnogostruku aplikaciju — ATA hlađenje i grejanje, ATW podno grejanje i sanitarna topla voda.',
+      'Jedna jedinica za mnogostruku aplikaciju - ATA hlađenje i grejanje, ATW podno grejanje i sanitarna topla voda.',
     url: '/flexfit',
   },
 }
 
 /** Katalog 2026, s20-23 */
 const APLIKACIJE = [
-  'ATA hlađenje — unutrašnjim jedinicama multi sistema',
-  'ATA grejanje — unutrašnjim jedinicama multi sistema',
+  'ATA hlađenje - unutrašnjim jedinicama multi sistema',
+  'ATA grejanje - unutrašnjim jedinicama multi sistema',
   'ATW podno grejanje',
   'ATA grejanje + ATW podno grejanje istovremeno',
   'ATW sanitarna topla voda',
@@ -73,7 +73,7 @@ const FUNKCIJE = [
   {
     naslov: 'Zaštita podnog grejanja',
     tekst:
-      'U kombinaciji sa podnim grejanjem, temperatura ulazne vode se podešava mešnim ventilom — tako se štiti pod i postiže veći komfor.',
+      'U kombinaciji sa podnim grejanjem, temperatura ulazne vode se podešava mešnim ventilom - tako se štiti pod i postiže veći komfor.',
   },
   {
     naslov: 'Trenutna topla voda',
@@ -87,12 +87,12 @@ const FUNKCIJE = [
   },
 ]
 
-/** Specifikacija — katalog s23. Kolone: 27K / 36K / 42K */
+/** Specifikacija - katalog s23. Kolone: 27K / 36K / 42K */
 const SPEC_ROWS: { label: string; unit?: string; v: [string, string, string] }[] = [
   { label: 'Napajanje', unit: 'Ph-V-Hz', v: ['220-240V–50Hz, 1Ph', '220-240V–50Hz, 1Ph', '220-240V–50Hz, 1Ph'] },
   { label: 'Električni grejač Hidro box-a', unit: 'W/A', v: ['3100 / 13,5', '3100 / 13,5', '3100 / 13,5'] },
-  { label: 'Zvučni pritisak — Hidro box', unit: 'dB(A)', v: ['52', '52', '52'] },
-  { label: 'Zvučni pritisak — spoljna jedinica', unit: 'dB(A)', v: ['65', '70', '70'] },
+  { label: 'Zvučni pritisak - Hidro box', unit: 'dB(A)', v: ['52', '52', '52'] },
+  { label: 'Zvučni pritisak - spoljna jedinica', unit: 'dB(A)', v: ['65', '70', '70'] },
   { label: 'ATA hlađenje', unit: '°C', v: ['-15~50', '-15~50', '-15~50'] },
   { label: 'ATA grejanje', unit: '°C', v: ['-15~24', '-15~24', '-15~24'] },
   { label: 'ATW grejanje (prostorija)', unit: '°C', v: ['0~43', '0~43', '0~43'] },
@@ -111,7 +111,7 @@ export default function FlexFitPage() {
     <>
       <Header />
       <main className={styles.page}>
-        {/* ── Hero ─────────────────────────────────────────── */}
+        {/* Hero */}
         <section className={styles.hero}>
           <div className={styles.inner}>
             <p className={styles.eyebrow}>Flex Fit</p>
@@ -120,7 +120,7 @@ export default function FlexFitPage() {
             </h1>
             <p className={styles.lead}>
               Jedna spoljna jedinica pokriva klimatizaciju, podno grejanje i pripremu sanitarne
-              tople vode — bez zasebnog sistema za svaku funkciju.
+              tople vode - bez zasebnog sistema za svaku funkciju.
             </p>
 
             <ul className={styles.apps}>
@@ -134,7 +134,7 @@ export default function FlexFitPage() {
           </div>
         </section>
 
-        {/* ── Šema sistema ─────────────────────────────────── */}
+        {/* Šema sistema */}
         <section className={styles.section}>
           <div className={styles.inner}>
             <h2 className={styles.h2}>Šema sistema</h2>
@@ -145,7 +145,7 @@ export default function FlexFitPage() {
             <div className={styles.figure}>
               <Image
                 src="/images/flexfit/sema-sistema.webp"
-                alt="Šema Flex Fit sistema — spoljna jedinica, unutrašnje jedinice i Hidro box"
+                alt="Šema Flex Fit sistema - spoljna jedinica, unutrašnje jedinice i Hidro box"
                 width={1200}
                 height={960}
                 sizes="(max-width: 900px) 100vw, 900px"
@@ -155,11 +155,11 @@ export default function FlexFitPage() {
           </div>
         </section>
 
-        {/* ── Proizvodi ────────────────────────────────────── */}
+        {/* Proizvodi */}
         <section className={`${styles.section} ${styles.sectionAlt}`}>
           <div className={styles.inner}>
             <h2 className={styles.h2}>Pregled proizvoda</h2>
-            <p className={styles.sub}>Hidro box i tri spoljne jedinice — 27K, 36K i 42K.</p>
+            <p className={styles.sub}>Hidro box i tri spoljne jedinice - 27K, 36K i 42K.</p>
 
             <div className={styles.grid}>
               {PROIZVODI.map((p) => (
@@ -193,7 +193,7 @@ export default function FlexFitPage() {
           </div>
         </section>
 
-        {/* ── Jedan sistem, više funkcija ──────────────────── */}
+        {/* Jedan sistem, više funkcija */}
         <section className={styles.section}>
           <div className={styles.inner}>
             <h2 className={styles.h2}>Jedan sistem, više funkcija</h2>
@@ -204,7 +204,7 @@ export default function FlexFitPage() {
             <div className={styles.figure}>
               <Image
                 src="/images/flexfit/dijagram-funkcije.webp"
-                alt="Flex Fit — istovremeni rad klimatizacije, podnog grejanja i sanitarne tople vode"
+                alt="Flex Fit - istovremeni rad klimatizacije, podnog grejanja i sanitarne tople vode"
                 width={1400}
                 height={570}
                 sizes="(max-width: 1100px) 100vw, 1100px"
@@ -223,7 +223,7 @@ export default function FlexFitPage() {
           </div>
         </section>
 
-        {/* ── Specifikacija ────────────────────────────────── */}
+        {/* Specifikacija */}
         <section className={`${styles.section} ${styles.sectionAlt}`}>
           <div className={styles.inner}>
             <h2 className={styles.h2}>Specifikacija</h2>
@@ -256,7 +256,7 @@ export default function FlexFitPage() {
           </div>
         </section>
 
-        {/* ── Šema instalacije ─────────────────────────────── */}
+        {/* Šema instalacije */}
         <section className={styles.section}>
           <div className={styles.inner}>
             <h2 className={styles.h2}>Šema instalacije</h2>
@@ -273,12 +273,12 @@ export default function FlexFitPage() {
           </div>
         </section>
 
-        {/* ── CTA ──────────────────────────────────────────── */}
+        {/* CTA */}
         <section className={styles.cta}>
           <div className={styles.inner}>
             <h2 className={styles.ctaTitle}>Zainteresovani ste za Flex Fit?</h2>
             <p className={styles.ctaText}>
-              Pošaljite upit — pomoći ćemo vam da izaberete konfiguraciju za vaš objekat.
+              Pošaljite upit - pomoći ćemo vam da izaberete konfiguraciju za vaš objekat.
             </p>
             <a href="/kontakt" className={styles.ctaBtn}>
               Kontaktirajte nas

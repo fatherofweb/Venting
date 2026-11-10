@@ -22,7 +22,7 @@ const ROOT = join(__dirname, '..')
 const DATA_DIR = join(ROOT, 'public', 'data')
 const OUT_FILE = join(DATA_DIR, 'products.json')
 
-// ── Load .env.local if present ────────────────────────────────────────────────
+// Load .env.local if present
 try {
   const envRaw = await readFile(join(ROOT, '.env.local'), 'utf-8')
   for (const line of envRaw.split('\n')) {
@@ -39,7 +39,7 @@ try {
   }
 } catch { /* .env.local is optional */ }
 
-// ── Config ────────────────────────────────────────────────────────────────────
+// Config
 const STEELSOFT_BASE = 'http://mail.steelsoft.rs:51337'
 const STEELSOFT_USER = process.env.STEELSOFT_USER
 const STEELSOFT_PASS = process.env.STEELSOFT_PASS
@@ -51,7 +51,7 @@ if (!STEELSOFT_USER || !STEELSOFT_PASS) {
 
 const STEELSOFT_AUTH = Buffer.from(`${STEELSOFT_USER}:${STEELSOFT_PASS}`).toString('base64')
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
+// Helpers
 async function fetchSteelSoft(path) {
   console.log(`  GET ${STEELSOFT_BASE}${path}`)
   const res = await fetch(`${STEELSOFT_BASE}${path}`, {
@@ -75,10 +75,10 @@ function displayModel(p) {
 /** Polja koja overrideImage() traži iz sirovog zapisa. */
 const imageInput = (p) => ({ name: p.acName ?? '', model: p.Model ?? '', subcategoryName: p.acCLassif2Name ?? '' })
 
-// ── Main ──────────────────────────────────────────────────────────────────────
-console.log('─'.repeat(60))
+// Main
+console.log('-'.repeat(60))
 console.log('Venting product sync')
-console.log('─'.repeat(60))
+console.log('-'.repeat(60))
 
 const started = Date.now()
 
@@ -126,7 +126,7 @@ const catOf = (p) => {
     : { code: p.acClassif ?? '', name: p.acClassifName ?? '' }
 }
 
-// Build products — svaki artikal po definiciji filtera ima lokalnu katalog-sliku,
+// Build products - svaki artikal po definiciji filtera ima lokalnu katalog-sliku,
 // pa overrideImage() ovde nikad ne vraća null.
 console.log('\n[5/5] Building products…')
 const products = ventingRaw.map((p) => {
@@ -148,7 +148,7 @@ const products = ventingRaw.map((p) => {
   description: info?.description ?? '',
   energyClass: p.EnergetskiRazred ?? '',
   inverter: p.Inverter ?? '',
-  // API za neke grupe ne vraća karakteristike — tada uzimamo one iz kataloga
+  // API za neke grupe ne vraća karakteristike - tada uzimamo one iz kataloga
   specs: apiSpecs.length > 0 ? apiSpecs : info ? toSpecs(info.specs) : [],
   }
 })
@@ -175,11 +175,11 @@ await mkdir(DATA_DIR, { recursive: true })
 await writeFile(OUT_FILE, JSON.stringify(result, null, 2), 'utf-8')
 
 const elapsed = ((Date.now() - started) / 1000).toFixed(1)
-console.log('\n' + '─'.repeat(60))
+console.log('\n' + '-'.repeat(60))
 console.log(`✓ Synced ${result.total} products across ${categories.length} categories`)
 console.log(`✓ Written to ${OUT_FILE}`)
 console.log(`✓ Completed in ${elapsed}s`)
-console.log('─'.repeat(60))
+console.log('-'.repeat(60))
 
 console.log('\nCategories:')
 for (const cat of categories) {

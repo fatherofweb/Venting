@@ -71,7 +71,7 @@ export default function ProductDetail({ product, related = [] }: Props) {
   return (
     <div className={styles.page}>
 
-      {/* ── Hero ─────────────────────────────────────────────── */}
+      {/* Hero */}
       <section className={styles.hero}>
         <div className={styles.heroInner}>
 
@@ -136,7 +136,7 @@ export default function ProductDetail({ product, related = [] }: Props) {
             </div>
           </div>
 
-          {/* Right: image — hidden entirely when no image exists */}
+          {/* Right: image - hidden entirely when no image exists */}
           {product.image && (
             <div className={styles.heroImage}>
               <div className={styles.heroImageWrap}>
@@ -148,7 +148,7 @@ export default function ProductDetail({ product, related = [] }: Props) {
         </div>
       </section>
 
-      {/* ── Technical specs ───────────────────────────────────── */}
+      {/* Technical specs */}
       {Object.keys(specGroups).length > 0 && (
         <section className={styles.specs}>
           <div className={styles.specsInner}>
@@ -181,7 +181,7 @@ export default function ProductDetail({ product, related = [] }: Props) {
         </section>
       )}
 
-      {/* ── Related products ──────────────────────────────────── */}
+      {/* Related products */}
       {related.length > 0 && (
         <section className={styles.related}>
           <div className={styles.relatedInner}>

@@ -14,7 +14,7 @@ export default function Footer() {
     categoryHref(3), // Rekuperatori
     categoryHref(4), // Fancoili
     categoryHref(5), // Kondenz pumpe
-    categoryHref(1), // Vazdušne zavese — u komercijalnom programu
+    categoryHref(1), // Vazdušne zavese - u komercijalnom programu
     categoryHref(6), // Dodatna oprema
   ]
 

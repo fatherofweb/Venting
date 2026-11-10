@@ -1,4 +1,4 @@
-/* ── Section ───────────────────────────────────────────── */
+/* Section */
 .section {
   margin: 80px auto;
   max-width: 1200px;
@@ -15,7 +15,7 @@
   margin: 0 auto 60px;
 }
 
-/* ── Grid ──────────────────────────────────────────────── */
+/* Grid */
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -23,13 +23,13 @@
   align-items: stretch;
 }
 
-/* ── Item ──────────────────────────────────────────────── */
+/* Item */
 .item {
   cursor: pointer;
   height: 100%;
 }
 
-/* ── Card ─────────────────────────────────────────────── */
+/* Card */
 .card {
   background: #fff;
   border: 2px solid #edf1f5;
@@ -52,7 +52,7 @@
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.10);
 }
 
-/* ── Card inner content ────────────────────────────────── */
+/* Card inner content */
 .inner {
   padding: 48px 28px 36px;
   text-align: center;
@@ -62,7 +62,7 @@
   align-items: center;
 }
 
-/* ── Product code ──────────────────────────────────────── */
+/* Product code */
 .code {
   font-weight: 700;
   font-size: 20px;
@@ -71,7 +71,7 @@
   margin: 0 0 24px;
 }
 
-/* ── Image area ────────────────────────────────────────── */
+/* Image area */
 .imageWrap {
   position: relative;
   height: 240px;
@@ -84,7 +84,7 @@
   transition: transform 0.3s ease;
 }
 
-/* ── Product name ──────────────────────────────────────── */
+/* Product name */
 .name {
   font-size: 18px;
   font-weight: 500;
@@ -94,7 +94,7 @@
   line-height: 1.3;
 }
 
-/* ── Dotted divider ────────────────────────────────────── */
+/* Dotted divider */
 .dotDivider {
   height: 0;
   border: none;
@@ -102,7 +102,7 @@
   margin: 20px 0 16px;
 }
 
-/* ── Spec columns ──────────────────────────────────────── */
+/* Spec columns */
 .details {
   display: grid;
   grid-template-columns: repeat(var(--spec-cols, 3), 1fr);
@@ -133,7 +133,7 @@
   align-self: start;
 }
 
-/* ── Action bar — slides into view on hover ────────────── */
+/* Action bar - slides into view on hover */
 .actionBar {
   display: flex;
   overflow: hidden;
@@ -149,7 +149,7 @@
   border-top-color: rgba(12, 12, 13, 0.15);
 }
 
-/* ── Action buttons ────────────────────────────────────── */
+/* Action buttons */
 .actionBtn {
   flex: 1;
   display: flex;
@@ -179,7 +179,7 @@
   flex-shrink: 0;
 }
 
-/* ── Responsive ────────────────────────────────────────── */
+/* Responsive */
 @media (max-width: 992px) {
   .grid { grid-template-columns: repeat(2, 1fr); }
 }

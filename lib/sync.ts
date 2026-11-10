@@ -1,8 +1,8 @@
 /**
- * Core sync logic — runs both in the Vercel Cron route and the local CLI script.
+ * Core sync logic - runs both in the Vercel Cron route and the local CLI script.
  * Fetches products + specs from the SteelSoft API and keeps only the current 2026
  * VENTING offer (see product-filter.mjs). Every kept product is attached its local
- * watermark-free catalogue photo from lib/image-overrides.mjs — the site serves no
+ * watermark-free catalogue photo from lib/image-overrides.mjs - the site serves no
  * external product images, so the whole thing stays well under the Vercel 60s limit.
  */
 
@@ -13,7 +13,7 @@ import { isCatalogProduct } from './product-filter.mjs'
 
 const STEELSOFT_BASE = 'http://mail.steelsoft.rs:51337'
 
-// ── Types ────────────────────────────────────────────────────────────────────
+// Types
 
 export interface Spec {
   name: string
@@ -57,7 +57,7 @@ export interface SyncResult {
   total: number
 }
 
-// ── SteelSoft API ─────────────────────────────────────────────────────────────
+// SteelSoft API
 
 function steelsoftAuth(): string {
   const user = process.env.STEELSOFT_USER
@@ -77,7 +77,7 @@ async function fetchSteelSoft<T>(path: string): Promise<T> {
   return res.json() as Promise<T>
 }
 
-// ── Raw API types ─────────────────────────────────────────────────────────────
+// Raw API types
 
 interface RawProduct {
   anQId: number
@@ -125,10 +125,10 @@ interface RawSpec {
   anOrderID: number | null
 }
 
-// ── Main sync function ────────────────────────────────────────────────────────
+// Main sync function
 
 export async function syncProducts(): Promise<SyncResult> {
-  // Fetch sequentially — the server returns 500 on concurrent large requests
+  // Fetch sequentially - the server returns 500 on concurrent large requests
   console.log('[sync] Fetching SteelSoft products…')
   const allProducts = await fetchSteelSoft<RawProduct[]>('/api/identi/')
   console.log(`[sync] Got ${allProducts.length} products`)
@@ -137,7 +137,7 @@ export async function syncProducts(): Promise<SyncResult> {
   const allSpecs = await fetchSteelSoft<RawSpec[]>('/api/karakteristike/')
   console.log(`[sync] Got ${allSpecs.length} specs`)
 
-  // The 2026 catalogue *is* the set of photos the client sent — a product only
+  // The 2026 catalogue *is* the set of photos the client sent - a product only
   // exists on the site if one of those photos covers it (see product-filter.mjs).
   // Everything else (discontinued series, spare parts, items with no photo) is
   // left out by design.
@@ -195,7 +195,7 @@ export async function syncProducts(): Promise<SyncResult> {
     description: info?.description ?? '',
     energyClass: p.EnergetskiRazred ?? '',
     inverter: p.Inverter ?? '',
-    // API za neke grupe ne vraća karakteristike — tada uzimamo one iz kataloga
+    // API za neke grupe ne vraća karakteristike - tada uzimamo one iz kataloga
     specs: apiSpecs.length > 0 ? apiSpecs : info ? toSpecs(info.specs) : [],
     }
   })
@@ -218,6 +218,6 @@ export async function syncProducts(): Promise<SyncResult> {
     total: products.length,
   }
 
-  console.log(`[sync] Done — ${result.total} products across ${categories.length} categories`)
+  console.log(`[sync] Done - ${result.total} products across ${categories.length} categories`)
   return result
 }

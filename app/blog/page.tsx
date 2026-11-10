@@ -22,7 +22,7 @@ export default function BlogPage() {
             Blog
           </h1>
 
-          {/* Članci još nemaju sadržaj, pa kartice nisu linkovane — vodile bi na 404.
+          {/* Članci još nemaju sadržaj, pa kartice nisu linkovane - vodile bi na 404.
               Kad stignu tekstovi: vrati <a href={`/blog/${post.slug}`}> i dodaj rutu app/blog/[slug]. */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
             {POSTS.map((post, i) => (

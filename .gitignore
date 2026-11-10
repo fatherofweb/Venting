@@ -6,7 +6,7 @@ node_modules/
 out/
 
 # Generated data files (populated at runtime by sync).
-# products.json IS committed — it's the deployed source of truth for the
+# products.json IS committed - it's the deployed source of truth for the
 # catalogue; the daily KV cron only overrides it when strictly newer.
 public/data/*
 !public/data/products.json

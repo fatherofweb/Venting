@@ -6,7 +6,7 @@ import { useLanguage } from '@/lib/LanguageContext'
 import { categoryHref } from '@/lib/categories.mjs'
 import { type Locale } from '@/lib/i18n'
 
-/* ─── Search helpers ─────────────────────────────────────── */
+/* Search helpers */
 type ProductHit = { id: string; name: string; categoryName: string; image: string | null }
 
 function normalize(s: string): string {
@@ -26,7 +26,7 @@ function highlight(text: string, query: string): string {
   return text.slice(0, idx) + '<mark>' + text.slice(idx, idx + q.length) + '</mark>' + text.slice(idx + q.length)
 }
 
-/* ─── Constants ──────────────────────────────────────────── */
+/* Constants */
 const LANGUAGES: { code: Locale; nativeName: string; flag: string }[] = [
   { code: 'sr', nativeName: 'SRB', flag: '🇷🇸' },
   { code: 'en', nativeName: 'EN',  flag: '🇬🇧' },
@@ -38,7 +38,7 @@ const SECONDARY_LINKS = [
   { label: 'Kontakt',          href: '/kontakt' },
 ]
 
-/* ─── Language Switcher ──────────────────────────────────── */
+/* Language Switcher */
 function LanguageSwitcher({ locale, setLocale }: { locale: Locale; setLocale: (l: Locale) => void }) {
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
@@ -95,7 +95,7 @@ function LanguageSwitcher({ locale, setLocale }: { locale: Locale; setLocale: (l
   )
 }
 
-/* ─── Header ─────────────────────────────────────────────── */
+/* Header */
 export default function Header() {
   const { t, locale, setLocale } = useLanguage()
   const [searchOpen, setSearchOpen]   = useState(false)
@@ -161,7 +161,7 @@ export default function Header() {
               <Image src="/logo.png" alt="Venting" width={138} height={32} priority className="h-8 w-auto"/>
             </a>
 
-            {/* Primary nav — desktop */}
+            {/* Primary nav - desktop */}
             <nav className="hidden xl:flex flex-1 items-center justify-center" aria-label="Primary navigation">
               <ul className="flex items-center gap-3 min-[1400px]:gap-4 2xl:gap-6">
                 {t.nav.map((item, i) => (
@@ -180,7 +180,7 @@ export default function Header() {
               {/* Language */}
               <LanguageSwitcher locale={locale} setLocale={setLocale}/>
 
-              {/* ── Search — bigger & bolder ── */}
+              {/* Search - bigger & bolder */}
               <button
                 onClick={openSearch}
                 aria-label="Search"
@@ -205,7 +205,7 @@ export default function Header() {
                 </span>
               </button>
 
-              {/* ── Burger — bigger & bolder ── */}
+              {/* Burger - bigger & bolder */}
               <button
                 onClick={openMenu}
                 aria-label={menuOpen ? 'Close menu' : 'Open menu'}
@@ -250,7 +250,7 @@ export default function Header() {
           </div>
         </div>
 
-        {/* ── Search bar + live results ──────────────────────── */}
+        {/* Search bar + live results */}
         <div className={`overflow-visible transition-all duration-300 ${searchOpen ? 'border-t border-[#e2e2e2]' : 'hidden'}`}>
           <div className="w-full px-10 py-4 relative">
             <div className="flex items-center gap-3 border-b-2 border-brand-text pb-1">
@@ -333,7 +333,7 @@ export default function Header() {
         </div>
       </header>
 
-      {/* ── Burger menu overlay ───────────────────────────────── */}
+      {/* Burger menu overlay */}
       {/* Backdrop */}
       <div
         onClick={() => setMenuOpen(false)}
@@ -341,7 +341,7 @@ export default function Header() {
         aria-hidden="true"
       />
 
-      {/* Drawer — slides down from under the sticky header */}
+      {/* Drawer - slides down from under the sticky header */}
       <div className={`fixed top-[106px] left-0 right-0 z-30 bg-white border-b border-[#e2e2e2] shadow-[0_8px_40px_rgba(0,0,0,0.1)] transition-all duration-300 origin-top ${menuOpen ? 'opacity-100 scale-y-100 pointer-events-auto' : 'opacity-0 scale-y-95 pointer-events-none'}`}>
         <div className="w-full px-10 py-8">
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-10">

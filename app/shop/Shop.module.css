@@ -1,4 +1,4 @@
-/* ── Hero ──────────────────────────────────────────────────── */
+/* Hero */
 .hero {
   position: relative;
   height: 400px;
@@ -83,16 +83,16 @@
   max-width: 360px;
 }
 
-/* ── Page section ─────────────────────────────────────────── */
+/* Page section */
 .section {
   margin: 60px auto 80px;
   max-width: 1200px;
   padding: 0 24px;
 }
 
-/* ── Category tabs ────────────────────────────────────────── */
+/* Category tabs */
 .tabsOuter {
-  /* desktop: plain passthrough — mobile overrides add scroll + fade */
+  /* desktop: plain passthrough - mobile overrides add scroll + fade */
 }
 
 .tabs {
@@ -156,7 +156,7 @@
   opacity: 0.6;
 }
 
-/* ── Product grid ─────────────────────────────────────────── */
+/* Product grid */
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -164,7 +164,7 @@
   align-items: stretch;
 }
 
-/* ── Card item ────────────────────────────────────────────── */
+/* Card item */
 .item {
   display: block;
   cursor: pointer;
@@ -173,7 +173,7 @@
   height: 100%;
 }
 
-/* ── Card shell ───────────────────────────────────────────── */
+/* Card shell */
 .card {
   background: #fff;
   border: 2px solid #edf1f5;
@@ -196,7 +196,7 @@
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.10);
 }
 
-/* ── Card content ─────────────────────────────────────────── */
+/* Card content */
 .inner {
   padding: 36px 24px 28px;
   text-align: center;
@@ -206,7 +206,7 @@
   align-items: center;
 }
 
-/* ── Product name ─────────────────────────────────────────── */
+/* Product name */
 .code {
   font-weight: 700;
   font-size: 17px;
@@ -216,7 +216,7 @@
   word-break: break-word;
 }
 
-/* ── Image ────────────────────────────────────────────────── */
+/* Image */
 .imageWrap {
   position: relative;
   height: 200px;
@@ -242,7 +242,7 @@
   height: 60px;
 }
 
-/* ── Category label ───────────────────────────────────────── */
+/* Category label */
 .categoryLabel {
   font-size: 13px;
   font-weight: 500;
@@ -251,7 +251,7 @@
   line-height: 1.4;
 }
 
-/* ── Dotted divider ───────────────────────────────────────── */
+/* Dotted divider */
 .dotDivider {
   height: 0;
   border: none;
@@ -260,7 +260,7 @@
   width: 100%;
 }
 
-/* ── Spec 2-row grid (labels row 1, values row 2) ────────── */
+/* Spec 2-row grid (labels row 1, values row 2) */
 .specGrid {
   display: grid;
   grid-template-columns: repeat(var(--spec-cols, 3), 1fr);
@@ -291,7 +291,7 @@
   align-self: start;
 }
 
-/* ── Action bar ───────────────────────────────────────────── */
+/* Action bar */
 .actionBar {
   display: flex;
   overflow: hidden;
@@ -331,7 +331,7 @@
   flex-shrink: 0;
 }
 
-/* ── Search ───────────────────────────────────────────────── */
+/* Search */
 .searchRow {
   display: flex;
   align-items: center;
@@ -410,7 +410,7 @@
   white-space: nowrap;
 }
 
-/* ── Pagination ───────────────────────────────────────────── */
+/* Pagination */
 .pagination {
   display: flex;
   align-items: center;
@@ -458,7 +458,7 @@
   border-color: #1a1a1d !important;
 }
 
-/* ── Empty state ──────────────────────────────────────────── */
+/* Empty state */
 .empty {
   text-align: center;
   color: #6b7280;
@@ -466,7 +466,7 @@
   padding: 60px 0;
 }
 
-/* ── Tablet ───────────────────────────────────────────────── */
+/* Tablet */
 @media (max-width: 960px) {
   .heroInner  { padding: 0 40px; }
   .heroVisual { display: none; }
@@ -475,7 +475,7 @@
   .grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
 }
 
-/* ── Mobile ───────────────────────────────────────────────── */
+/* Mobile */
 @media (max-width: 640px) {
 
   /* Hero: compact, text-focused */
@@ -485,7 +485,7 @@
   .heroTitle { font-size: clamp(26px, 7vw, 32px); margin-bottom: 18px; line-height: 1.1; }
   .heroCta   { font-size: 12px; padding: 8px 18px; }
 
-  /* Section: no extra top gap — hero handles separation */
+  /* Section: no extra top gap - hero handles separation */
   .section { margin: 0 auto 48px; padding: 0; }
 
   /* Tabs outer: clips scroll + right-fade hint */
@@ -566,7 +566,7 @@
   .specLabel         { font-size: 8.5px; padding-bottom: 3px; }
   .specValue         { font-size: 11px; }
 
-  /* On touch the card is the tap target — no hover bar needed */
+  /* On touch the card is the tap target - no hover bar needed */
   .actionBar { display: none; }
 
   .empty { padding: 36px 20px; font-size: 14px; }
@@ -579,7 +579,7 @@
   .pageBtn { min-width: 36px; height: 36px; font-size: 13px; }
 }
 
-/* ── Filteri ─────────────────────────────────────────────── */
+/* Filteri */
 /* stoji u istom redu sa pretragom; brojač je apsolutno pozicioniran ispod
    dugmeta da ne bi pomerao vertikalno poravnanje sa input poljem */
 .filterBar {
@@ -735,7 +735,7 @@
   color: #fff;
 }
 
-/* mora posle .chip:hover — inače hover oboji tekst u crno na crnoj podlozi */
+/* mora posle .chip:hover - inače hover oboji tekst u crno na crnoj podlozi */
 .chipOn:hover {
   background: #2a3038;
   border-color: #2a3038;

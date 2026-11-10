@@ -1,9 +1,9 @@
-/* ── Page wrapper ────────────────────────────────────── */
+/* Page wrapper */
 .page {
   background: #fff;
 }
 
-/* ── Hero ────────────────────────────────────────────── */
+/* Hero */
 .hero {
   background: #fff;
   padding: 60px 0 0;
@@ -19,13 +19,13 @@
   align-items: center;
 }
 
-/* ── Hero text (with image = half grid, without = full width capped) ── */
+/* Hero text (with image = half grid, without = full width capped) */
 .heroTextFull {
   grid-column: 1 / -1;
   max-width: 680px;
 }
 
-/* ── Breadcrumb ──────────────────────────────────────── */
+/* Breadcrumb */
 .breadcrumb {
   display: flex;
   align-items: center;
@@ -52,7 +52,7 @@
   font-weight: 500;
 }
 
-/* ── Eyebrow / type ──────────────────────────────────── */
+/* Eyebrow / type */
 .eyebrow {
   font-size: 11px;
   font-weight: 700;
@@ -62,7 +62,7 @@
   margin: 0 0 12px;
 }
 
-/* ── Product title ───────────────────────────────────── */
+/* Product title */
 .title {
   font-family: var(--font-archivo-black), 'Archivo Black', sans-serif;
   font-size: clamp(28px, 3.2vw, 48px);
@@ -74,7 +74,7 @@
   word-break: break-word;
 }
 
-/* ── Model code ──────────────────────────────────────── */
+/* Model code */
 .model {
   font-size: 14px;
   font-weight: 500;
@@ -83,7 +83,7 @@
   font-family: ui-monospace, 'SF Mono', monospace;
 }
 
-/* ── Subcategory + barcode ───────────────────────────── */
+/* Subcategory + barcode */
 .metaRow {
   display: flex;
   align-items: center;
@@ -110,7 +110,7 @@
   font-family: ui-monospace, 'SF Mono', monospace;
 }
 
-/* ── Quick stats row ─────────────────────────────────── */
+/* Quick stats row */
 .quickStats {
   display: flex;
   margin-bottom: 36px;
@@ -165,7 +165,7 @@
   line-height: 1.3;
 }
 
-/* ── CTAs ────────────────────────────────────────────── */
+/* CTAs */
 .ctas {
   display: flex;
   align-items: center;
@@ -188,7 +188,7 @@
   color: #0c0c0d;
 }
 
-/* ── Hero image ──────────────────────────────────────── */
+/* Hero image */
 .heroImage {
   display: flex;
   align-items: center;
@@ -217,7 +217,7 @@
   height: auto;
 }
 
-/* ── Specs section ───────────────────────────────────── */
+/* Specs section */
 .specs {
   padding: 52px 0 72px;
 }
@@ -237,7 +237,7 @@
   margin: 0 0 40px;
 }
 
-/* ── Spec groups ─────────────────────────────────────── */
+/* Spec groups */
 .specGroup {
   margin-bottom: 40px;
 }
@@ -255,7 +255,7 @@
   margin: 0 0 12px;
 }
 
-/* ── Spec table ──────────────────────────────────────── */
+/* Spec table */
 .specTable {
   width: 100%;
   border-collapse: collapse;
@@ -298,7 +298,7 @@
   font-size: 12px;
 }
 
-/* ── Related products ────────────────────────────────────── */
+/* Related products */
 .related {
   background: #f9fafb;
   padding: 52px 0 72px;
@@ -369,7 +369,7 @@
   margin: 0;
 }
 
-/* ── Tablet: collapse to single column ───────────────────── */
+/* Tablet: collapse to single column */
 @media (max-width: 768px) {
   .heroInner { grid-template-columns: 1fr; gap: 0; }
   .heroImage { order: -1; justify-content: center; }
@@ -379,7 +379,7 @@
   .specName { width: 52%; }
 }
 
-/* ── Mobile: tighten everything ──────────────────────────── */
+/* Mobile: tighten everything */
 @media (max-width: 640px) {
   /* Hero */
   .hero      { padding: 16px 0 0; }

@@ -29,7 +29,7 @@ function Tile({
       className={`group relative flex flex-col rounded-[10px] overflow-hidden bg-white border border-black/[0.07] cursor-pointer transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_38px_rgba(0,0,0,0.14)] ${className}`}
       style={{ textDecoration: 'none' }}
     >
-      {/* Image area — white to match the photo background, device shown in full */}
+      {/* Image area - white to match the photo background, device shown in full */}
       <div className="relative flex-1 min-h-0 bg-white">
         {cat?.image && (
           <div className="absolute inset-0 p-4 sm:p-5">
@@ -74,7 +74,7 @@ export default function WeRecommend({ categoryStats }: Props) {
         </h2>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3.5 wr-grid">
-          {/* Col 1 — tall: Kućna rešenja */}
+          {/* Col 1 - tall: Kućna rešenja */}
           <Tile cat={cats[0]} fallbackTab={0} labelSize="text-[14px]"
             className="sm:col-start-1 sm:row-start-1 sm:row-span-2" />
 
@@ -82,7 +82,7 @@ export default function WeRecommend({ categoryStats }: Props) {
           <Tile cat={cats[1]} fallbackTab={1} labelSize="text-[13px]"
             className="sm:col-start-2 sm:row-start-1" />
 
-          {/* Col 3 — tall: Fancoili */}
+          {/* Col 3 - tall: Fancoili */}
           <Tile cat={cats[3]} fallbackTab={3} labelSize="text-[14px]"
             className="sm:col-start-3 sm:row-start-1 sm:row-span-2" />
 
